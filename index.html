@@ -275,19 +275,8 @@ function initInventario(){
   }
   //logica
   for (var i = 0; i < 64*invmaxpages; i++) {
-    //array inv: []
-    invArray[i] = new Array(
-      Math.floor((Math.random()*4)-1),
-      Math.floor((Math.random()*6)),
-      Math.floor((Math.random()*6)),
-      Math.floor((Math.random()*11)),//[3] enanchement 0..10
-      Math.floor((Math.random()*level)+1),//[4] lvl
-      Math.floor((Math.random()*6)),//[5] goldps
-      Math.floor((Math.random()*6)),//[6] diamsps
-      0,//[7] eff
-      0,//[8] magic find
-      Math.floor((Math.random()*6)) //[9] expps
-      );
+    //array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
+    invArray[i] = new Array(-1,0,0,0,0,0,0,0,0,0);
   };
 }
 
@@ -399,6 +388,9 @@ function updateMainPanel(){
 var timer = $.timer(function() {
   ciclo();
 }, 200, true);
+var timer = $.timer(function() {
+  cicloSecondo();
+}, 1000, true);
 function ciclo(){
     updateMainPanel();
     update();
@@ -412,10 +404,50 @@ function ciclo(){
     gold+=goldps/5;
     diams+=diamsps/5;
     if(exp>=expmax){levelUP();}
-
+drop();
     //document.title = scala(gold);
-}
+}function cicloSecondo(){
+  if(Math.random()*100<mf) drop();
+}function drop(){
+  i=tipo=rar=0;
+  while(i<invArray.length){
+    if(invArray[i][0]==-1){
+      tipo=Math.floor((Math.random()*9));
+      if(tipo==0){//cassa
+        invArray[i][0]=0;
+        rar=Math.floor((Math.random()*3600));
+        if(rar<3)         invArray[i][2]=6;
+        else if(rar<40)   invArray[i][2]=5;
+        else if(rar<180)  invArray[i][2]=4;
+        else if(rar<560)  invArray[i][2]=3;
+        else if(rar<1500) invArray[i][2]=2;
+        else              invArray[i][2]=1;
+      }else if(tipo<3){//pozione
+        invArray[i][0]=1;
+        invArray[i][1]=Math.floor((Math.random()*5));//tipo di pozione
+        rar=Math.floor((Math.random()*100));
+        if(rar<10)        invArray[i][2]=2;
+        else if(rar<35)   invArray[i][2]=1;
+        else              invArray[i][2]=0;
+      }else{//gear
+        invArray[i][0]=2;
+        invArray[i][1]=Math.floor((Math.random()*6));//tipo di gear
+        rar=Math.floor((Math.random()*3600));
+        if(rar<3)         invArray[i][2]=6;
+        else if(rar<40)   invArray[i][2]=5;
+        else if(rar<180)  invArray[i][2]=4;
+        else if(rar<560)  invArray[i][2]=3;
+        else if(rar<1500) invArray[i][2]=2;
+        else              invArray[i][2]=1;
+        invArray[i][3]=0;//enanchement
+        invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
 
+      }
+      updateInventario();
+      break;
+    }i++;
+  }
+}
 function levelUP(){
   exp=0;
   expmax=parseInt(expmax*1.25);
