@@ -279,14 +279,18 @@ function initInventario(){
     invArray[i] = new Array(
       Math.floor((Math.random()*4)-1),
       Math.floor((Math.random()*6)),
-      Math.floor((Math.random()*6)));
+      Math.floor((Math.random()*6)),
+      Math.floor((Math.random()*11)),//[3] enanchement 0..10
+      Math.floor((Math.random()*level)+1),//[4] lvl
+      Math.floor((Math.random()*6)),//[5] goldps
+      Math.floor((Math.random()*6)),//[6] diamsps
+      0,//[7] eff
+      0,//[8] magic find
+      Math.floor((Math.random()*6)) //[9] expps
+      );
   };
 }
 
-
-
-
-var tempArray = new Array(0,0,0);//da aggiornare quando aggiungo le stat all'array-inventario
 $('#sort').click(function(){
   invArray.sort(function(a,b){return b[2]-a[2];});
   invArray.sort(function(a,b){return b[1]-a[1];});
@@ -320,9 +324,25 @@ function setInvIcon(i,q,t){
       case 3: tipo='Gaunlet'; break;
       case 4: tipo='Ring'; break;
       case 5: tipo='Pickaxe'; break;
+    }rar='';
+    switch(q-1){
+      case 0: rar='Common'; break;
+      case 1: rar='Magic'; break;
+      case 2: rar='Rare'; break;
+      case 3: rar='Epic'; break;
+      case 4: rar='Legendary'; break;
+      case 5: rar='Unique'; break;
     }
     $('#s'+i).css({'background':'url("./inv_'+tipo+'.png")'});
-    $('#s'+i).tooltipster('content','<b id="q'+q+'">'+tipo+' +2</b>');
+
+    stats='';
+    stats+='Gold/s: '+scala(invArray[i+64*(invpage-1)][5])+' (+0)<br>';
+    stats+='Diams/s: '+scala(invArray[i+64*(invpage-1)][6])+' (+0)<br>';
+    stats+='Eff: '+scala(invArray[i+64*(invpage-1)][6])+'% (+0%)<br>';
+    stats+='M.Find/s: '+scala(invArray[i+64*(invpage-1)][6])+'% (+0%)<br>';
+    stats+='Exp/s: '+scala(invArray[i+64*(invpage-1)][6])+' (+0)<br>';
+
+    $('#s'+i).tooltipster('content','<b id="q'+q+'">'+rar+' '+tipo+' +'+invArray[i+64*(invpage-1)][3]+'</b><br><i>Level '+scala(invArray[i+64*(invpage-1)][4])+'</i><br><small>'+stats+'</small>');
   }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
     qual='';
     switch(q%3){
@@ -339,7 +359,7 @@ function setInvIcon(i,q,t){
       case 4: tipo='diamond';gain='diamonds gain'; break;
     }
     $('#s'+i).removeClass("q6 q1 q2 q3 q4 q5").addClass("q0");
-    $('#s'+i).css({'background':'url("./pot_02.png")'});
+    $('#s'+i).css({'background':'url("./pot_'+(t%5)+''+(q%3)+'.png")'});
     $('#s'+i).css({'background-position':'50% 50%'});
     $('#s'+i).css({'background-size':'110%'});
     $('#s'+i).tooltipster('content','<b>'+qual+' '+tipo+' Potion</b><br><i>Increases '+gain+' by 50% for '+(10*(1+(q%3)))+' seconds.</i>');
