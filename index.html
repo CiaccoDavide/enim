@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="./tooltipster.css" />
+    <link rel="stylesheet" href="./jquery.mCustomScrollbar.css" />
+  <style type="text/css">
+  *               {padding:0;margin:0;font-family: Verdana,Geneva,sans-serif;}
+  body            {background:#111;color:#eee;font-size:11px;overflow-x:scroll;padding-top:40px;}
+  h2              {font-size:20px;font-weight: 100;padding-top: 10px}
+  header          {font-size:20px;position:absolute;left:10px;top:3px;right:10px;height:30px;padding:4px;}
+  .main,.gear,.inventory,.minions    {text-align:center;position:relative;display:inline-block;height:620px;/*float:left;*/width:330px;margin-left:10px;box-shadow:inset 0 0 10px 0 #000;border:solid 1px #333;overflow:hidden;border-radius: 3px;}
+  button b        {font-size:12px;}
+  button          {background:#333;border:solid 1px #f93;color:#fff;border-radius:3px;font-size:10px;padding:6px;cursor:pointer;width:100%;height:auto;margin-top:3px;margin-bottom:3px;text-align:left;}
+  button:active   {cursor:pointer;background:#333;border:solid 1px #39f;color:#fff;margin-top:5px;}
+  a,a:visited     {color:#eee;text-decoration:none;}
+  a:hover         {color:#fff;text-decoration:underline;}
+  footer          {position:fixed;bottom:0;font-size:10px;padding:0 0 0 6px;/*top right bottom left*/}
+  footer a:hover  {color:#f39;}
+  #on             {background:#333;border:solid 1px #f93;color:#fff;}
+  #off            {background:#222;border:solid 1px #642;color:#666;}
+  #off g          {color:#555}
+  #bought         {background:#222;border:solid 1px #396;color:#666;}
+  #bought g       {color:#555}
+  #achieved       {background:#222;border:solid 1px #396;color:#eee;}
+  #stats          {text-align:left;padding:10px;font-size:11px;}
+  g               {color:#bdbdbd;}
+  #mine{position:absolute;z-index:-1;left:10px;top:110px;}
+  .subpanelL{width:161px;margin: 0;float: left;text-align: right;padding:2px;}
+  .subpanelR{width:161px;margin: 0;float: left;text-align: left;padding:2px;}
+  .div{float: left;width: 330px;}
+  progress{border: solid 1px #333;width:280px;height:20px;padding:1px;background: #111;box-shadow:inset 0 0 3px 0 #000;border-radius: 4px;}
+  -webkit-progress-value{background: #1b7ded; /* Old browsers */
+background: -moz-linear-gradient(top,  #1b7ded 0%, #0755a9 18%, #1364b5 96%, #408fe4 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1b7ded), color-stop(18%,#0755a9), color-stop(96%,#1364b5), color-stop(100%,#408fe4)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #1b7ded 0%,#0755a9 18%,#1364b5 96%,#408fe4 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #1b7ded 0%,#0755a9 18%,#1364b5 96%,#408fe4 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #1b7ded 0%,#0755a9 18%,#1364b5 96%,#408fe4 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #1b7ded 0%,#0755a9 18%,#1364b5 96%,#408fe4 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b7ded', endColorstr='#408fe4',GradientType=0 ); /* IE6-9 */
+border-radius: 2px;}
+  progress[value]::-moz-progress-bar{background: #1b7ded; /* Old browsers */
+background: -moz-linear-gradient(top,  #1b7ded 0%, #0755a9 18%, #1364b5 96%, #408fe4 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1b7ded), color-stop(18%,#0755a9), color-stop(96%,#1364b5), color-stop(100%,#408fe4)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #1b7ded 0%,#0755a9 18%,#1364b5 96%,#408fe4 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #1b7ded 0%,#0755a9 18%,#1364b5 96%,#408fe4 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #1b7ded 0%,#0755a9 18%,#1364b5 96%,#408fe4 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #1b7ded 0%,#0755a9 18%,#1364b5 96%,#408fe4 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b7ded', endColorstr='#408fe4',GradientType=0 ); /* IE6-9 */
+border-radius: 2px;
+}
+.icons{height: 40px;width: 330px;padding: 3px;}
+.icons span{border: solid 1px #333;width:38px;height:38px;padding:1px;box-shadow:inset 0 0 3px 0 #000;border-radius: 4px;float: left;margin: 6px}
+.icons:hover{cursor:pointer;}
+.slots{width: 300px;padding:20px;}
+.slots span{/*border: solid 1px #333;*/width:28px;height:28px;box-shadow:inset 0 0 8px 2px #000;border-radius: 4px;float: left;margin: 3px}
+.slots:hover{cursor:pointer;}
+.minion{width: 330px;padding: 3px;text-align: left;float: left;margin-left: 10px;}
+.minion .upgrade{border: solid 1px #333;width:38px;height:38px;padding:1px;box-shadow:inset 0 0 3px 0 #000;border-radius: 4px;float: left;margin: 6px}
+.minion .buy{border: solid 1px #333;width:38px;height:38px;padding:1px;box-shadow:inset 0 0 3px 0 #000;border-radius: 4px;float: left;margin: 6px}
+.minion small,h4{display: inline-block;}
+.minion .upgrade:hover{cursor:pointer;}
+.minion .buy:hover{cursor:pointer;}
+.upgrade{}
+.upon{background: url("./icon_up.png");background-position: right 1px top 2px; !important}
+.upoff{background: url("./icon_up_off.png");background-position: right 1px top 2px; !important}
+#level{margin-top:-21px;margin-bottom: 20px}
+
+.minions{overflow-y:auto;}
+.minions::-webkit-scrollbar { 
+    display: none; 
+}
+
+
+.q0{border:solid 1px #333; !important}
+.q1{border:solid 1px #666; !important}
+.q2{border:solid 1px #04A3E4; !important}
+.q3{border:solid 1px #cFcF14; !important}
+.q4{border:solid 1px #D107FF; !important}
+.q5{border:solid 1px #FF3C35; !important}
+.q6{border:solid 1px #FFA347; !important}
+
+
+#q1{color:#bbb;}
+#q2{color:#04A3E4;}
+#q3{color:#cFcF14;}
+#q4{color:#D107FF;}
+#q5{color:#FF3C35;}
+#q6{color:#FFA347;}
+
+
+.hr{width:330px;height:1px;background:#333;position:absolute;top:250px;}
+#sort{text-decoration:none;position: absolute;bottom:8px;right:8px}
+#sort:hover{cursor:pointer;text-decoration:underline;}
+
+
+  </style>
+</head>
+<body>
+
+
+  <header>
+    <p>Gold: <output id="profit">0</output></p>
+  </header>
+
+  <div class="main">
+  <div class="tempo">0</div>
+    <img src="./title.png">
+    <img id="mine" src="./mine.png">
+
+    <br><br><br> <br><br><br> <br><br><br><br>
+    <span id="mainPanel"></span>
+  </div>
+  <div class="gear">
+    <h2>Gear</h2>
+    <div class="icons">
+    	<span id="boots"></span>
+    	<span id="armor"></span>
+    	<span id="helm"></span>
+    	<span id="gaunlet"></span>
+    	<span id="ring"></span>
+    	<span id="pickaxe"></span>
+    </div>
+    <div class="div"><h3>Gear Stats</h3></div>
+    <div class="subpanelL">
+    	<p>Gold:</p>
+    	<p>Diamonds:</p>
+    	<br>
+    	<p>Gold/s:</p>
+    	<p>Diamonds/s:</p>
+    	<p>Click Efficency:</p>
+    	<p>Magic Find/s:</p>
+    	<p>Experience/s:</p>
+    </div>
+    <div class="subpanelR">
+    	<span>0</span><br>
+    	<span>0</span><br>
+    	<br>
+    	<span>1</span><br>
+    	<span>0.01</span><br>
+    	<span>5%</span><br>
+    	<span>0.5%</span><br>
+    	<span>10</span><br><br>
+    </div>
+<!--  </div>
+  <br>
+  <div class="inventory"> -->
+  <div class="hr"></div>
+    <div class="div"><h2>Inventory</h2><small>(double left-click to equip/use,right-click to sell)</small></div>
+    <div class="slots">
+    	
+    </div>
+    <div class="div"><a href="#" id="invleft"><</a> <span id="invnav"></span> <a href="#" id="invright">></a><span id="sort">sort</span><br><br></div>
+    
+  </div>
+
+  <div class="minions">
+    <div class="div"><h2>Minions</h2><small>(double left-click to equip/use,right-click to toggle auto-buy)</small></div><br><br><br><br>
+    <div class="list">
+	    
+    </div>
+    
+  </div>
+
+
+
+
+  <script src="./jquery.min.js"></script>
+  <script src="./jquery.timer.js"></script>
+  <script src="./jquery.tooltipster.min.js"></script>
+  <script src="./jquery.mCustomScrollbar.concat.min.js"></script>
+
+  <script>
+  $(window).load(function(){
+    $(".minions").mCustomScrollbar({
+      axis:"y",
+      theme: "minimal"
+    });
+  });
+  var gold=diams=0;
+  var exp=level=time=0,expps=1,expmax=180,goldps=1,diamsps=0.1,mf=0.5,clickeff=5;
+  var d=h=m=s=0;
+  var globalmulti=1;
+
+  var invpage=1,invmaxpages=20;
+  var invArray = new Array();
+
+  var minionsArray = new Array();
+  //[owned][cost_base][gold_base][diams_base]
+  minionsArray[0] = new Array("Earthworm",           0,10,                       2,                      0);
+  minionsArray[1] = new Array("Mole",                0,640,                      128,                    0.5);
+  minionsArray[2] = new Array("Zombie",              0,44800,                    8960,                   35);
+  minionsArray[3] = new Array("Macho",               0,3404800,                  680960,                 2660);
+  minionsArray[4] = new Array("Robot",               0,279169600,                55838720,               218120);
+  minionsArray[5] = new Array("Auger",               0,24569036800,              4913807360,             19194560);
+  minionsArray[6] = new Array("Excavator",           0,2309489459200,            461897891840,           1804288640);
+  minionsArray[7] = new Array("Bagger 293",          0,230948945920000,          46189789184000,         180428864000);
+  minionsArray[8] = new Array("Robodigger 9000",     0,24480588267520000,        4896117653504000,       19125459584000);
+  minionsArray[9] = new Array("Dwarf",               0,2741825885962240000,      548365177192448000,     2142051473408000);
+  minionsArray[10] = new Array("Orbiting Laser",     0,323535454543544000000,    64707090908708900000,   252762073862144000);
+  minionsArray[11] = new Array("Interstellar Miner", 0,40118396363399500000000,  8023679272679900000000, 31342497158905900000);
+
+  var upgradeArray = new Array();
+  //[level][up_cost_base]
+  upgradeArray[0] = new Array(1, 30000);
+  upgradeArray[1] = new Array(1, 162640);
+  upgradeArray[2] = new Array(1, 955584);
+  upgradeArray[3] = new Array(1, 8947187);
+  upgradeArray[4] = new Array(1, 332876723);
+  upgradeArray[5] = new Array(1, 26632872483);
+  upgradeArray[6] = new Array(1, 2479939843096);
+  upgradeArray[7] = new Array(1, 247316548884437);
+  upgradeArray[8] = new Array(1, 26162340799934200);
+  upgradeArray[9] = new Array(1, 2924962271561780000);
+  upgradeArray[10] = new Array(1, 344595182898789000000);
+  upgradeArray[11] = new Array(1, 42668400716850500000000);
+
+  var typeMulti = new Array();
+  typeMulti[0]=1;
+  typeMulti[1]=1;
+  typeMulti[2]=1;
+  typeMulti[3]=1;
+  typeMulti[4]=1;
+  typeMulti[5]=1;
+  typeMulti[6]=1;
+  typeMulti[7]=1;
+  typeMulti[8]=1;
+  typeMulti[9]=1;
+  typeMulti[10]=1;
+  typeMulti[11]=1;
+  typeMulti[12]=1;
+  typeMulti[13]=1;
+  typeMulti[14]=1;
+  typeMulti[15]=1;
+  typeMulti[16]=1;
+
+
+  //create minions
+  var minionsoutput='';
+  for(var i=0; i<minionsArray.length; i++) {
+    minionsoutput+='<div class="minion"><span id="u'+i+'" class="upgrade upon"></span><span class="buy" id="b'+i+'">Buy icon</span><span id="m'+i+'"><h4>'+minionsArray[i][0]+'</h4> <small>LVL.'+upgradeArray[i][0]+'</small><p>Owned: '+scala(minionsArray[i][1])+'</p><p>Cost: '+scala(costoMinion(i))+'</p></span></div>';
+
+  };
+  $('.list').html(minionsoutput);
+  //create tooltips
+  for(var i=0; i<minionsArray.length; i++) {
+    $('#u'+i).tooltipster({content: $('<b>Level '+(upgradeArray[i][0]+1)+'</b><br><i>Doubles the productivity of every '+minionsArray[i][0]+'</i><p>Cost: '+scala(costoUpgrade(i))+' gold</p>'),
+      contentAsHTML:true});
+    $('#b'+i).tooltipster({content: $('<b>'+minionsArray[i][0]+'</b><p> +'+scala(profitGoldMinion(i))+' gold/s</p><p> +'+scala(profitDiamsMinion(i))+' diamonds/s</p>'),contentAsHTML:true});
+  };
+            
+
+  initInventario();//inizializza l'array dell'inventario
+  updateInventario();//aggiorna il contenuto dell'inventario (grafico)
+
+  //runtimeLoop();
+
+
+updateMainPanel();
+
+
+function update(){
+  $("#profit").html(scala(gold));
+}
+
+function initInventario(){
+  //grafica
+  var inv='';
+  for (var i = 0; i < 64; i++) {
+    inv+='<span class="slot" id="s'+(i)+'"></span>';
+  };
+  $('.slots').html(inv);
+  //add tooltip
+  for (var i = 0; i < 64; i++) {
+    $('#s'+i).tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
+  }
+  //logica
+  for (var i = 0; i < 64*invmaxpages; i++) {
+    //array inv: []
+    invArray[i] = new Array(
+      Math.floor((Math.random()*4)-1),
+      Math.floor((Math.random()*6)),
+      Math.floor((Math.random()*6)));
+  };
+}
+
+
+
+
+var tempArray = new Array(0,0,0);//da aggiornare quando aggiungo le stat all'array-inventario
+$('#sort').click(function(){
+  i=0;
+  while(i < 64*invmaxpages-1){
+    if(invArray[i][0]<invArray[i+1][0]){
+
+      tempArray[0]=invArray[i][0];
+      tempArray[1]=invArray[i][1];
+      tempArray[2]=invArray[i][2];
+      
+      invArray[i][0]=invArray[i+1][0];
+      invArray[i][1]=invArray[i+1][1];
+      invArray[i][2]=invArray[i+1][2];
+      
+      invArray[i+1][0]=tempArray[0];
+      invArray[i+1][1]=tempArray[1];
+      invArray[i+1][2]=tempArray[2];
+
+      i=0;
+    }else{i++;}
+  }
+  updateInventario();
+});
+
+
+function updateInventario(){
+  var inv='';
+  for (var i = 0; i < 64; i++) {
+    //$('#s'+i).html(invArray[i+64*(invpage-1)][0]);
+    q=invArray[i+64*(invpage-1)][2]+1;
+    t=invArray[i+64*(invpage-1)][1];
+    setInvIcon(i,q,t);
+  };
+  $('#invnav').html('<small>Page '+invpage+'/'+invmaxpages+' </small>');
+}
+function setInvIcon(i,q,t){
+  if(invArray[i+64*(invpage-1)][0]==-1){//empty
+    $('#s'+i).removeClass("q6 q1 q2 q3 q4 q5").addClass("q0");
+    $('#s'+i).css({'background':'url("./inv_empty.png")'});
+    $('#s'+i).tooltipster('content','<i>empty slot</i>');
+  }else if(invArray[i+64*(invpage-1)][0]==2){//oggetto
+    $('#s'+i).removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+q); 
+    tipo='';
+    switch(t){
+      case 0: tipo='Boots'; break;
+      case 1: tipo='Armor'; break;
+      case 2: tipo='Helm'; break;
+      case 3: tipo='Gaunlet'; break;
+      case 4: tipo='Ring'; break;
+      case 5: tipo='Pickaxe'; break;
+    }
+    $('#s'+i).css({'background':'url("./inv_'+tipo+'.png")'});
+    $('#s'+i).tooltipster('content','<b id="q'+q+'">'+tipo+' +2</b>');
+  }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
+    $('#s'+i).removeClass("q6 q1 q2 q3 q4 q5").addClass("q0");
+    $('#s'+i).css({'background':'url("./pot_02.png")'});
+    $('#s'+i).css({'background-position':'50% 50%'});
+    $('#s'+i).css({'background-size':'110%'});
+    $('#s'+i).tooltipster('content','<b>Potion</b>');
+  }else if(invArray[i+64*(invpage-1)][0]==0){//cassa
+    $('#s'+i).removeClass("q6 q1 q2 q3 q4 q5").addClass("q0");
+    $('#s'+i).css({'background':'url("./inv_empty.png")'});
+    $('#s'+i).tooltipster('content','<b id="q'+q+'">Chest</b>');
+  }
+}
+$('#invleft').click(function(){
+  if(invpage>1){invpage--;updateInventario();}
+});
+$('#invright').click(function(){
+  if(invpage<invmaxpages){invpage++;updateInventario();}
+});
+
+function updateMainPanel(){
+  d=parseInt(time/(60*60*24));
+  h=parseInt((time/(60*60))%24);
+  m=parseInt((time/60)%60);
+  s=parseInt(time%60);
+  $('#mainPanel').html('<div id="time">Game time: '+d+'d '+h+'h '+m+'m '+s+'s</div><div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>Gold:</p><p>Diamonds:</p><br><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(gold)+'</span><br><span>'+scala(diams)+'</span><br><br><span>'+scala(goldps)+'</span><br><span>'+scala(diamsps)+'</span><br><span>'+scala(clickeff)+'%</span><br><span>'+scala(mf)+'%</span><br><span>'+scala(expps)+'</span><br><br></div>');
+}
+
+//main timer loop
+var timer = $.timer(function() {
+  ciclo();
+}, 200, true);
+function ciclo(){
+    updateMainPanel();
+    update();
+    updateUpIcons();
+
+    goldps=profitGold();
+    diamsps=profitDiam();
+
+    time+=1/5;
+    exp+=expps/5;
+    gold+=goldps/5;
+    diams+=diamsps/5;
+    if(exp>=expmax){levelUP();}
+
+    //document.title = scala(gold);
+}
+
+function levelUP(){
+  exp=0;
+  expmax=parseInt(expmax*1.25);
+  level++;
+}
+
+function updateUpIcons(){
+  for(var i=0; i<minionsArray.length; i++) {
+    if(gold>=costoUpgrade(i)) $('#u'+i).removeClass('upon upoff').addClass('upon');
+    else                      $('#u'+i).removeClass('upon upoff').addClass('upoff');
+  }
+}
+function profitGoldMinion(i){
+  return minionsArray[i][3]*Math.pow(2,upgradeArray[i][0]-1);
+}function profitGoldMinions(){
+  sommaprofit=0;
+  for(var i=0;i<minionsArray.length;i++) sommaprofit+=minionsArray[i][1]*profitGoldMinion(i);
+  return sommaprofit;
+}
+function profitDiamsMinion(i){
+  return minionsArray[i][4]*Math.pow(2,upgradeArray[i][0]-1);
+}function profitDiamsMinions(){
+  sommaprofit=0;
+  for(var i=0;i<minionsArray.length;i++) sommaprofit+=minionsArray[i][1]*profitDiamsMinion(i);
+  return sommaprofit;
+}
+function updateMinions(){
+  for(var i=0; i<minionsArray.length; i++) {
+    //if(gold>=costoMinion(i))
+    $('#m'+i).html('<h4>'+minionsArray[i][0]+'</h4> <small>LVL.'+upgradeArray[i][0]+'</small><p>Owned: '+scala(minionsArray[i][1])+'</p><p>Cost: '+scala(costoMinion(i))+'</p>');
+
+    $('#u'+i).tooltipster('content','<b>Level '+(upgradeArray[i][0]+1)+'</b><br><i>Doubles the productivity of every '+minionsArray[i][0]+'</i><p>Cost: '+scala(costoUpgrade(i))+' gold</p>');
+    $('#b'+i).tooltipster('content','<b>'+minionsArray[i][0]+'</b><p> +'+scala(profitGoldMinion(i))+' gold/s</p><p> +'+scala(profitDiamsMinion(i))+' diamonds/s</p>');
+
+  };
+}
+function costoMinion(i){
+  //return minionsArray[i][2]*Math.pow(1.5,minionsArray[i][1]);//cost*1.5^count
+  return (i+1+1*i)*minionsArray[i][2]*Math.pow(1.5,minionsArray[i][1]);//cost*1.5^count
+}
+function costoUpgrade(i){
+  //return upgradeArray[i][1]*Math.pow(2.5,upgradeArray[i][0]-1);//cost*2.5^count
+  return (i+1+1*i)*upgradeArray[i][1]*Math.pow(2.5,upgradeArray[i][0]-1);//cost*2.5^count
+}
+
+function profitGold(){
+  return (1+profitGoldMinions())*globalmulti;
+}
+function profitDiam(){
+  return (0.01+profitDiamsMinions())*globalmulti;
+}
+
+$('.buy').click(function(){
+  id = parseInt($(this).attr('id').substring(1));
+  if(gold>=costoMinion(id)){
+    gold-=costoMinion(id);
+    minionsArray[id][1]++;
+    updateMinions();
+  }
+});
+$('.upgrade').click(function(){
+  id = parseInt($(this).attr('id').substring(1));
+  if(gold>=costoUpgrade(id)){
+    gold-=costoUpgrade(id);
+    upgradeArray[id][0]++;
+    updateMinions();
+  }
+});
+
+
+//get real time when hidden
+$(window).blur(function(){
+  timer.pause();
+  before = new Date();
+});
+$(window).focus(function(){
+  timer.play();
+  now = new Date();
+  elapsedTime = (now.getTime() - before.getTime());
+  elapsedTime/=200;
+    $('.tempo').text(elapsedTime/5);
+  while(elapsedTime>0){
+    elapsedTime--;
+    ciclo();
+  }
+});
+
+
+//window.open("", "", "width=200, height=100");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function createLongClickableButtons(){
+    botplace='';
+    for(i=0;i<16;i++){
+        botplace+='<div id="'+i+'" class="longo"></div>';
+    }//document.getElementById("bottoni").innerHTML = botplace;
+  }
+
+
+  function costo(i){
+    return minionsArray[i][2]*(Math.pow(inc,minionsArray[i][1]));
+  }function guadagno(i){
+    return minionsArray[i][1]*minionsArray[i][3]*upgradeArray[i+1][1]*upgradeArray[i+18][1]*typeMulti[i];
+  }function slavesProfit(){
+    return upgradeArray[0][1]*upgradeArray[17][1];
+  }
+
+
+
+
+
+function scala(num){
+  if(num < 1e3)         return pDD(num);
+  else if(num >= 1e39)  return pDD(num/1e39) + " Duodecillions";
+  else if(num >= 1e36)  return pDD(num/1e36) + " Undecillions";
+  else if(num >= 1e33)  return pDD(num/1e33) + " Decillions";
+  else if(num >= 1e30)  return pDD(num/1e30) + " Nonillions";
+  else if(num >= 1e27)  return pDD(num/1e27) + " Octillions";
+  else if(num >= 1e24)  return pDD(num/1e24) + " Septillions";
+  else if(num >= 1e21)  return pDD(num/1e21) + " Sextillions";
+  else if(num >= 1e18)  return pDD(num/1e18) + " Quintillions";
+  else if(num >= 1e15)  return pDD(num/1e15) + " Quadrillions";
+  else if(num >= 1e12)  return pDD(num/1e12) + " T";
+  else if(num >= 1e9)   return pDD(num/1e9) + " B";
+  else if(num >= 1e6)   return pDD(num/1e6) + " M";
+  else if(num >= 1e3)   return pDD(num/1e3) + " K";
+}function pDD(num){//tieni solo 2 cifre decimali - parsaDueDecimali
+  return parseInt(100*num)/100;
+}
+
+
+
+
+
+//buy max
+var pressTimer
+
+$(".longo").mouseup(function(){
+  clearTimeout(pressTimer)
+  return false;
+}).mousedown(function(){
+  id=this.id;
+  pressTimer = window.setTimeout(function() {
+    buyMax(id);
+  },500)
+  return false;
+});
+
+function buyMax(id){
+  while(costo(id)<=profit){
+    addProf(id);
+  }
+}
+
+
+
+
+
+
+  </script>
+
+</body>
+</html>
