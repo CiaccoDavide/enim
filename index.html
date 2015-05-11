@@ -52,7 +52,7 @@ border-radius: 2px;
 .icons span{border: solid 1px #333;width:38px;height:38px;padding:1px;box-shadow:inset 0 0 3px 0 #000;border-radius: 4px;float: left;margin: 6px}
 .icons:hover{cursor:pointer;}
 .slots{width: 300px;padding:20px;}
-.slots span{/*border: solid 1px #333;*/width:28px;height:28px;box-shadow:inset 0 0 8px 2px #000;border-radius: 4px;float: left;margin: 3px}
+.slots span{/*border: solid 1px #333;*/width:28px;height:28px;box-shadow:inset 0 0 4px 2px #000;border-radius: 4px;float: left;margin: 3px}
 .slots:hover{cursor:pointer;}
 .minion{width: 330px;padding: 3px;text-align: left;float: left;margin-left: 10px;}
 .minion .upgrade{border: solid 1px #333;width:38px;height:38px;padding:1px;box-shadow:inset 0 0 3px 0 #000;border-radius: 4px;float: left;margin: 6px}
@@ -288,25 +288,9 @@ function initInventario(){
 
 var tempArray = new Array(0,0,0);//da aggiornare quando aggiungo le stat all'array-inventario
 $('#sort').click(function(){
-  i=0;
-  while(i < 64*invmaxpages-1){
-    if(invArray[i][0]<invArray[i+1][0]){
-
-      tempArray[0]=invArray[i][0];
-      tempArray[1]=invArray[i][1];
-      tempArray[2]=invArray[i][2];
-      
-      invArray[i][0]=invArray[i+1][0];
-      invArray[i][1]=invArray[i+1][1];
-      invArray[i][2]=invArray[i+1][2];
-      
-      invArray[i+1][0]=tempArray[0];
-      invArray[i+1][1]=tempArray[1];
-      invArray[i+1][2]=tempArray[2];
-
-      i=0;
-    }else{i++;}
-  }
+  invArray.sort(function(a,b){return b[2]-a[2];});
+  invArray.sort(function(a,b){return b[1]-a[1];});
+  invArray.sort(function(a,b){return b[0]-a[0];});
   updateInventario();
 });
 
@@ -327,7 +311,7 @@ function setInvIcon(i,q,t){
     $('#s'+i).css({'background':'url("./inv_empty.png")'});
     $('#s'+i).tooltipster('content','<i>empty slot</i>');
   }else if(invArray[i+64*(invpage-1)][0]==2){//oggetto
-    $('#s'+i).removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+q); 
+    $('#s'+i).removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+q);
     tipo='';
     switch(t){
       case 0: tipo='Boots'; break;
@@ -340,15 +324,40 @@ function setInvIcon(i,q,t){
     $('#s'+i).css({'background':'url("./inv_'+tipo+'.png")'});
     $('#s'+i).tooltipster('content','<b id="q'+q+'">'+tipo+' +2</b>');
   }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
+    qual='';
+    switch(q%3){
+      case 0: qual='Small'; break;
+      case 1: qual='Fat'; break;
+      case 2: qual='Awesome'; break;
+    }
+    tipo='';gain='';
+    switch(t%5){
+      case 0: tipo='magic';gain='magic find'; break;
+      case 1: tipo='gold';gain='gold gain'; break;
+      case 2: tipo='experience';gain='experience gain'; break;
+      case 3: tipo='efficency';gain='mining efficiency'; break;
+      case 4: tipo='diamond';gain='diamonds gain'; break;
+    }
     $('#s'+i).removeClass("q6 q1 q2 q3 q4 q5").addClass("q0");
     $('#s'+i).css({'background':'url("./pot_02.png")'});
     $('#s'+i).css({'background-position':'50% 50%'});
     $('#s'+i).css({'background-size':'110%'});
-    $('#s'+i).tooltipster('content','<b>Potion</b>');
+    $('#s'+i).tooltipster('content','<b>'+qual+' '+tipo+' Potion</b><br><i>Increases '+gain+' by 50% for '+(10*(1+(q%3)))+' seconds.</i>');
   }else if(invArray[i+64*(invpage-1)][0]==0){//cassa
-    $('#s'+i).removeClass("q6 q1 q2 q3 q4 q5").addClass("q0");
-    $('#s'+i).css({'background':'url("./inv_empty.png")'});
-    $('#s'+i).tooltipster('content','<b id="q'+q+'">Chest</b>');
+    $('#s'+i).removeClass("q6 q0 q2 q3 q4 q5").addClass("q1");
+    rar='';
+    switch(q-1){
+      case 0: rar='Common'; break;
+      case 1: rar='Magic'; break;
+      case 2: rar='Rare'; break;
+      case 3: rar='Epic'; break;
+      case 4: rar='Legendary'; break;
+      case 5: rar='Unique'; break;
+    }
+    $('#s'+i).css({'background':'url("./chest'+(q-1)+'.png")'});
+    $('#s'+i).css({'background-position':'50% 50%'});
+    $('#s'+i).css({'background-size':'110%'});
+    $('#s'+i).tooltipster('content','<b id="q'+q+'">'+rar+' Chest</b>');
   }
 }
 $('#invleft').click(function(){
