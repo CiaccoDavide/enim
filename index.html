@@ -433,33 +433,19 @@ drop();
   if(Math.random()*100<mf) drop();
 }function drop(){
   i=tipo=rar=0;
-  while(i<invArray.length){
-    if(invArray[i][0]==-1){
       tipo=Math.floor((Math.random()*9));
       if(tipo==0){//cassa
         dropChest(Math.floor((Math.random()*3600)));
       }else if(tipo<3){//pozione
         dropPotion();
       }else{//gear
-        invArray[i][0]=2;
-        invArray[i][1]=Math.floor((Math.random()*6));//tipo di gear
-        rar=Math.floor((Math.random()*3600));
-        if(rar<3)         invArray[i][2]=6;
-        else if(rar<40)   invArray[i][2]=5;
-        else if(rar<180)  invArray[i][2]=4;
-        else if(rar<560)  invArray[i][2]=3;
-        else if(rar<1500) invArray[i][2]=2;
-        else              invArray[i][2]=1;
-        invArray[i][3]=0;//enanchement
-        invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
-
+        dropGear(Math.floor((Math.random()*3600)));
       }
+    
+  
       q=invArray[i][2]+1;
       t=invArray[i][1];
       setInvIcon(i-64*(invpage-1),q,t);
-      break;
-    }i++;
-  }
 }
 function dropPotion(){
   i=rar=0;
@@ -489,6 +475,25 @@ function dropChest(rar){
         else              invArray[i][2]=1;
         break;
     }i++;
+  }
+}
+function dropGear(rar){
+  i=0;
+  while(i<invArray.length){
+    if(invArray[i][0]==-1){
+        invArray[i][0]=2;
+        invArray[i][1]=Math.floor((Math.random()*6));//tipo di gear
+        
+        if(rar<3)         invArray[i][2]=6;
+        else if(rar<40)   invArray[i][2]=5;
+        else if(rar<180)  invArray[i][2]=4;
+        else if(rar<560)  invArray[i][2]=3;
+        else if(rar<1500) invArray[i][2]=2;
+        else              invArray[i][2]=1;
+        invArray[i][3]=0;//enanchement
+        invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
+        break;
+      }i++;
   }
 }
 
