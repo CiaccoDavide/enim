@@ -402,9 +402,9 @@ $('.slot').dblclick(function(){
     dropPotion();
   }
 });
+window.oncontextmenu = function() { return false };//disable menu (rightclick penso...)
 $('.slot').mousedown(function(e){
-  
-    if( e.button == 2 ) { e.preventDefault();
+    if( e.button == 2 ) { 
       id=(this.id).substring(1);
       if(invArray[i+64*(invpage-1)][0]==2){//gear
         refined+=100*invArray[i+64*(invpage-1)][2]*invArray[i+64*(invpage-1)][4];
