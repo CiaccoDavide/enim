@@ -388,7 +388,7 @@ $('#invright').click(function(){
 
 
 
-$('.slot').dblclick(function(){
+$('.slot').dblclick(function(){levelUP();
   id=(this.id).substring(1);
   if(invArray[i+64*(invpage-1)][0]==-1){//empty
   }else if(invArray[i+64*(invpage-1)][0]==2){//oggetto
@@ -501,7 +501,8 @@ function dropGear(rar){
         invArray[i][2]=rar;//rarità
         invArray[i][3]=0;//enanchement
         invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
-        invArray[i][5]=scala((((Math.random()*16*level)+16+10*(level-1))/16)*(rar+invArray[i][3]));//goldps
+        invArray[i][5]=scala((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(2,invArray[i][4])/16)*(rar+invArray[i][3]));//goldps
+        invArray[i][6]=scala((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(2,invArray[i][4])/16)*(rar+invArray[i][3])/100);//diamsps
         break;
       }i++;
   }updateSlotInv(i);
