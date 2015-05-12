@@ -492,6 +492,8 @@ function dropChest(rar){
 }
 function dropGear(rar){
   i=0;
+    //              0     1    2        3        4     5        6      7    8    9
+    //array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
   while(i<invArray.length){
     if(invArray[i][0]==-1){
         invArray[i][0]=2;//gear_code
@@ -499,6 +501,7 @@ function dropGear(rar){
         invArray[i][2]=rar;//rarità
         invArray[i][3]=0;//enanchement
         invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
+        invArray[i][5]=Math.floor((Math.random()*level)+1);//lvl
         break;
       }i++;
   }updateSlotInv(i);
