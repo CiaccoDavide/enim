@@ -436,7 +436,7 @@ function ciclo(){
     gold+=goldps/5;
     diams+=diamsps/5;
     if(exp>=expmax){levelUP();}
-//drop();
+drop();
     //document.title = scala(gold);
 }function cicloSecondo(){
   if(Math.random()*100<mf) drop();
@@ -501,7 +501,7 @@ function dropGear(rar){
         invArray[i][2]=rar;//rarità
         invArray[i][3]=0;//enanchement
         invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
-        invArray[i][5]=Math.floor((Math.random()*level)+1);//lvl
+        invArray[i][5]=scala((((Math.random()*16*level)+16+10*(level-1))/16)*(rar+invArray[i][3]));//goldps
         break;
       }i++;
   }updateSlotInv(i);
