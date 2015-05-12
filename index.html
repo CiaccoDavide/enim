@@ -466,7 +466,9 @@ drop();
         invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
 
       }
-      updateInventario();
+      q=invArray[i][2]+1;
+      t=invArray[i][1];
+      setInvIcon(i,q,t);
       break;
     }i++;
   }
