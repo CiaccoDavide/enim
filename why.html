@@ -389,13 +389,70 @@ $('#invright').click(function(){
 
 
 $('.slot').dblclick(function(){
-  id=(this.id).substring(1);
+  i=parseInt((this.id).substring(1));
   if(invArray[i+64*(invpage-1)][0]==-1){//empty
   }else if(invArray[i+64*(invpage-1)][0]==2){//oggetto
+    invArray[i+64*(invpage-1)][0]=-1;
   }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
+    invArray[i+64*(invpage-1)][0]=-1;
   }else if(invArray[i+64*(invpage-1)][0]==0){//cassa
+    rar=invArray[i+64*(invpage-1)][2];
+    invArray[i+64*(invpage-1)][0]=-1;
+    dropGear(rar);
+    dropGear(rar);
+    dropGear(rar);
+    dropPotion();
   }
 });
+function dropChest(rar){
+  var i=rar=0;
+  while(i<invArray.length){
+    if(invArray[i][0]==-1){
+        invArray[i][0]=0;
+        if(rar<3)         invArray[i][2]=6;
+        else if(rar<40)   invArray[i][2]=5;
+        else if(rar<180)  invArray[i][2]=4;
+        else if(rar<560)  invArray[i][2]=3;
+        else if(rar<1500) invArray[i][2]=2;
+        else              invArray[i][2]=1;
+        updateInventario();
+      break;
+    }i++;
+  }
+}function dropGear(rar){
+  var i=rar=0;
+  while(i<invArray.length){
+    if(invArray[i][0]==-1){
+        invArray[i][0]=2;
+        invArray[i][1]=Math.floor((Math.random()*6));//tipo di gear
+        
+        if(rar<3)         invArray[i][2]=6;
+        else if(rar<40)   invArray[i][2]=5;
+        else if(rar<180)  invArray[i][2]=4;
+        else if(rar<560)  invArray[i][2]=3;
+        else if(rar<1500) invArray[i][2]=2;
+        else              invArray[i][2]=1;
+        invArray[i][3]=0;//enanchement
+        invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
+        updateInventario();
+      break;
+    }i++;
+  }
+}function dropPotion(){
+  var i=rar=0;
+  while(i<invArray.length){
+    if(invArray[i][0]==-1){
+        invArray[i][0]=1;
+        invArray[i][1]=Math.floor((Math.random()*5));//tipo di pozione
+        rar=Math.floor((Math.random()*100));
+        if(rar<10)        invArray[i][2]=2;
+        else if(rar<35)   invArray[i][2]=1;
+        else              invArray[i][2]=0;
+        updateInventario();
+      break;
+    }i++;
+  }
+}
 
 
 
@@ -432,43 +489,14 @@ drop();
 }function cicloSecondo(){
   if(Math.random()*100<mf) drop();
 }function drop(){
-  i=tipo=rar=0;
-  while(i<invArray.length){
-    if(invArray[i][0]==-1){
-      tipo=Math.floor((Math.random()*9));
-      if(tipo==0){//cassa
-        invArray[i][0]=0;
-        rar=Math.floor((Math.random()*3600));
-        if(rar<3)         invArray[i][2]=6;
-        else if(rar<40)   invArray[i][2]=5;
-        else if(rar<180)  invArray[i][2]=4;
-        else if(rar<560)  invArray[i][2]=3;
-        else if(rar<1500) invArray[i][2]=2;
-        else              invArray[i][2]=1;
-      }else if(tipo<3){//pozione
-        invArray[i][0]=1;
-        invArray[i][1]=Math.floor((Math.random()*5));//tipo di pozione
-        rar=Math.floor((Math.random()*100));
-        if(rar<10)        invArray[i][2]=2;
-        else if(rar<35)   invArray[i][2]=1;
-        else              invArray[i][2]=0;
-      }else{//gear
-        invArray[i][0]=2;
-        invArray[i][1]=Math.floor((Math.random()*6));//tipo di gear
-        rar=Math.floor((Math.random()*3600));
-        if(rar<3)         invArray[i][2]=6;
-        else if(rar<40)   invArray[i][2]=5;
-        else if(rar<180)  invArray[i][2]=4;
-        else if(rar<560)  invArray[i][2]=3;
-        else if(rar<1500) invArray[i][2]=2;
-        else              invArray[i][2]=1;
-        invArray[i][3]=0;//enanchement
-        invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
-
-      }
-      updateInventario();
-      break;
-    }i++;
+  var tipo=0;
+  tipo=Math.floor((Math.random()*9));
+  if(tipo==0){//cassa
+    dropChest(Math.floor((Math.random()*3600)));
+  }else if(tipo<3){//pozione
+    dropPotion();
+  }else{//gear
+    dropGear(Math.floor((Math.random()*3600)));
   }
 }
 function levelUP(){
