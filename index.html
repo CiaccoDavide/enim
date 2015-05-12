@@ -376,7 +376,7 @@ function setInvIcon(i,q,t){
     $('#s'+i).css({'background':'url("./chest'+(q-1)+'.png")'});
     $('#s'+i).css({'background-position':'50% 50%'});
     $('#s'+i).css({'background-size':'110%'});
-    $('#s'+i).tooltipster('content','<b id="q'+q+'">'+rar+' Chest</b>');
+    $('#s'+i).tooltipster('content','<b id="q'+q+'">'+rar+' Chest</b><br><i>Drops 3 pieces of '+rar+' gear and a random potion.</i>');
   }
 }
 $('#invleft').click(function(){
@@ -394,10 +394,18 @@ $('.slot').dblclick(function(){
   }else if(invArray[i+64*(invpage-1)][0]==2){//oggetto
   }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
   }else if(invArray[i+64*(invpage-1)][0]==0){//cassa
-    dropGear(invArray[i+64*(invpage-1)][2]);
+    rarchest=invArray[i+64*(invpage-1)][2];
+    invArray[i+64*(invpage-1)][0]=-1;
+    dropGear(rarchest);
+    dropGear(rarchest);
+    dropGear(rarchest);
+    dropPotion();
   }
 });
-
+dropGear(1);
+dropGear(1);
+dropGear(1);
+dropChest(4);
 
 
 function updateMainPanel(){
@@ -428,7 +436,7 @@ function ciclo(){
     gold+=goldps/5;
     diams+=diamsps/5;
     if(exp>=expmax){levelUP();}
-drop();
+//drop();
     //document.title = scala(gold);
 }function cicloSecondo(){
   if(Math.random()*100<mf) drop();
@@ -442,6 +450,8 @@ drop();
   }else{//gear
     dropGear(getRar());
   }
+}
+function updateSlotInv(i){
   q=invArray[i][2]+1;
   t=invArray[i][1];
   setInvIcon(i-64*(invpage-1),q,t);
@@ -468,7 +478,7 @@ function dropPotion(){
         else              invArray[i][2]=0;
         break;
     }i++;
-  }
+  }updateSlotInv(i);
 }
 function dropChest(rar){
   i=0;
@@ -478,7 +488,7 @@ function dropChest(rar){
         invArray[i][2]=rar;
         break;
     }i++;
-  }
+  }updateSlotInv(i);
 }
 function dropGear(rar){
   i=0;
@@ -491,7 +501,7 @@ function dropGear(rar){
         invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
         break;
       }i++;
-  }
+  }updateSlotInv(i);
 }
 
 function levelUP(){
