@@ -389,10 +389,12 @@ $('#invright').click(function(){
 
 
 $('.slot').dblclick(function(){
-  id=(this.id).substring(1);
+  i=parseInt((this.id).substring(1));
   if(invArray[i+64*(invpage-1)][0]==-1){//empty
   }else if(invArray[i+64*(invpage-1)][0]==2){//oggetto
+    invArray[i+64*(invpage-1)][0]=-1;
   }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
+    invArray[i+64*(invpage-1)][0]=-1;
   }else if(invArray[i+64*(invpage-1)][0]==0){//cassa
     rarchest=invArray[i+64*(invpage-1)][2];
     invArray[i+64*(invpage-1)][0]=-1;
@@ -402,18 +404,16 @@ $('.slot').dblclick(function(){
     dropPotion();
   }
 });
-window.oncontextmenu = function() { return false };//disable menu (rightclick penso...)
-$('.slot').mousedown(function(e){
-    if( e.button == 2 ) { 
-      id=(this.id).substring(1);
+//REFINE
+$('.slot').bind('contextmenu', function(){
+      i=parseInt((this.id).substring(1));
       if(invArray[i+64*(invpage-1)][0]==2){//gear
         refined+=100*invArray[i+64*(invpage-1)][2]*invArray[i+64*(invpage-1)][4];
         invArray[i+64*(invpage-1)][0]=-1;
+        updateSlotInv(i+64*(invpage-1));
       }
       return false; 
-    } 
-    return true; 
-  }); 
+});
 
 
 function updateMainPanel(){
