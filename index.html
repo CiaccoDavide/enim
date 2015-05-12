@@ -177,7 +177,7 @@ border-radius: 2px;
     });
   });
   var gold=diams=0;
-  var exp=level=time=0,expps=1,expmax=180,goldps=1,diamsps=0.1,mf=0.5,clickeff=5;
+  var exp=level=time=refined=0,expps=1,expmax=180,goldps=1,diamsps=0.1,mf=0.5,clickeff=5;
   var d=h=m=s=0;
   var globalmulti=1;
 
@@ -388,7 +388,7 @@ $('#invright').click(function(){
 
 
 
-$('.slot').dblclick(function(){levelUP();
+$('.slot').dblclick(function(){
   id=(this.id).substring(1);
   if(invArray[i+64*(invpage-1)][0]==-1){//empty
   }else if(invArray[i+64*(invpage-1)][0]==2){//oggetto
@@ -402,10 +402,18 @@ $('.slot').dblclick(function(){levelUP();
     dropPotion();
   }
 });
-dropGear(1);
-dropGear(1);
-dropGear(1);
-dropChest(4);
+$('.slot').mousedown(function(e){
+  
+    if( e.button == 2 ) { e.preventDefault();
+      id=(this.id).substring(1);
+      if(invArray[i+64*(invpage-1)][0]==2){//gear
+        refined+=100*invArray[i+64*(invpage-1)][2]*invArray[i+64*(invpage-1)][4];
+        invArray[i+64*(invpage-1)][0]=-1;
+      }
+      return false; 
+    } 
+    return true; 
+  }); 
 
 
 function updateMainPanel(){
@@ -413,7 +421,7 @@ function updateMainPanel(){
   h=parseInt((time/(60*60))%24);
   m=parseInt((time/60)%60);
   s=parseInt(time%60);
-  $('#mainPanel').html('<div id="time">Game time: '+d+'d '+h+'h '+m+'m '+s+'s</div><div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>Gold:</p><p>Diamonds:</p><br><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(gold)+'</span><br><span>'+scala(diams)+'</span><br><br><span>'+scala(goldps)+'</span><br><span>'+scala(diamsps)+'</span><br><span>'+scala(clickeff)+'%</span><br><span>'+scala(mf)+'%</span><br><span>'+scala(expps)+'</span><br><br></div>');
+  $('#mainPanel').html('<div id="time">Game time: '+d+'d '+h+'h '+m+'m '+s+'s</div><div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>Gold:</p><p>Diamonds:</p><p>Refined materials:</p><br><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(gold)+'</span><br><span>'+scala(diams)+'</span><br><span>'+scala(refined)+'</span><br><br><span>'+scala(goldps)+'</span><br><span>'+scala(diamsps)+'</span><br><span>'+scala(clickeff)+'%</span><br><span>'+scala(mf)+'%</span><br><span>'+scala(expps)+'</span><br><br></div>');
 }
 
 //main timer loop
@@ -501,8 +509,8 @@ function dropGear(rar){
         invArray[i][2]=rar;//rarità
         invArray[i][3]=0;//enanchement
         invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
-        invArray[i][5]=scala((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(2,invArray[i][4])/16)*(rar+invArray[i][3]));//goldps
-        invArray[i][6]=scala((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(2,invArray[i][4])/16)*(rar+invArray[i][3])/100);//diamsps
+        invArray[i][5]=((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*(rar+invArray[i][3]));//goldps
+        invArray[i][6]=((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*(rar+invArray[i][3])/100);//diamsps
         break;
       }i++;
   }updateSlotInv(i);
