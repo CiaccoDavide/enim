@@ -51,7 +51,7 @@ border-radius: 2px;
 .icons{height: 40px;width: 330px;padding: 3px;}
 .icons span{border: solid 1px #333;width:38px;height:38px;padding:1px;box-shadow:inset 0 0 3px 0 #000;border-radius: 4px;float: left;margin: 6px}
 .icons:hover{cursor:pointer;}
-.invslot span{/*border: solid 1px #333;*/background:rgba(0,0,0,0.1);width:38px;height:38px;padding:1px;box-shadow:inset 0 0 3px 0 #000;border-radius: 4px;float: left;margin: 6px}
+.invslot span{/*border: solid 1px #333;*/background:rgba(0,0,0,0.1);width:38px;height:38px;padding:1px;box-shadow:inset 0 0 3px 3px #000;border-radius: 4px;float: left;margin: 6px}
 .invslot:hover{cursor:pointer;}
 .slots{width: 300px;padding:20px;}
 .slots span{/*border: solid 1px #333;*/width:28px;height:28px;box-shadow:inset 0 0 2px 2px #000;border-radius: 4px;float: left;margin: 3px}
@@ -225,12 +225,12 @@ border-radius: 2px;
 
   var gearArray = new Array();
   
-  gearArray[0] = new Array(-1,0,0,0,0,0,0);
-  gearArray[1] = new Array(-1,0,0,0,0,0,0);
-  gearArray[2] = new Array(-1,0,0,0,0,0,0);
-  gearArray[3] = new Array(-1,0,0,0,0,0,0);
-  gearArray[4] = new Array(-1,0,0,0,0,0,0);
-  gearArray[5] = new Array(-1,0,0,0,0,0,0);
+  gearArray[0] = new Array(-1,0,0,0,0,0,0,0);
+  gearArray[1] = new Array(-1,0,0,0,0,0,0,0);
+  gearArray[2] = new Array(-1,0,0,0,0,0,0,0);
+  gearArray[3] = new Array(-1,0,0,0,0,0,0,0);
+  gearArray[4] = new Array(-1,0,0,0,0,0,0,0);
+  gearArray[5] = new Array(-1,0,0,0,0,0,0,0);
 
 
   //create minions
@@ -326,9 +326,9 @@ function setInvIcon(i,q,t){
     stats='';
     stats+='Gold/s: '+scala(invArray[i+64*(invpage-1)][5])+' (+0)<br>';
     stats+='Diams/s: '+scala(invArray[i+64*(invpage-1)][6])+' (+0)<br>';
-    stats+='Eff: '+scala(invArray[i+64*(invpage-1)][6])+'% (+0%)<br>';
-    stats+='M.Find/s: '+scala(invArray[i+64*(invpage-1)][6])+'% (+0%)<br>';
-    stats+='Exp/s: '+scala(invArray[i+64*(invpage-1)][6])+' (+0)<br>';
+    stats+='Eff: '+scala(invArray[i+64*(invpage-1)][7])+'% (+0%)<br>';
+    stats+='M.Find/s: '+scala(invArray[i+64*(invpage-1)][8])+'% (+0%)<br>';
+    stats+='Exp/s: '+scala(invArray[i+64*(invpage-1)][9])+' (+0)<br>';
 
     $('#s'+i).tooltipster('content','<b id="q'+q+'">'+rar+' '+tipo+' +'+invArray[i+64*(invpage-1)][3]+'</b><br><i>Level '+scala(invArray[i+64*(invpage-1)][4])+'</i><br><small>'+stats+'</small>');
   }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
@@ -459,16 +459,33 @@ function updateMainPanel(){
 }
 function updateGearSlots(gear){
   switch(gear){
-    case 0: $('#boots').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[0][0]+1)).css({opacity:1}); break;
-    case 1: $('#armor').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[1][0]+1)).css({opacity:1}); break;
-    case 2: $('#helm').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[2][0]+1)).css({opacity:1}); break;
-    case 3: $('#gaunlet').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[3][0]+1)).css({opacity:1}); break;
-    case 4: $('#ring').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[4][0]+1)).css({opacity:1}); break;
-    case 5: $('#pickaxe').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[5][0]+1)).css({opacity:1}); break;
+    case 0: $('#boots').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[0][0]+1));$('#boots').css({opacity:1}); break;
+    case 1: $('#armor').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[1][0]+1));$('#armor').css({opacity:1}); break;
+    case 2: $('#helm').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[2][0]+1));$('#helm').css({opacity:1}); break;
+    case 3: $('#gaunlet').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[3][0]+1));$('#gaunlet').css({opacity:1}); break;
+    case 4: $('#ring').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[4][0]+1));$('#ring').css({opacity:1}); break;
+    case 5: $('#pickaxe').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[5][0]+1));$('#pickaxe').css({opacity:1}); break;
   }
 }
+    //                      0       1       2       3     4         5   6     7
+//array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
+function getGearStats(i){
+  i+=2;
+  var tota=0;
+  var tipi=6;
+  switch(i){
+    case 2: while(tipi>0)tota+=gearArray[--tipi][i];tota/=6;break;
+    default: while(tipi>0)tota+=gearArray[--tipi][i];break;
+  }
+  return tota;
+}
 function updateGearPanel(){
-  $('#gearPanel').html('<div class="div"><br><h3>Gear Stats</h3></div><br><br><div class="subpanelL"><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(gear_clickeff)+'</span><br><span>'+scala(gear_diamsps)+'</span><br><span>'+scala(gear_clickeff)+'%</span><br><span>'+scala(gear_mf)+'%</span><br><span>'+scala(gear_expps)+'</span><br><br><br></div>');
+  gear_goldps=    getGearStats(1);
+  gear_diamsps=   getGearStats(2);
+  gear_clickeff=  getGearStats(3);
+  gear_mf=        getGearStats(4);
+  gear_expps=     getGearStats(5);
+  $('#gearPanel').html('<div class="div"><br><h3>Gear Stats</h3></div><br><br><div class="subpanelL"><p>Level:</p><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(getGearStats(0))+'</span><br><span>'+scala(gear_goldps)+'</span><br><span>'+scala(gear_diamsps)+'</span><br><span>'+scala(gear_clickeff)+'%</span><br><span>'+scala(gear_mf)+'%</span><br><span>'+scala(gear_expps)+'</span><br><br></div>');
 }
 
 //main timer loop
@@ -558,6 +575,12 @@ function dropGear(rar){
         invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
         invArray[i][5]=((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*(rar+invArray[i][3]));//goldps
         invArray[i][6]=((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*(rar+invArray[i][3])/100);//diamsps
+
+        invArray[i][7]=(10/(11-invArray[i][3]))/(7-invArray[i][2]);//eff max_eff=60% (max 10% per gear)
+        if(invArray[i][7]>10)invArray[i][7]=10;
+        invArray[i][8]=(10/(11-invArray[i][3]))/(7-invArray[i][2]);//mf max_mf=60% (max 10% per gear)
+        if(invArray[i][8]>10)invArray[i][8]=10;
+        invArray[i][9]=2;//expps
         break;
       }i++;
   }updateSlotInv(i);
