@@ -51,6 +51,8 @@ border-radius: 2px;
 .icons{height: 40px;width: 330px;padding: 3px;}
 .icons span{border: solid 1px #333;width:38px;height:38px;padding:1px;box-shadow:inset 0 0 3px 0 #000;border-radius: 4px;float: left;margin: 6px}
 .icons:hover{cursor:pointer;}
+.invslot span{/*border: solid 1px #333;*/width:38px;height:38px;padding:1px;box-shadow:inset 0 0 3px 0 #000;border-radius: 4px;float: left;margin: 6px}
+.invslot:hover{cursor:pointer;}
 .slots{width: 300px;padding:20px;}
 .slots span{/*border: solid 1px #333;*/width:28px;height:28px;box-shadow:inset 0 0 2px 2px #000;border-radius: 4px;float: left;margin: 3px}
 .slots:hover{cursor:pointer;}
@@ -111,8 +113,8 @@ border-radius: 2px;
     <span id="mainPanel"></span>
   </div>
   <div class="gear">
-    <h2>Gear</h2>
-    <span id="gearSlots"></span>
+    <h2>Gear</h2><br>
+    <div class="invslot"><span id="boots" class="q0"></span><span id="armor" class="q0"></span><span id="helm" class="q0"></span><span id="gaunlet" class="q0"></span><span id="ring" class="q0"></span><span id="pickaxe" class="q0"></span></div>
     <span id="gearPanel"></span>
 <!--  </div>
   <br>
@@ -403,6 +405,7 @@ $('.slot').dblclick(function(){
     gear_mf=0;
     gear_expps=0;
 
+    updateGearSlots(tipo);
     updateSlotInv(i);
     updateGearPanel();
   }else if(invArray[i][0]==1){//pozione small fat awesome 10 20 30
@@ -441,9 +444,16 @@ function updateMainPanel(){
   m=parseInt((time/60)%60);
   s=parseInt(time%60);
   $('#mainPanel').html('<div id="time">Game time: '+d+'d '+h+'h '+m+'m '+s+'s</div><div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>Gold:</p><p>Diamonds:</p><p>Refined materials:</p><br><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(gold)+'</span><br><span>'+scala(diams)+'</span><br><span>'+scala(refined)+'</span><br><br><span>'+scala(goldps)+'</span><br><span>'+scala(diamsps)+'</span><br><span>'+scala(clickeff)+'%</span><br><span>'+scala(mf)+'%</span><br><span>'+scala(expps)+'</span><br><br></div>');
-}updateGearSlots();
-function updateGearSlots(){
-  $('#gearSlots').html('<div class="icons"><span id="boots"></span><span id="armor"></span><span id="helm"></span><span id="gaunlet"></span><span id="ring"></span><span id="pickaxe"></span></div>');
+}
+function updateGearSlots(gear){
+  switch(gear){
+    case 0: $('#boots').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[0][0]+1)); break;
+    case 1: $('#armor').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[1][0]+1)); break;
+    case 2: $('#helm').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[2][0]+1)); break;
+    case 3: $('#gaunlet').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[3][0]+1)); break;
+    case 4: $('#ring').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[4][0]+1)); break;
+    case 5: $('#pickaxe').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[5][0]+1)); break;
+  }
 }
 function updateGearPanel(){
   $('#gearPanel').html('<div class="div"><br><h3>Gear Stats</h3></div><br><br><div class="subpanelL"><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(gear_clickeff)+'</span><br><span>'+scala(gear_diamsps)+'</span><br><span>'+scala(gear_clickeff)+'%</span><br><span>'+scala(gear_mf)+'%</span><br><span>'+scala(gear_expps)+'</span><br><br><br></div>');
