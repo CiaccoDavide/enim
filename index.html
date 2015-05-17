@@ -487,7 +487,6 @@ function updateGearPanel(){
   gear_expps=     getGearStats(5);
   $('#gearPanel').html('<div class="div"><br><h3>Gear Stats</h3></div><br><br><div class="subpanelL"><p>Level:</p><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(getGearStats(0))+'</span><br><span>'+scala(gear_goldps)+'</span><br><span>'+scala(gear_diamsps)+'</span><br><span>'+scala(gear_clickeff)+'%</span><br><span>'+scala(gear_mf)+'%</span><br><span>'+scala(gear_expps)+'</span><br><br></div>');
 }
-
 //main timer loop
 var timer = $.timer(function() {
   ciclo();
@@ -632,10 +631,10 @@ function costoUpgrade(i){
 }
 
 function profitGold(){
-  return (1+profitGoldMinions())*globalmulti;
+  return (1+profitGoldMinions()+getGearStats(1))*globalmulti;
 }
 function profitDiam(){
-  return (0.01+profitDiamsMinions())*globalmulti;
+  return (0.01+profitDiamsMinions()+getGearStats(2))*globalmulti;
 }
 
 $('.buy').click(function(){
