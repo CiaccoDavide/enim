@@ -325,7 +325,7 @@ function setInvIcon(i,q,t){
     }
     $('#s'+i).css({'background':'url("./inv_'+tipo+'.png")'});
 
-    var diffe=parseInt((invArray[i+64*(invpage-1)][5]-gearArray[t][3])*100)/100;
+    var diffe=parseInt((invArray[i+64*(invpage-1)][5]-gearArray[t][3])*10)/10;
     if(diffe>0)colores='meglio">(+'+scala(diffe)+')';else if(diffe<0)colores='peggio">('+scala(diffe)+')';else colores='neutro">';
 
     stats='';
@@ -667,6 +667,18 @@ $('.upgrade').click(function(){
     updateMinions();
   }
 });
+//BUY MAX
+$('.buy').bind('contextmenu', function(){
+      id = parseInt($(this).attr('id').substring(1));
+      while(gold>=costoMinion(id)){
+        gold-=costoMinion(id);
+        minionsArray[id][1]++;
+        updateMinions();
+      }
+      return false; 
+});
+
+
 
 /*
 //get real time when hidden
