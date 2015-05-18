@@ -258,7 +258,7 @@ border-radius: 2px;
 
   //runtimeLoop();
 
-
+var mainpanel='';
 updateMainPanel();
 
 
@@ -476,7 +476,17 @@ function updateMainPanel(){
   h=parseInt((time/(60*60))%24);
   m=parseInt((time/60)%60);
   s=parseInt(time%60);
-  $('#mainPanel').html('<div id="time">Game time: '+d+'d '+h+'h '+m+'m '+s+'s</div><div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>Gold:</p><p>Diamonds:</p><p>Refined materials:</p><br><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(gold)+'</span><br><span>'+scala(diams)+'</span><br><span>'+scala(refined)+'</span><br><br><span>'+scala(goldps)+'</span><br><span>'+scala(diamsps)+'</span><br><span>'+scala(clickeff)+'%</span><br><span>'+scala(mf)+'%</span><br><span>'+scala(expps)+'</span><br><br></div>');
+
+  mainpanel='<div id="time">Game time: '+d+'d '+h+'h '+m+'m '+s+'s</div><div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>Gold:</p><p>Diamonds:</p><p>Refined materials:</p><br><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(gold)+'</span><br><span>'+scala(diams)+'</span><br><span>'+scala(refined)+'</span><br><br>';
+  //potion timers
+  if(timerPozioni[0]>0)timerPozioni[0]-=0.2;else if(timerPozioni[0]<0)timerPozioni[0]=0;
+  mainpanel+='<span>'+scala(goldps);
+  if(timerPozioni[1]>0)timerPozioni[1]-=0.2;else if(timerPozioni[1]<0)timerPozioni[1]=0;
+  if(timerPozioni[2]>0)timerPozioni[2]-=0.2;else if(timerPozioni[2]<0)timerPozioni[2]=0;
+  if(timerPozioni[3]>0)timerPozioni[3]-=0.2;else if(timerPozioni[3]<0)timerPozioni[3]=0;
+  if(timerPozioni[4]>0)timerPozioni[4]-=0.2;else if(timerPozioni[4]<0)timerPozioni[4]=0;
+
+  $('#mainPanel').html(mainpanel+'</span><br><span>'+scala(diamsps)+'</span><br><span>'+scala(clickeff)+'%</span><br><span>'+scala(mf)+'%</span><br><span>'+scala(expps)+'</span><br><br></div>');
 }
 function updateGearSlots(gear){
   switch(gear){
@@ -530,11 +540,6 @@ function ciclo(){
     if(exp>=expmax){levelUP();}
 //drop();
     //document.title = scala(gold);
-
-
-
-    //potion timers
-    
 }function cicloSecondo(){
   if(Math.random()*100<mf) drop();
 }function drop(){
