@@ -325,7 +325,7 @@ function setInvIcon(i,q,t){
     }
     $('#s'+i).css({'background':'url("./inv_'+tipo+'.png")'});
 
-    var diffe=parseInt((invArray[i+64*(invpage-1)][5]-gearArray[t][3])*10)/10;
+    var diffe=pDD(invArray[i+64*(invpage-1)][5]-gearArray[t][3]);
     if(diffe>0)colores='meglio">(+'+scala(diffe)+')';else if(diffe<0)colores='peggio">('+scala(diffe)+')';else colores='neutro">';
 
     stats='';
@@ -586,12 +586,12 @@ function dropGear(rar){
         invArray[i][2]=rar;//rarità
         invArray[i][3]=0;//enanchement
         invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
-        invArray[i][5]=((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*(rar+invArray[i][3]));//goldps
-        invArray[i][6]=((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*(rar+invArray[i][3])/100);//diamsps
+        invArray[i][5]=pDD(((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*(rar+invArray[i][3])));//goldps
+        invArray[i][6]=pDD(((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*(rar+invArray[i][3])/100));//diamsps
 
-        invArray[i][7]=(10/(11-invArray[i][3]))/(7-invArray[i][2]);//eff max_eff=60% (max 10% per gear)
+        invArray[i][7]=pDD((10/(11-invArray[i][3]))/(7-invArray[i][2]));//eff max_eff=60% (max 10% per gear)
         if(invArray[i][7]>10)invArray[i][7]=10;
-        invArray[i][8]=(10/(11-invArray[i][3]))/(7-invArray[i][2]);//mf max_mf=60% (max 10% per gear)
+        invArray[i][8]=pDD((10/(11-invArray[i][3]))/(7-invArray[i][2]));//mf max_mf=60% (max 10% per gear)
         if(invArray[i][8]>10)invArray[i][8]=10;
         invArray[i][9]=2;//expps
         break;
@@ -771,7 +771,7 @@ function scala(num){
   else if(num >= 1e6)   return pDD(num/1e6) + " M";
   else if(num >= 1e3)   return pDD(num/1e3) + " K";
 }function pDD(num){//tieni solo 2 cifre decimali - parsaDueDecimali
-  return parseInt(100*num)/100;
+  return Math.floor(100*num)/100;
 }
 
 
