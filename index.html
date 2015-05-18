@@ -172,6 +172,9 @@ border-radius: 2px;
   var d=h=m=s=0;
   var globalmulti=1;
 
+  //gold, diams, eff, mf, exp
+  var timerPozioni = new Array(0,0,0,0,0);
+
   var invpage=1,invmaxpages=20;
   var invArray = new Array();
 
@@ -435,6 +438,10 @@ $('.slot').dblclick(function(){
     //updateSlotInv(i);
     updateGearPanel();
   }else if(invArray[i][0]==1){//pozione small fat awesome 10 20 30
+
+    //gold, diams, eff, mf, exp
+    timerPozioni[invArray[i][1]]+=10*(invArray[i][2]+1);
+
     invArray[i][0]=-1;
     updateSlotInv(i);
   }else if(invArray[i][0]==0){//cassa
@@ -523,6 +530,11 @@ function ciclo(){
     if(exp>=expmax){levelUP();}
 //drop();
     //document.title = scala(gold);
+
+
+
+    //potion timers
+    
 }function cicloSecondo(){
   if(Math.random()*100<mf) drop();
 }function drop(){
