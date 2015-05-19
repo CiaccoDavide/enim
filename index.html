@@ -764,7 +764,10 @@ $(window).focus(function(){
 //window.open("", "", "width=200, height=100");
 
 
-
+//right click disabled
+$('html').bind('contextmenu', function(){
+      return false; 
+});
 
 
 
