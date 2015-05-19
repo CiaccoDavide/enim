@@ -576,6 +576,7 @@ function ciclo(){
 
     goldps=profitGold();
     diamsps=profitDiam();
+    expps=profitExp();
 
     time+=1/5;
     exp+=expps/5;
@@ -710,6 +711,9 @@ function profitGold(){
 }
 function profitDiam(){
   return (0.01+profitDiamsMinions()+getGearStats(2))*globalmulti;
+}
+function profitExp(){
+  return (1+getGearStats(5))*globalmulti;
 }
 
 $('.buy').click(function(){
