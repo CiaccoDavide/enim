@@ -505,21 +505,21 @@ function updateMainPanel(){
 
   if(timerPozioni[3]>0){
     timerPozioni[3]-=0.2;
-    mainpanel+='<span class="potEff">'+scala(clickeff)+'</span><span class="neutro"> ['+scala(timerPozioni[3])+'s]</span><br>';
+    mainpanel+='<span class="potEff">'+scala(clickeff)+'%</span><span class="neutro"> ['+scala(timerPozioni[3])+'s]</span><br>';
     multiEff=2;
   }else if(timerPozioni[3]<0){
     timerPozioni[3]=0;
-    mainpanel+='<span>'+scala(clickeff)+'</span><br>';
-  }else{mainpanel+='<span>'+scala(clickeff)+'</span><br>';multiEff=1;}
+    mainpanel+='<span>'+scala(clickeff)+'%</span><br>';
+  }else{mainpanel+='<span>'+scala(clickeff)+'%</span><br>';multiEff=1;}
 
   if(timerPozioni[0]>0){
     timerPozioni[0]-=0.2;
-    mainpanel+='<span class="potMf">'+scala(mf)+'</span><span class="neutro"> ['+scala(timerPozioni[0])+'s]</span><br>';
+    mainpanel+='<span class="potMf">'+scala(mf)+'%</span><span class="neutro"> ['+scala(timerPozioni[0])+'s]</span><br>';
     multiMf=2;
   }else if(timerPozioni[0]<0){
     timerPozioni[0]=0;
-    mainpanel+='<span>'+scala(mf)+'</span><br>';
-  }else{mainpanel+='<span>'+scala(mf)+'</span><br>';multiMf=1;}
+    mainpanel+='<span>'+scala(mf)+'%</span><br>';
+  }else{mainpanel+='<span>'+scala(mf)+'%</span><br>';multiMf=1;}
 
   if(timerPozioni[2]>0){
     timerPozioni[2]-=0.2;
