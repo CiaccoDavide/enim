@@ -552,6 +552,7 @@ function updateGearPanel(){
   gear_clickeff=  getGearStats(3);
   gear_mf=        getGearStats(4);
   gear_expps=     getGearStats(5);
+  $('#gearPanel').html('<div class="div"><br><h3>Gear Stats</h3></div><br><br><div class="subpanelL"><p>Level:</p><p>Attack:</p><p>Defense:</p><p>Critical Chance:</p><p>Magic Find:</p><p>Exp Gain:</p></div><div class="subpanelR"><span>'+scala(getGearStats(0))+'</span><br><span>'+scala(gear_goldps)+'</span><br><span>'+scala(gear_diamsps)+'</span><br><span>'+scala(gear_clickeff)+'%</span><br><span>'+scala(gear_mf)+'%</span><br><span>'+scala(gear_expps)+'</span><br><br></div>');
 
   /*
   //potion timers
