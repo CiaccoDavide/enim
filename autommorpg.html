@@ -147,7 +147,7 @@ border-radius: 2px;
   </div>
 
   <div class="minions">
-    <div class="div"><h2>Minions</h2><small>(double left-click to equip/use,right-click to toggle auto-buy)</small></div><br><br><br><br>
+    <div class="div"><h2>Title</h2><small>Sub-Title</small></div><br><br><br><br>
     <div class="list">
 	    
     </div>
@@ -167,7 +167,7 @@ border-radius: 2px;
   });
   
   var gold=diams=0;
-  var exp=level=time=refined=0,expmax=180;
+  var exp=level=refined=0,expmax=180;
   var expps=1,goldps=1,diamsps=0.1,mf=0.5,clickeff=5;
   var gear_expps=0,gear_goldps=0,gear_diamsps=0,gear_mf=0,gear_clickeff=0;
   var d=h=m=s=0;
@@ -179,28 +179,7 @@ border-radius: 2px;
   var invpage=1,invmaxpages=20;
   var invArray = new Array();
 
-  var typeMulti = new Array();
-  typeMulti[0]=1;
-  typeMulti[1]=1;
-  typeMulti[2]=1;
-  typeMulti[3]=1;
-  typeMulti[4]=1;
-  typeMulti[5]=1;
-  typeMulti[6]=1;
-  typeMulti[7]=1;
-  typeMulti[8]=1;
-  typeMulti[9]=1;
-  typeMulti[10]=1;
-  typeMulti[11]=1;
-  typeMulti[12]=1;
-  typeMulti[13]=1;
-  typeMulti[14]=1;
-  typeMulti[15]=1;
-  typeMulti[16]=1;
-
-
   var gearArray = new Array();
-  
   gearArray[0] = new Array(-1,0,0,0,0,0,0,0);
   gearArray[1] = new Array(-1,0,0,0,0,0,0,0);
   gearArray[2] = new Array(-1,0,0,0,0,0,0,0);
@@ -208,7 +187,6 @@ border-radius: 2px;
   gearArray[4] = new Array(-1,0,0,0,0,0,0,0);
   gearArray[5] = new Array(-1,0,0,0,0,0,0,0);
    
-
   initInventario();//inizializza l'array dell'inventario
   updateInventario();//aggiorna il contenuto dell'inventario (grafico)
 
@@ -428,12 +406,7 @@ $('.slot').bind('contextmenu', function(){
 
 
 function updateMainPanel(){
-  d=parseInt(time/(60*60*24));
-  h=parseInt((time/(60*60))%24);
-  m=parseInt((time/60)%60);
-  s=parseInt(time%60);
-
-  mainpanel='<div id="time">Game time: '+d+'d '+h+'h '+m+'m '+s+'s</div><div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>credits: </p></div><div class="subpanelR"><span>0</span><br><br>';
+  mainpanel='<div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>credits: </p></div><div class="subpanelR"><span>0</span><br><br>';
   
 
 
@@ -536,7 +509,6 @@ function ciclo(){
 
     mf=calcMf();
 
-    time+=1/5;
     if(exp>=expmax){levelUP();}
 //drop();
     //document.title = scala(gold);
