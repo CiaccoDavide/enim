@@ -382,6 +382,39 @@ function updateSlotInv(i){
   setInvIcon(i-64*(invpage-1),q,t);
 }
 
+
+
+function scala(num){
+  if(num < 1e3)         return pDD(num);
+  else if(num >= 1e39)  return pDD(num/1e39) + " Duodecillions";
+  else if(num >= 1e36)  return pDD(num/1e36) + " Undecillions";
+  else if(num >= 1e33)  return pDD(num/1e33) + " Decillions";
+  else if(num >= 1e30)  return pDD(num/1e30) + " Nonillions";
+  else if(num >= 1e27)  return pDD(num/1e27) + " Octillions";
+  else if(num >= 1e24)  return pDD(num/1e24) + " Septillions";
+  else if(num >= 1e21)  return pDD(num/1e21) + " Sextillions";
+  else if(num >= 1e18)  return pDD(num/1e18) + " Quintillions";
+  else if(num >= 1e15)  return pDD(num/1e15) + " Quadrillions";
+  else if(num >= 1e12)  return pDD(num/1e12) + " T";
+  else if(num >= 1e9)   return pDD(num/1e9) + " B";
+  else if(num >= 1e6)   return pDD(num/1e6) + " M";
+  else if(num >= 1e3)   return pDD(num/1e3) + " K";
+}function pDD(num){//tieni solo 2 cifre decimali - parsaDueDecimali
+  return Math.floor(100*num)/100;
+}
+//right click disabled
+$('html').bind('contextmenu', function(){
+      return false; 
+});
+
+
+
+
+
+
+
+
+
 //DA PHPiZZARE
 
 $('#sort').click(function(){//php sort and refresh grafico dell'inv
@@ -466,6 +499,16 @@ function levelUP(){//implementare anche la parte grafica con la barra che scorre
   level++;
 }
 
+$('.slot').bind('contextmenu', function(){//REFINE
+      i=parseInt((this.id).substring(1));
+      if(invArray[i+64*(invpage-1)][0]==2){//gear
+        refined+=100*invArray[i+64*(invpage-1)][2]*invArray[i+64*(invpage-1)][4];
+        invArray[i+64*(invpage-1)][0]=-1;
+        updateSlotInv(i+64*(invpage-1));
+      }
+      return false; 
+});
+
 
 
 
@@ -483,16 +526,6 @@ dropChest(3);
 dropChest(4);
 dropChest(5);
 dropChest(0);
-//REFINE
-$('.slot').bind('contextmenu', function(){
-      i=parseInt((this.id).substring(1));
-      if(invArray[i+64*(invpage-1)][0]==2){//gear
-        refined+=100*invArray[i+64*(invpage-1)][2]*invArray[i+64*(invpage-1)][4];
-        invArray[i+64*(invpage-1)][0]=-1;
-        updateSlotInv(i+64*(invpage-1));
-      }
-      return false; 
-});
 
 
 function updateMainPanel(){
@@ -630,10 +663,6 @@ $(window).focus(function(){
 //window.open("", "", "width=200, height=100");
 
 
-//right click disabled
-$('html').bind('contextmenu', function(){
-      return false; 
-});
 
 
 
@@ -643,26 +672,6 @@ $('html').bind('contextmenu', function(){
 
 
 
-
-
-function scala(num){
-  if(num < 1e3)         return pDD(num);
-  else if(num >= 1e39)  return pDD(num/1e39) + " Duodecillions";
-  else if(num >= 1e36)  return pDD(num/1e36) + " Undecillions";
-  else if(num >= 1e33)  return pDD(num/1e33) + " Decillions";
-  else if(num >= 1e30)  return pDD(num/1e30) + " Nonillions";
-  else if(num >= 1e27)  return pDD(num/1e27) + " Octillions";
-  else if(num >= 1e24)  return pDD(num/1e24) + " Septillions";
-  else if(num >= 1e21)  return pDD(num/1e21) + " Sextillions";
-  else if(num >= 1e18)  return pDD(num/1e18) + " Quintillions";
-  else if(num >= 1e15)  return pDD(num/1e15) + " Quadrillions";
-  else if(num >= 1e12)  return pDD(num/1e12) + " T";
-  else if(num >= 1e9)   return pDD(num/1e9) + " B";
-  else if(num >= 1e6)   return pDD(num/1e6) + " M";
-  else if(num >= 1e3)   return pDD(num/1e3) + " K";
-}function pDD(num){//tieni solo 2 cifre decimali - parsaDueDecimali
-  return Math.floor(100*num)/100;
-}
 
 
   </script>
