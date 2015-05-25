@@ -186,9 +186,11 @@ var mainpanel='';
 updateMainPanel();
 
 
-function update(){
-  $("#profit").html(scala(gold));
-}
+
+
+
+
+//DA TENERE (tutte le azioni grafiche)
 
 function initInventario(){
   //grafica
@@ -207,15 +209,6 @@ function initInventario(){
     invArray[i] = new Array(-1,0,0,0,0,0,0,0,0,0);
   };
 }
-
-$('#sort').click(function(){
-  invArray.sort(function(a,b){return b[2]-a[2];});
-  invArray.sort(function(a,b){return b[1]-a[1];});
-  invArray.sort(function(a,b){return b[0]-a[0];});
-  updateInventario();
-});
-
-
 function updateInventario(){
   var inv='';
   for (var i = 0; i < 64; i++) {
@@ -314,9 +307,6 @@ $('#invleft').click(function(){
 $('#invright').click(function(){
   if(invpage<invmaxpages){invpage++;updateInventario();}
 });
-    //                      0       1       2       3     4         5   6     7
-//array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
-
 $('.slot').dblclick(function(){
   id=parseInt((this.id).substring(1));
   i=id+64*(invpage-1);
@@ -362,10 +352,8 @@ $('.slot').dblclick(function(){
     //updateSlotInv(i);
     updateGearPanel();
   }else if(invArray[i][0]==1){//pozione small fat awesome 10 20 30
-
     //gold, diams, eff, mf, exp
     timerPozioni[invArray[i][1]]+=10*(invArray[i][2]+1);
-
     invArray[i][0]=-1;
     updateSlotInv(i);
   }else if(invArray[i][0]==0){//cassa
@@ -377,33 +365,6 @@ $('.slot').dblclick(function(){
     dropPotion();
   }
 });
-dropChest(1);
-dropChest(2);
-dropChest(3);
-dropChest(4);
-dropChest(5);
-dropChest(0);
-//REFINE
-$('.slot').bind('contextmenu', function(){
-      i=parseInt((this.id).substring(1));
-      if(invArray[i+64*(invpage-1)][0]==2){//gear
-        refined+=100*invArray[i+64*(invpage-1)][2]*invArray[i+64*(invpage-1)][4];
-        invArray[i+64*(invpage-1)][0]=-1;
-        updateSlotInv(i+64*(invpage-1));
-      }
-      return false; 
-});
-
-
-function updateMainPanel(){
-  mainpanel='<div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>credits: </p></div><div class="subpanelR"><span>0</span><br><br>';
-  
-
-
-
-
-  $('#mainPanel').html(mainpanel+'<br></div>');
-}
 function updateGearSlots(gear){
   switch(gear){
     case 0: $('#boots').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[0][0]+1));$('#boots').css({opacity:1}); break;
@@ -414,97 +375,24 @@ function updateGearSlots(gear){
     case 5: $('#pickaxe').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[5][0]+1));$('#pickaxe').css({opacity:1}); break;
   }
 }
-    //                      0       1       2       3     4         5   6     7
-//array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
-function getGearStats(i){
-  i+=2;
-  var tota=0;
-  var tipi=6;
-  switch(i){
-    case 2: while(tipi>0)tota+=gearArray[--tipi][i];tota/=6;break;
-    default: while(tipi>0)tota+=gearArray[--tipi][i];break;
-  }
-  return tota;
+
+function updateSlotInv(i){
+  q=invArray[i][2]+1;
+  t=invArray[i][1];
+  setInvIcon(i-64*(invpage-1),q,t);
 }
-function updateGearPanel(){
-  gear_goldps=    getGearStats(1);
-  gear_diamsps=   getGearStats(2);
-  gear_clickeff=  getGearStats(3);
-  gear_mf=        getGearStats(4);
-  gear_expps=     getGearStats(5);
-  $('#gearPanel').html('<div class="div"><br><h3>Gear Stats</h3></div><br><br><div class="subpanelL"><p>Level:</p><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(getGearStats(0))+'</span><br><span>'+scala(gear_goldps)+'</span><br><span>'+scala(gear_diamsps)+'</span><br><span>'+scala(gear_clickeff)+'%</span><br><span>'+scala(gear_mf)+'%</span><br><span>'+scala(gear_expps)+'</span><br><br></div>');
+
+//DA PHPiZZARE
+
+$('#sort').click(function(){//php sort and refresh grafico dell'inv
+  invArray.sort(function(a,b){return b[2]-a[2];});
+  invArray.sort(function(a,b){return b[1]-a[1];});
+  invArray.sort(function(a,b){return b[0]-a[0];});
+  updateInventario();
+});
 
 
-
-  /*
-
-  //potion timers
-  if(timerPozioni[1]>0){
-    timerPozioni[1]-=0.2;
-    mainpanel+='<span class="potGold">'+scala(goldps)+'</span><span class="neutro"> ['+scala(timerPozioni[1])+'s]</span><br>';
-    multiGold=2;
-  }else if(timerPozioni[1]<0){
-    timerPozioni[1]=0;
-    mainpanel+='<span>'+scala(goldps)+'</span><br>';
-  }else{mainpanel+='<span>'+scala(goldps)+'</span><br>';multiGold=1;}
-
-  if(timerPozioni[4]>0){
-    timerPozioni[4]-=0.2;
-    mainpanel+='<span class="potDiams">'+scala(diamsps)+'</span><span class="neutro"> ['+scala(timerPozioni[4])+'s]</span><br>';
-    multiDiam=2;
-  }else if(timerPozioni[4]<0){
-    timerPozioni[4]=0;
-    mainpanel+='<span>'+scala(diamsps)+'</span><br>';
-  }else{mainpanel+='<span>'+scala(diamsps)+'</span><br>';multiDiam=1;}
-
-  if(timerPozioni[3]>0){
-    timerPozioni[3]-=0.2;
-    mainpanel+='<span class="potEff">'+scala(clickeff)+'%</span><span class="neutro"> ['+scala(timerPozioni[3])+'s]</span><br>';
-    multiEff=2;
-  }else if(timerPozioni[3]<0){
-    timerPozioni[3]=0;
-    mainpanel+='<span>'+scala(clickeff)+'%</span><br>';
-  }else{mainpanel+='<span>'+scala(clickeff)+'%</span><br>';multiEff=1;}
-
-  if(timerPozioni[0]>0){
-    timerPozioni[0]-=0.2;
-    mainpanel+='<span class="potMf">'+scala(mf)+'%</span><span class="neutro"> ['+scala(timerPozioni[0])+'s]</span><br>';
-    multiMf=2;
-  }else if(timerPozioni[0]<0){
-    timerPozioni[0]=0;
-    mainpanel+='<span>'+scala(mf)+'%</span><br>';
-  }else{mainpanel+='<span>'+scala(mf)+'%</span><br>';multiMf=1;}
-
-  if(timerPozioni[2]>0){
-    timerPozioni[2]-=0.2;
-    mainpanel+='<span class="potExp">'+scala(expps)+'</span><span class="neutro"> ['+scala(timerPozioni[2])+'s]</span><br>';
-    multiExp=2;
-  }else if(timerPozioni[2]<0){
-    timerPozioni[2]=0;
-    mainpanel+='<span>'+scala(expps)+'</span><br>';
-  }else{mainpanel+='<span>'+scala(expps)+'</span><br>';multiExp=1;}
-  */
-}
-//main timer loop
-var timer = $.timer(function() {
-  ciclo();
-}, 200, true);
-var timer = $.timer(function() {
-  cicloSecondo();
-}, 1000, true);
-function ciclo(){
-    updateMainPanel();updateGearPanel();
-    update();
-    updateUpIcons();
-
-    mf=calcMf();
-
-    if(exp>=expmax){levelUP();}
-//drop();
-    //document.title = scala(gold);
-}function cicloSecondo(){
-  if(Math.random()*100<mf) drop();
-}function drop(){
+function drop(){
   tipo=rar=0;
   tipo=Math.floor((Math.random()*9));
   if(tipo==0){//cassa
@@ -514,11 +402,6 @@ function ciclo(){
   }else{//gear
     dropGear(getRar());
   }
-}
-function updateSlotInv(i){
-  q=invArray[i][2]+1;
-  t=invArray[i][1];
-  setInvIcon(i-64*(invpage-1),q,t);
 }
 function getRar(){
   rar=Math.floor((Math.random()*3600));
@@ -577,12 +460,143 @@ function dropGear(rar){
       }i++;
   }updateSlotInv(i);
 }
-
-function levelUP(){
+function levelUP(){//implementare anche la parte grafica con la barra che scorre!
   exp=0;
   expmax=parseInt(expmax*1.25);
   level++;
 }
+
+
+
+
+//ancora da classificare
+
+
+
+    //                      0       1       2       3     4         5   6     7
+//array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
+
+
+dropChest(1);
+dropChest(2);
+dropChest(3);
+dropChest(4);
+dropChest(5);
+dropChest(0);
+//REFINE
+$('.slot').bind('contextmenu', function(){
+      i=parseInt((this.id).substring(1));
+      if(invArray[i+64*(invpage-1)][0]==2){//gear
+        refined+=100*invArray[i+64*(invpage-1)][2]*invArray[i+64*(invpage-1)][4];
+        invArray[i+64*(invpage-1)][0]=-1;
+        updateSlotInv(i+64*(invpage-1));
+      }
+      return false; 
+});
+
+
+function updateMainPanel(){
+  mainpanel='<div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>credits: </p></div><div class="subpanelR"><span>0</span><br><br>';
+  
+
+  $('#mainPanel').html(mainpanel+'<br></div>');
+}
+
+    //                      0       1       2       3     4         5   6     7
+//array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
+function getGearStats(i){
+  i+=2;
+  var tota=0;
+  var tipi=6;
+  switch(i){
+    case 2: while(tipi>0)tota+=gearArray[--tipi][i];tota/=6;break;
+    default: while(tipi>0)tota+=gearArray[--tipi][i];break;
+  }
+  return tota;
+}
+function updateGearPanel(){
+  gear_goldps=    getGearStats(1);
+  gear_diamsps=   getGearStats(2);
+  gear_clickeff=  getGearStats(3);
+  gear_mf=        getGearStats(4);
+  gear_expps=     getGearStats(5);
+  $('#gearPanel').html('<div class="div"><br><h3>Gear Stats</h3></div><br><br><div class="subpanelL"><p>Level:</p><p>Gold/s:</p><p>Diamonds/s:</p><p>Click Efficency:</p><p>Magic Find/s:</p><p>Experience/s:</p></div><div class="subpanelR"><span>'+scala(getGearStats(0))+'</span><br><span>'+scala(gear_goldps)+'</span><br><span>'+scala(gear_diamsps)+'</span><br><span>'+scala(gear_clickeff)+'%</span><br><span>'+scala(gear_mf)+'%</span><br><span>'+scala(gear_expps)+'</span><br><br></div>');
+
+  /*
+  //potion timers
+  if(timerPozioni[1]>0){
+    timerPozioni[1]-=0.2;
+    mainpanel+='<span class="potGold">'+scala(goldps)+'</span><span class="neutro"> ['+scala(timerPozioni[1])+'s]</span><br>';
+    multiGold=2;
+  }else if(timerPozioni[1]<0){
+    timerPozioni[1]=0;
+    mainpanel+='<span>'+scala(goldps)+'</span><br>';
+  }else{mainpanel+='<span>'+scala(goldps)+'</span><br>';multiGold=1;}
+
+  if(timerPozioni[4]>0){
+    timerPozioni[4]-=0.2;
+    mainpanel+='<span class="potDiams">'+scala(diamsps)+'</span><span class="neutro"> ['+scala(timerPozioni[4])+'s]</span><br>';
+    multiDiam=2;
+  }else if(timerPozioni[4]<0){
+    timerPozioni[4]=0;
+    mainpanel+='<span>'+scala(diamsps)+'</span><br>';
+  }else{mainpanel+='<span>'+scala(diamsps)+'</span><br>';multiDiam=1;}
+
+  if(timerPozioni[3]>0){
+    timerPozioni[3]-=0.2;
+    mainpanel+='<span class="potEff">'+scala(clickeff)+'%</span><span class="neutro"> ['+scala(timerPozioni[3])+'s]</span><br>';
+    multiEff=2;
+  }else if(timerPozioni[3]<0){
+    timerPozioni[3]=0;
+    mainpanel+='<span>'+scala(clickeff)+'%</span><br>';
+  }else{mainpanel+='<span>'+scala(clickeff)+'%</span><br>';multiEff=1;}
+
+  if(timerPozioni[0]>0){
+    timerPozioni[0]-=0.2;
+    mainpanel+='<span class="potMf">'+scala(mf)+'%</span><span class="neutro"> ['+scala(timerPozioni[0])+'s]</span><br>';
+    multiMf=2;
+  }else if(timerPozioni[0]<0){
+    timerPozioni[0]=0;
+    mainpanel+='<span>'+scala(mf)+'%</span><br>';
+  }else{mainpanel+='<span>'+scala(mf)+'%</span><br>';multiMf=1;}
+
+  if(timerPozioni[2]>0){
+    timerPozioni[2]-=0.2;
+    mainpanel+='<span class="potExp">'+scala(expps)+'</span><span class="neutro"> ['+scala(timerPozioni[2])+'s]</span><br>';
+    multiExp=2;
+  }else if(timerPozioni[2]<0){
+    timerPozioni[2]=0;
+    mainpanel+='<span>'+scala(expps)+'</span><br>';
+  }else{mainpanel+='<span>'+scala(expps)+'</span><br>';multiExp=1;}
+  */
+}
+
+
+
+
+
+
+//main timer loop
+var timer = $.timer(function() {
+  ciclo();
+}, 200, true);
+var timer = $.timer(function() {
+  cicloSecondo();
+}, 1000, true);
+function ciclo(){
+    updateMainPanel();updateGearPanel();
+    update();
+    updateUpIcons();
+
+    mf=calcMf();
+
+    if(exp>=expmax){levelUP();}
+//drop();
+    //document.title = scala(gold);
+}function cicloSecondo(){
+  if(Math.random()*100<mf) drop();
+}
+
 
 function profitExp(){
   return (1+getGearStats(5))*globalmulti*multiExp;
