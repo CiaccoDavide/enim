@@ -126,6 +126,7 @@ border-radius: 2px;
 
   <div class="main">
   <div class="tempo">0</div>
+
     <br><br><br> <br><br><br> <br><br><br><br>
     <span id="mainPanel"></span>
   </div>
@@ -143,6 +144,13 @@ border-radius: 2px;
     </div>
     <div class="div"><a href="#" id="invleft"><</a> <span id="invnav"></span> <a href="#" id="invright">></a><span id="sort">sort</span><br><br></div>
     
+  </div>
+
+  <div class="minions">
+    <div class="div"><h2>Minions</h2><small>(double left-click to equip/use,right-click to toggle auto-buy)</small></div><br><br><br><br>
+    <div class="list">
+	    
+    </div>
   </div>
 
   <script src="./jquery.min.js"></script>
@@ -170,36 +178,6 @@ border-radius: 2px;
 
   var invpage=1,invmaxpages=20;
   var invArray = new Array();
-
-  var minionsArray = new Array();
-  //[owned][cost_base][gold_base][diams_base]
-  minionsArray[0] = new Array("Earthworm",           0,10,                       2,                      0);
-  minionsArray[1] = new Array("Mole",                0,640,                      128,                    0.5);
-  minionsArray[2] = new Array("Zombie",              0,44800,                    8960,                   35);
-  minionsArray[3] = new Array("Macho",               0,3404800,                  680960,                 2660);
-  minionsArray[4] = new Array("Robot",               0,279169600,                55838720,               218120);
-  minionsArray[5] = new Array("Auger",               0,24569036800,              4913807360,             19194560);
-  minionsArray[6] = new Array("Excavator",           0,2309489459200,            461897891840,           1804288640);
-  minionsArray[7] = new Array("Bagger 293",          0,230948945920000,          46189789184000,         180428864000);
-  minionsArray[8] = new Array("Robodigger 9000",     0,24480588267520000,        4896117653504000,       19125459584000);
-  minionsArray[9] = new Array("Dwarf",               0,2741825885962240000,      548365177192448000,     2142051473408000);
-  minionsArray[10] = new Array("Orbiting Laser",     0,323535454543544000000,    64707090908708900000,   252762073862144000);
-  minionsArray[11] = new Array("Interstellar Miner", 0,40118396363399500000000,  8023679272679900000000, 31342497158905900000);
-
-  var upgradeArray = new Array();
-  //[level][up_cost_base]
-  upgradeArray[0] = new Array(1, 30000);
-  upgradeArray[1] = new Array(1, 162640);
-  upgradeArray[2] = new Array(1, 955584);
-  upgradeArray[3] = new Array(1, 8947187);
-  upgradeArray[4] = new Array(1, 332876723);
-  upgradeArray[5] = new Array(1, 26632872483);
-  upgradeArray[6] = new Array(1, 2479939843096);
-  upgradeArray[7] = new Array(1, 247316548884437);
-  upgradeArray[8] = new Array(1, 26162340799934200);
-  upgradeArray[9] = new Array(1, 2924962271561780000);
-  upgradeArray[10] = new Array(1, 344595182898789000000);
-  upgradeArray[11] = new Array(1, 42668400716850500000000);
 
   var typeMulti = new Array();
   typeMulti[0]=1;
@@ -229,22 +207,7 @@ border-radius: 2px;
   gearArray[3] = new Array(-1,0,0,0,0,0,0,0);
   gearArray[4] = new Array(-1,0,0,0,0,0,0,0);
   gearArray[5] = new Array(-1,0,0,0,0,0,0,0);
-
-
-  //create minions
-  var minionsoutput='';
-  for(var i=0; i<minionsArray.length; i++) {
-    minionsoutput+='<div class="minion"><span id="u'+i+'" class="upgrade upon"></span><span class="buy" id="b'+i+'">Buy icon</span><span id="m'+i+'"><h4>'+minionsArray[i][0]+'</h4> <small>LVL.'+upgradeArray[i][0]+'</small><p>Owned: '+scala(minionsArray[i][1])+'</p><p>Cost: '+scala(costoMinion(i))+'</p></span></div>';
-
-  };
-  $('.list').html(minionsoutput);
-  //create tooltips
-  for(var i=0; i<minionsArray.length; i++) {
-    $('#u'+i).tooltipster({content: $('<b>Level '+(upgradeArray[i][0]+1)+'</b><br><i>Doubles the productivity of every '+minionsArray[i][0]+'</i><p>Cost: '+scala(costoUpgrade(i))+' gold</p>'),
-      contentAsHTML:true});
-    $('#b'+i).tooltipster({content: $('<b>'+minionsArray[i][0]+'</b><p> +'+scala(profitGoldMinion(i))+' gold/s</p><p> +'+scala(profitDiamsMinion(i))+' diamonds/s</p>'),contentAsHTML:true});
-  };
-            
+   
 
   initInventario();//inizializza l'array dell'inventario
   updateInventario();//aggiorna il contenuto dell'inventario (grafico)
@@ -660,51 +623,6 @@ function levelUP(){
   level++;
 }
 
-function updateUpIcons(){
-  for(var i=0; i<minionsArray.length; i++) {
-    if(gold>=costoUpgrade(i)) $('#u'+i).removeClass('upon upoff').addClass('upon');
-    else                      $('#u'+i).removeClass('upon upoff').addClass('upoff');
-  }
-}
-function profitGoldMinion(i){
-  return minionsArray[i][3]*Math.pow(2,upgradeArray[i][0]-1);
-}function profitGoldMinions(){
-  sommaprofit=0;
-  for(var i=0;i<minionsArray.length;i++) sommaprofit+=minionsArray[i][1]*profitGoldMinion(i);
-  return sommaprofit;
-}
-function profitDiamsMinion(i){
-  return minionsArray[i][4]*Math.pow(2,upgradeArray[i][0]-1);
-}function profitDiamsMinions(){
-  sommaprofit=0;
-  for(var i=0;i<minionsArray.length;i++) sommaprofit+=minionsArray[i][1]*profitDiamsMinion(i);
-  return sommaprofit;
-}
-function updateMinions(){
-  for(var i=0; i<minionsArray.length; i++) {
-    //if(gold>=costoMinion(i))
-    $('#m'+i).html('<h4>'+minionsArray[i][0]+'</h4> <small>LVL.'+upgradeArray[i][0]+'</small><p>Owned: '+scala(minionsArray[i][1])+'</p><p>Cost: '+scala(costoMinion(i))+'</p>');
-
-    $('#u'+i).tooltipster('content','<b>Level '+(upgradeArray[i][0]+1)+'</b><br><i>Doubles the productivity of every '+minionsArray[i][0]+'</i><p>Cost: '+scala(costoUpgrade(i))+' gold</p>');
-    $('#b'+i).tooltipster('content','<b>'+minionsArray[i][0]+'</b><p> +'+scala(profitGoldMinion(i))+' gold/s</p><p> +'+scala(profitDiamsMinion(i))+' diamonds/s</p>');
-
-  };
-}
-function costoMinion(i){
-  //return minionsArray[i][2]*Math.pow(1.5,minionsArray[i][1]);//cost*1.5^count
-  return (i+1+1*i)*minionsArray[i][2]*Math.pow(1.5,minionsArray[i][1]);//cost*1.5^count
-}
-function costoUpgrade(i){
-  //return upgradeArray[i][1]*Math.pow(2.5,upgradeArray[i][0]-1);//cost*2.5^count
-  return (i+1+1*i)*upgradeArray[i][1]*Math.pow(2.5,upgradeArray[i][0]-1);//cost*2.5^count
-}
-
-function profitGold(){
-  return (1+profitGoldMinions()+getGearStats(1))*globalmulti*multiGold;
-}
-function profitDiam(){
-  return (0.01+profitDiamsMinions()+getGearStats(2))*globalmulti*multiDiam;
-}
 function profitExp(){
   return (1+getGearStats(5))*globalmulti*multiExp;
 }
@@ -714,35 +632,6 @@ function calcMf(){
 function calcEff(){
   return (5+getGearStats(3))*globalmulti*multiEff;
 }
-
-$('.buy').click(function(){
-  id = parseInt($(this).attr('id').substring(1));
-  if(gold>=costoMinion(id)){
-    gold-=costoMinion(id);
-    minionsArray[id][1]++;
-    updateMinions();
-  }
-});
-$('.upgrade').click(function(){
-  id = parseInt($(this).attr('id').substring(1));
-  if(gold>=costoUpgrade(id)){
-    gold-=costoUpgrade(id);
-    upgradeArray[id][0]++;
-    updateMinions();
-  }
-});
-//BUY MAX
-$('.buy').bind('contextmenu', function(){
-      id = parseInt($(this).attr('id').substring(1));
-      while(gold>=costoMinion(id)){
-        gold-=costoMinion(id);
-        minionsArray[id][1]++;
-        updateMinions();
-      }
-      return false; 
-});
-
-
 
 /*
 //get real time when hidden
@@ -802,26 +691,6 @@ $('html').bind('contextmenu', function(){
 
 
 
-  function createLongClickableButtons(){
-    botplace='';
-    for(i=0;i<16;i++){
-        botplace+='<div id="'+i+'" class="longo"></div>';
-    }//document.getElementById("bottoni").innerHTML = botplace;
-  }
-
-
-  function costo(i){
-    return minionsArray[i][2]*(Math.pow(inc,minionsArray[i][1]));
-  }function guadagno(i){
-    return minionsArray[i][1]*minionsArray[i][3]*upgradeArray[i+1][1]*upgradeArray[i+18][1]*typeMulti[i];
-  }function slavesProfit(){
-    return upgradeArray[0][1]*upgradeArray[17][1];
-  }
-
-
-
-
-
 function scala(num){
   if(num < 1e3)         return pDD(num);
   else if(num >= 1e39)  return pDD(num/1e39) + " Duodecillions";
@@ -841,29 +710,6 @@ function scala(num){
   return Math.floor(100*num)/100;
 }
 
-
-
-
-
-//buy max
-var pressTimer
-
-$(".longo").mouseup(function(){
-  clearTimeout(pressTimer)
-  return false;
-}).mousedown(function(){
-  id=this.id;
-  pressTimer = window.setTimeout(function() {
-    buyMax(id);
-  },500)
-  return false;
-});
-
-function buyMax(id){
-  while(costo(id)<=profit){
-    addProf(id);
-  }
-}
 
   </script>
 
