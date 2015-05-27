@@ -248,19 +248,19 @@ function setInvIcon(i,q,t){
     if(diffe>0)colores='meglio">(+'+scala(diffe)+')';else if(diffe<0)colores='peggio">('+scala(diffe)+')';else colores='neutro">';
 
     stats='';
-    stats+='Gold/s: '+scala(invArray[i+64*(invpage-1)][5])+' <span class="'+colores+'</span><br>';
+    stats+='Atk: '+scala(invArray[i+64*(invpage-1)][5])+' <span class="'+colores+'</span><br>';
     diffe=invArray[i+64*(invpage-1)][6]-gearArray[t][4];
     if(diffe>0)colores='meglio">(+'+scala(diffe)+')';else if(diffe<0)colores='peggio">('+scala(diffe)+')';else colores='neutro">';
-    stats+='Diams/s: '+scala(invArray[i+64*(invpage-1)][6])+' <span class="'+colores+'</span><br>';
+    stats+='Def: '+scala(invArray[i+64*(invpage-1)][6])+' <span class="'+colores+'</span><br>';
     diffe=invArray[i+64*(invpage-1)][7]-gearArray[t][5];
     if(diffe>0)colores='meglio">(+'+scala(diffe)+'%)';else if(diffe<0)colores='peggio">('+scala(diffe)+'%)';else colores='neutro">';
-    stats+='Eff: '+scala(invArray[i+64*(invpage-1)][7])+'% <span class="'+colores+'</span><br>';
+    stats+='Crit: '+scala(invArray[i+64*(invpage-1)][7])+'% <span class="'+colores+'</span><br>';
     diffe=invArray[i+64*(invpage-1)][8]-gearArray[t][6];
     if(diffe>0)colores='meglio">(+'+scala(diffe)+'%)';else if(diffe<0)colores='peggio">('+scala(diffe)+'%)';else colores='neutro">';
-    stats+='M.Find/s: '+scala(invArray[i+64*(invpage-1)][8])+'% <span class="'+colores+'</span><br>';
+    stats+='M.Find: '+scala(invArray[i+64*(invpage-1)][8])+'% <span class="'+colores+'</span><br>';
     diffe=invArray[i+64*(invpage-1)][9]-gearArray[t][7];
     if(diffe>0)colores='meglio">(+'+scala(diffe)+')';else if(diffe<0)colores='peggio">('+scala(diffe)+')';else colores='neutro">';
-    stats+='Exp/s: '+scala(invArray[i+64*(invpage-1)][9])+' <span class="'+colores+'</span><br>';
+    stats+='Exp: '+scala(invArray[i+64*(invpage-1)][9])+' <span class="'+colores+'</span><br>';
 
     $('#s'+i).tooltipster('content','<b id="q'+q+'">'+rar+' '+tipo+' +'+invArray[i+64*(invpage-1)][3]+'</b><br><i>Level '+scala(invArray[i+64*(invpage-1)][4])+'</i><br><small>'+stats+'</small>');
   }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
