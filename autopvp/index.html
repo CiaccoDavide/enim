@@ -156,7 +156,7 @@ border-radius: 2px;
   });
   
   var gold=diams=0;
-  var exp=100,level=refined=0,expmax=180;
+  var exp=100,level=credits=0,expmax=180;
   var expps=1,goldps=1,diamsps=0.1,mf=0.5,clickeff=5;
   var gear_expps=0,gear_goldps=0,gear_diamsps=0,gear_mf=0,gear_clickeff=0;
   var d=h=m=s=0;
@@ -501,11 +501,12 @@ function levelUP(){//implementare anche la parte grafica con la barra che scorre
 $('.slot').bind('contextmenu', function(){//REFINE
       i=parseInt((this.id).substring(1));
       if(invArray[i+64*(invpage-1)][0]==2){//gear
-        refined+=100*invArray[i+64*(invpage-1)][2]*invArray[i+64*(invpage-1)][4];
+        credits+=100*(invArray[i+64*(invpage-1)][2]*invArray[i+64*(invpage-1)][4]+1);
         invArray[i+64*(invpage-1)][0]=-1;
         updateSlotInv(i+64*(invpage-1));
+      updateMainPanel();
       }
-      return false; 
+      return false;
 });
 
 
@@ -528,7 +529,7 @@ dropChest(0);
 
 
 function updateMainPanel(){
-  mainpanel='<div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>credits: </p></div><div class="subpanelR"><span>0</span><br><br>';
+  mainpanel='<div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>credits: </p></div><div class="subpanelR"><span>'+scala(credits)+'</span><br><br>';
   
 
   $('#mainPanel').html(mainpanel+'<br></div>');
