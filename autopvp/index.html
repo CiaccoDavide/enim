@@ -355,6 +355,7 @@ $('.slot').dblclick(function(){
     timerPozioni[invArray[i][1]]+=10*(invArray[i][2]+1);
     invArray[i][0]=-1;
     updateSlotInv(i);
+    updateGearPanel();
   }else if(invArray[i][0]==0){//cassa
     invArray[i][0]=-1;
     rarchest=invArray[i][2];
