@@ -181,7 +181,7 @@ border-radius: 2px;
 
   //runtimeLoop();
 
-var mainpanel=potpanel='';
+var mainpanel=potpanel=plurale='';
 updateMainPanel();
 
 
@@ -282,7 +282,8 @@ function setInvIcon(i,q,t){
     $('#s'+i).css({'background':'url("./pot_'+(t%5)+''+(q%3)+'.png")'});
     $('#s'+i).css({'background-position':'50% 50%'});
     $('#s'+i).css({'background-size':'110%'});
-    $('#s'+i).tooltipster('content','<b>'+qual+' '+tipo+' Potion</b><br><i>Increases '+gain+' by 50% for '+((1+(q%3)))+' matches.</i>');
+    plurale='';if((1+(q%3))>1)plurale='es';
+    $('#s'+i).tooltipster('content','<b>'+qual+' '+tipo+' Potion</b><br><i>Increases '+gain+' by 50% for '+((1+(q%3)))+' match'+plurale+'.</i>');
   }else if(invArray[i+64*(invpage-1)][0]==0){//cassa
     $('#s'+i).removeClass("q6 q1 q2 q3 q4 q5").addClass("q0");
     rar='';
