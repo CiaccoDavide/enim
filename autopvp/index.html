@@ -103,8 +103,8 @@ border-radius: 2px;
 .neutro{color:#999;}
 .peggio{color:#eF4C55;}
 
-.potGold{color:#fCdF65;}
-.potDiams{color:#fff;}
+.potGold{color:#fc6565;}
+.potDiams{color:#cca943;}
 .potEff{color:#fC3Fe5;}
 .potMf{color:#4C8Ff5;}
 .potExp{color:#3CeF65;}
@@ -383,6 +383,72 @@ function updateSlotInv(i){
   setInvIcon(i-64*(invpage-1),q,t);
 }
 
+function getGearStats(i){//le stats vengono scaricate tramite php negli array
+  i+=2;
+  var tota=0;
+  var tipi=6;
+  switch(i){
+    case 2: while(tipi>0)tota+=gearArray[--tipi][i];tota/=6;break;
+    default: while(tipi>0)tota+=gearArray[--tipi][i];break;
+  }
+  return tota;
+}
+function updateGearPanel(){
+  gear_goldps=    getGearStats(1);
+  gear_diamsps=   getGearStats(2);
+  gear_clickeff=  getGearStats(3);
+  gear_mf=        getGearStats(4);
+  gear_expps=     getGearStats(5);
+  potpanel='';
+  //potion timers
+  if(timerPozioni[1]>0){
+    potpanel+='<span class="potGold">'+scala(gear_goldps)+'</span><span class="neutro"> ['+scala(timerPozioni[1])+']</span><br>';
+    multiGold=2;
+  }else if(timerPozioni[1]<0){
+    timerPozioni[1]=0;
+    potpanel+='<span>'+scala(gear_goldps)+'</span><br>';
+  }else{potpanel+='<span>'+scala(gear_goldps)+'</span><br>';multiGold=1;}
+
+  if(timerPozioni[4]>0){
+    potpanel+='<span class="potDiams">'+scala(gear_diamsps)+'</span><span class="neutro"> ['+scala(timerPozioni[4])+']</span><br>';
+    multiDiam=2;
+  }else if(timerPozioni[4]<0){
+    timerPozioni[4]=0;
+    potpanel+='<span>'+scala(gear_diamsps)+'</span><br>';
+  }else{potpanel+='<span>'+scala(gear_diamsps)+'</span><br>';multiDiam=1;}
+
+  if(timerPozioni[3]>0){
+    potpanel+='<span class="potEff">'+scala(gear_clickeff)+'%</span><span class="neutro"> ['+scala(timerPozioni[3])+']</span><br>';
+    multiEff=2;
+  }else if(timerPozioni[3]<0){
+    timerPozioni[3]=0;
+    potpanel+='<span>'+scala(gear_clickeff)+'%</span><br>';
+  }else{potpanel+='<span>'+scala(gear_clickeff)+'%</span><br>';multiEff=1;}
+
+  if(timerPozioni[0]>0){
+    potpanel+='<span class="potMf">'+scala(gear_mf)+'%</span><span class="neutro"> ['+scala(timerPozioni[0])+']</span><br>';
+    multiMf=2;
+  }else if(timerPozioni[0]<0){
+    timerPozioni[0]=0;
+    potpanel+='<span>'+scala(gear_mf)+'%</span><br>';
+  }else{potpanel+='<span>'+scala(gear_mf)+'%</span><br>';multiMf=1;}
+
+  if(timerPozioni[2]>0){
+    potpanel+='<span class="potExp">'+scala(gear_expps)+'</span><span class="neutro"> ['+scala(timerPozioni[2])+']</span><br>';
+    multiExp=2;
+  }else if(timerPozioni[2]<0){
+    timerPozioni[2]=0;
+    potpanel+='<span>'+scala(gear_expps)+'</span><br>';
+  }else{potpanel+='<span>'+scala(gear_expps)+'</span><br>';multiExp=1;}
+  $('#gearPanel').html('<div class="div"><br><h3>Gear Stats</h3></div><br><br><div class="subpanelL"><p>Level:</p><p>Attack:</p><p>Defense:</p><p>Critical Chance:</p><p>Magic Find:</p><p>Exp Gain:</p></div><div class="subpanelR"><span>'+scala(getGearStats(0))+'</span><br>'+potpanel+'<br><br></div>');
+}
+
+function updateMainPanel(){
+  mainpanel='<div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>credits: </p></div><div class="subpanelR"><span>'+scala(credits)+'</span><br><br>';
+  $('#mainPanel').html(mainpanel+'<br></div>');
+}
+
+
 
 
 function scala(num){
@@ -409,12 +475,9 @@ $('html').bind('contextmenu', function(){
 });
 
 
-
-
-
-
-
-
+function getUserData() {
+  //get(userdata.php) //restituisce un json con i dati da mettere nelle var/array del js 
+}
 
 //DA PHPiZZARE
 
@@ -522,86 +585,17 @@ $('.slot').bind('contextmenu', function(){//REFINE
 //array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
 
 
+dropChest(0);
 dropChest(1);
 dropChest(2);
 dropChest(3);
 dropChest(4);
 dropChest(5);
-dropChest(0);
 
-
-function updateMainPanel(){
-  mainpanel='<div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>credits: </p></div><div class="subpanelR"><span>'+scala(credits)+'</span><br><br>';
-  
-
-  $('#mainPanel').html(mainpanel+'<br></div>');
-}
 
     //                      0       1       2       3     4         5   6     7
 //array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
-function getGearStats(i){
-  i+=2;
-  var tota=0;
-  var tipi=6;
-  switch(i){
-    case 2: while(tipi>0)tota+=gearArray[--tipi][i];tota/=6;break;
-    default: while(tipi>0)tota+=gearArray[--tipi][i];break;
-  }
-  return tota;
-}
-function updateGearPanel(){
-  gear_goldps=    getGearStats(1);
-  gear_diamsps=   getGearStats(2);
-  gear_clickeff=  getGearStats(3);
-  gear_mf=        getGearStats(4);
-  gear_expps=     getGearStats(5);
 
-  potpanel='';
-  //potion timers
-  if(timerPozioni[1]>0){
-    potpanel+='<span class="potGold">'+scala(gear_goldps)+'</span><span class="neutro"> ['+scala(timerPozioni[1])+']</span><br>';
-    multiGold=2;
-  }else if(timerPozioni[1]<0){
-    timerPozioni[1]=0;
-    potpanel+='<span>'+scala(gear_goldps)+'</span><br>';
-  }else{potpanel+='<span>'+scala(gear_goldps)+'</span><br>';multiGold=1;}
-
-  if(timerPozioni[4]>0){
-    potpanel+='<span class="potDiams">'+scala(gear_diamsps)+'</span><span class="neutro"> ['+scala(timerPozioni[4])+']</span><br>';
-    multiDiam=2;
-  }else if(timerPozioni[4]<0){
-    timerPozioni[4]=0;
-    potpanel+='<span>'+scala(gear_diamsps)+'</span><br>';
-  }else{potpanel+='<span>'+scala(gear_diamsps)+'</span><br>';multiDiam=1;}
-
-  if(timerPozioni[3]>0){
-    potpanel+='<span class="potEff">'+scala(gear_clickeff)+'%</span><span class="neutro"> ['+scala(timerPozioni[3])+']</span><br>';
-    multiEff=2;
-  }else if(timerPozioni[3]<0){
-    timerPozioni[3]=0;
-    potpanel+='<span>'+scala(gear_clickeff)+'%</span><br>';
-  }else{potpanel+='<span>'+scala(gear_clickeff)+'%</span><br>';multiEff=1;}
-
-  if(timerPozioni[0]>0){
-    potpanel+='<span class="potMf">'+scala(gear_mf)+'%</span><span class="neutro"> ['+scala(timerPozioni[0])+']</span><br>';
-    multiMf=2;
-  }else if(timerPozioni[0]<0){
-    timerPozioni[0]=0;
-    potpanel+='<span>'+scala(gear_mf)+'%</span><br>';
-  }else{potpanel+='<span>'+scala(gear_mf)+'%</span><br>';multiMf=1;}
-
-  if(timerPozioni[2]>0){
-    potpanel+='<span class="potExp">'+scala(gear_expps)+'</span><span class="neutro"> ['+scala(timerPozioni[2])+']</span><br>';
-    multiExp=2;
-  }else if(timerPozioni[2]<0){
-    timerPozioni[2]=0;
-    potpanel+='<span>'+scala(gear_expps)+'</span><br>';
-  }else{potpanel+='<span>'+scala(gear_expps)+'</span><br>';multiExp=1;}
-
-
-  $('#gearPanel').html('<div class="div"><br><h3>Gear Stats</h3></div><br><br><div class="subpanelL"><p>Level:</p><p>Attack:</p><p>Defense:</p><p>Critical Chance:</p><p>Magic Find:</p><p>Exp Gain:</p></div><div class="subpanelR"><span>'+scala(getGearStats(0))+'</span><br>'+potpanel+'<br><br></div>');
-
-}
 
 
 
