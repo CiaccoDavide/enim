@@ -155,7 +155,7 @@ border-radius: 2px;
     });
   });
   
-  var gold=diams=0;
+  var wins=losses=0;
   var exp=100,level=credits=0,expmax=180;
   var expps=1,goldps=1,diamsps=0.1,mf=0.5,clickeff=5;
   var gear_expps=0,gear_goldps=0,gear_diamsps=0,gear_mf=0,gear_clickeff=0;
@@ -444,7 +444,7 @@ function updateGearPanel(){
 }
 
 function updateMainPanel(){
-  mainpanel='<div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>credits: </p></div><div class="subpanelR"><span>'+scala(credits)+'</span><br><br>';
+  mainpanel='<div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>rank: </p><p>credits: </p><p>wins/losses: </p></div><div class="subpanelR"><span>'+scala(0)+'</span><br><span>'+scala(credits)+'</span><br><span>'+scala(wins)+'/'+scala(losses)+'</span><br><br>';
   $('#mainPanel').html(mainpanel+'<br></div>');
 }
 
