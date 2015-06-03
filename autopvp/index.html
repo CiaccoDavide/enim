@@ -482,8 +482,8 @@ function dropGear(rar){
         invArray[i][2]=rar;//rarità
         invArray[i][3]=0;//enanchement
         invArray[i][4]=Math.floor((Math.random()*level)+1);//lvl
-        invArray[i][5]=pDD(((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*(rar+invArray[i][3])));//goldps
-        invArray[i][6]=pDD(((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*(rar+invArray[i][3])/100));//diamsps
+        invArray[i][5]=pDD(((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*((rar+1)+invArray[i][3])));//goldps
+        invArray[i][6]=pDD(((((Math.random()*16*invArray[i][4])+16+10*(invArray[i][4]-1))*Math.pow(1.1,invArray[i][4])/16)*((rar+1)+invArray[i][3])));//diamsps
 
         invArray[i][7]=pDD((10/(11-invArray[i][3]))/(7-invArray[i][2]));//eff max_eff=60% (max 10% per gear)
         if(invArray[i][7]>10)invArray[i][7]=10;
