@@ -503,12 +503,12 @@ function drop(){
 }
 function getRar(){
   rar=Math.floor((Math.random()*3600));
-  if(rar<3)         rar=6;
-  else if(rar<40)   rar=5;
-  else if(rar<180)  rar=4;
-  else if(rar<560)  rar=3;
-  else if(rar<1500) rar=2;
-  else              rar=1;
+  if(rar<3)         rar=5;
+  else if(rar<40)   rar=4;
+  else if(rar<180)  rar=3;
+  else if(rar<560)  rar=2;
+  else if(rar<1500) rar=1;
+  else              rar=0;
   return rar;
 }
 function dropPotion(){
@@ -582,14 +582,14 @@ $('.slot').bind('contextmenu', function(){//REFINE
     //                      0       1       2       3     4         5   6     7
 //array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
 
-
+/*
 dropChest(0);
 dropChest(1);
 dropChest(2);
 dropChest(3);
 dropChest(4);
 dropChest(5);
-
+*/
 
     //                      0       1       2       3     4         5   6     7
 //array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
