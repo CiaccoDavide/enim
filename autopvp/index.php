@@ -127,7 +127,7 @@ border-radius: 2px;
   <br>
   <div class="inventory"> -->
   <div class="hr"></div>
-    <div class="div"><h2>Inventory</h2><small>(double left-click to equip/use,right-click to sell)</small></div>
+    <div class="div"><h2>Inventory</h2><small>(double left-click to equip/use,right-click to sell/use)</small></div>
     <div class="slots">
     	
     </div>
@@ -612,8 +612,20 @@ $('.slot').bind('contextmenu', function(){//REFINE
         invArray[i+64*(invpage-1)][0]=-1;
         updateSlotInv(i+64*(invpage-1));
       updateMainPanel();
-      }
-      return false;
+      }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
+        //gold, diams, eff, mf, exp
+        timerPozioni[invArray[i][1]]+=(invArray[i][2]+1);
+        invArray[i+64*(invpage-1)][0]=-1;
+        updateSlotInv(i+64*(invpage-1));
+        updateGearPanel();
+      }else if(invArray[i+64*(invpage-1)][0]==0){//cassa
+        invArray[i+64*(invpage-1)][0]=-1;
+        rarchest=invArray[i+64*(invpage-1)][2];
+        dropGear(rarchest);
+        dropGear(rarchest);
+        dropGear(rarchest);
+        dropPotion();
+      }return false;
 });
 
 
