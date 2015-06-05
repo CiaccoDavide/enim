@@ -155,12 +155,12 @@ border-radius: 2px;
     });
   });
   
+  var username='xenoma';
   var wins=losses=0;
   var exp=100,level=credits=0,expmax=888;
   var expps=1,goldps=1,diamsps=0.1,mf=0.5,clickeff=5;
   var gear_expps=0,gear_goldps=0,gear_diamsps=0,gear_mf=0,gear_clickeff=0;
   var d=h=m=s=0;
-  var globalmulti=1;
   var multiGold=multiDiam=multiExp=multiMf=multiEff=1;
   //gold, diams, eff, mf, exp
   var timerPozioni = new Array(0,0,0,0,0);
@@ -179,11 +179,13 @@ border-radius: 2px;
   initInventario();//inizializza l'array dell'inventario
   updateInventario();//aggiorna il contenuto dell'inventario (grafico)
 
+  downloadInfo();
+  downloadGear();
+  downloadInventario();
   //runtimeLoop();
 
-var mainpanel=potpanel=plurale='';
-updateMainPanel();
-
+  var mainpanel=potpanel=plurale='';
+  updateMainPanel();
 
 
 
@@ -218,6 +220,45 @@ function updateInventario(){
   };
   $('#invnav').html('<small>Page '+invpage+'/'+invmaxpages+' </small>');
 }
+
+
+
+
+function downloadInfo(){
+  $.ajax({
+    url: "./getUserInfo.php?username="+username,
+    dataType: "JSON",
+    success: function(json){
+        exp=json[0];expmax=json[1];level=json[2];rank=json[3];wins=json[4];losses=json[5];credits=json[6];
+        updateMainPanel();
+    }
+  });
+}function downloadGear(){
+  $.ajax({
+    url: "./getUserGear.php?username="+username,
+    dataType: "JSON",
+    success: function(json){
+        for(var i=0;i<6;i++){
+            gearArray[i] = [json[i][0],json[i][1],json[i][2],json[i][3],json[i][4],json[i][5],json[i][6],json[i][7]];
+        }updateGearPanel();
+    }
+  });
+}function downloadInventario(){
+  $.ajax({
+    url: "./getUserInv.php?username="+username,
+    dataType: "JSON",
+    success: function(json){
+        for(var i=0;i<64*invmaxpages;i++){
+            invArray[i] = [json[i][0],json[i][1],json[i][2],json[i][3],json[i][4],json[i][5],json[i][6],json[i][7],json[i][8],json[i][9]];
+        }updateInventario();
+    }
+  });
+}
+
+
+
+
+
 function setInvIcon(i,q,t){
   if(invArray[i+64*(invpage-1)][0]==-1){//empty
     $('#s'+i).removeClass("q6 q1 q2 q3 q4 q5").addClass("q0");
@@ -444,7 +485,7 @@ function updateGearPanel(){
 }
 
 function updateMainPanel(){
-  mainpanel='<div id="username">Username</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>rank: </p><p>credits: </p><p>wins/losses: </p></div><div class="subpanelR"><span>'+scala(0)+'</span><br><span>'+scala(credits)+'</span><br><span>'+scala(wins)+'/'+scala(losses)+'</span><br><br>';
+  mainpanel='<div id="username">'+username+'</div><br><progress id="progressbar" value="'+exp+'" max="'+expmax+'"></progress><div id="level">Level '+scala(level)+' - Exp: '+scala(parseInt(exp))+'/'+scala(expmax)+'</div><div class="subpanelL"><p>rank: </p><p>credits: </p><p>wins/losses: </p></div><div class="subpanelR"><span>'+scala(0)+'</span><br><span>'+scala(credits)+'</span><br><span>'+scala(wins)+'/'+scala(losses)+'</span><br><br>';
   $('#mainPanel').html(mainpanel+'<br></div>');
 }
 
@@ -618,13 +659,13 @@ function ciclo(){
 
 
 function profitExp(){
-  return (1+getGearStats(5))*globalmulti*multiExp;
+  return (1+getGearStats(5))*multiExp;
 }
 function calcMf(){
-  return (0.5+getGearStats(4))*globalmulti*multiMf;
+  return (0.5+getGearStats(4))*multiMf;
 }
 function calcEff(){
-  return (5+getGearStats(3))*globalmulti*multiEff;
+  return (5+getGearStats(3))*multiEff;
 }
 
 /*
