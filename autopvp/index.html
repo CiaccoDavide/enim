@@ -156,7 +156,7 @@ border-radius: 2px;
   });
   
   var wins=losses=0;
-  var exp=100,level=credits=0,expmax=180;
+  var exp=100,level=credits=0,expmax=888;
   var expps=1,goldps=1,diamsps=0.1,mf=0.5,clickeff=5;
   var gear_expps=0,gear_goldps=0,gear_diamsps=0,gear_mf=0,gear_clickeff=0;
   var d=h=m=s=0;
@@ -476,6 +476,7 @@ $('html').bind('contextmenu', function(){
 
 
 function getUserData() {
+  //viene chiamata anche durante l'init!!!
   //get(userdata.php) //restituisce un json con i dati da mettere nelle var/array del js 
 }
 
@@ -575,10 +576,7 @@ $('.slot').bind('contextmenu', function(){//REFINE
 });
 
 
-
-
 //ancora da classificare
-
 
 
     //                      0       1       2       3     4         5   6     7
@@ -595,11 +593,6 @@ dropChest(5);
 
     //                      0       1       2       3     4         5   6     7
 //array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
-
-
-
-
-
 
 
 //main timer loop
@@ -654,16 +647,6 @@ $(window).focus(function(){
 */
 
 //window.open("", "", "width=200, height=100");
-
-
-
-
-
-
-
-
-
-
 
 
 
