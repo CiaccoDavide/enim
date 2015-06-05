@@ -348,65 +348,7 @@ $('#invleft').click(function(){
 $('#invright').click(function(){
   if(invpage<invmaxpages){invpage++;updateInventario();}
 });
-$('.slot').dblclick(function(){
-  id=parseInt((this.id).substring(1));
-  i=id+64*(invpage-1);
-  if(invArray[i][0]==-1){//empty
-  }else if(invArray[i][0]==2){//oggetto
-    tmp=0;
-    tipo=invArray[i][1];
-    if(gearArray[tipo][0]==-1)invArray[i][0]=-1;
-    //if(gearArray[tipo][0]==-1)
-    tmp=gearArray[tipo][0];
-    gearArray[tipo][0]=invArray[i][2];
-    invArray[i][2]=tmp;
-    tmp=gearArray[tipo][1];
-    gearArray[tipo][1]=invArray[i][3];
-    invArray[i][3]=tmp;
-    tmp=gearArray[tipo][2];
-    gearArray[tipo][2]=invArray[i][4];
-    invArray[i][4]=tmp;
-    tmp=gearArray[tipo][3];
-    gearArray[tipo][3]=invArray[i][5];
-    invArray[i][5]=tmp;
-    tmp=gearArray[tipo][4];
-    gearArray[tipo][4]=invArray[i][6];
-    invArray[i][6]=tmp;
-    tmp=gearArray[tipo][5];
-    gearArray[tipo][5]=invArray[i][7];
-    invArray[i][7]=tmp;
-    tmp=gearArray[tipo][6];
-    gearArray[tipo][6]=invArray[i][8];
-    invArray[i][8]=tmp;
-    tmp=gearArray[tipo][7];
-    gearArray[tipo][7]=invArray[i][9];
-    invArray[i][9]=tmp;
 
-    gear_goldps=0;
-    gear_diamsps=0;
-    gear_clickeff=0;
-    gear_mf=0;
-    gear_expps=0;
-
-    updateGearSlots(tipo);
-    updateInventario();
-    //updateSlotInv(i);
-    updateGearPanel();
-  }else if(invArray[i][0]==1){//pozione small fat awesome 10 20 30
-    //gold, diams, eff, mf, exp
-    timerPozioni[invArray[i][1]]+=(invArray[i][2]+1);
-    invArray[i][0]=-1;
-    updateSlotInv(i);
-    updateGearPanel();
-  }else if(invArray[i][0]==0){//cassa
-    invArray[i][0]=-1;
-    rarchest=invArray[i][2];
-    dropGear(rarchest);
-    dropGear(rarchest);
-    dropGear(rarchest);
-    dropPotion();
-  }
-});
 function updateGearSlots(gear){
   switch(gear){
     case 0: $('#boots').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[0][0]+1));$('#boots').css({opacity:1}); break;
@@ -522,7 +464,65 @@ function getUserData() {
 }
 
 //DA PHPiZZARE
+$('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica tutto l'inv ma solo uno slot)
+  id=parseInt((this.id).substring(1));
+  i=id+64*(invpage-1);
+  if(invArray[i][0]==-1){//empty
+  }else if(invArray[i][0]==2){//oggetto
+    tmp=0;
+    tipo=invArray[i][1];
+    if(gearArray[tipo][0]==-1)invArray[i][0]=-1;
+    //if(gearArray[tipo][0]==-1)
+    tmp=gearArray[tipo][0];
+    gearArray[tipo][0]=invArray[i][2];
+    invArray[i][2]=tmp;
+    tmp=gearArray[tipo][1];
+    gearArray[tipo][1]=invArray[i][3];
+    invArray[i][3]=tmp;
+    tmp=gearArray[tipo][2];
+    gearArray[tipo][2]=invArray[i][4];
+    invArray[i][4]=tmp;
+    tmp=gearArray[tipo][3];
+    gearArray[tipo][3]=invArray[i][5];
+    invArray[i][5]=tmp;
+    tmp=gearArray[tipo][4];
+    gearArray[tipo][4]=invArray[i][6];
+    invArray[i][6]=tmp;
+    tmp=gearArray[tipo][5];
+    gearArray[tipo][5]=invArray[i][7];
+    invArray[i][7]=tmp;
+    tmp=gearArray[tipo][6];
+    gearArray[tipo][6]=invArray[i][8];
+    invArray[i][8]=tmp;
+    tmp=gearArray[tipo][7];
+    gearArray[tipo][7]=invArray[i][9];
+    invArray[i][9]=tmp;
 
+    gear_goldps=0;
+    gear_diamsps=0;
+    gear_clickeff=0;
+    gear_mf=0;
+    gear_expps=0;
+
+    updateGearSlots(tipo);
+    updateInventario();
+    //updateSlotInv(i);
+    updateGearPanel();
+  }else if(invArray[i][0]==1){//pozione small fat awesome 10 20 30
+    //gold, diams, eff, mf, exp
+    timerPozioni[invArray[i][1]]+=(invArray[i][2]+1);
+    invArray[i][0]=-1;
+    updateSlotInv(i);
+    updateGearPanel();
+  }else if(invArray[i][0]==0){//cassa
+    invArray[i][0]=-1;
+    rarchest=invArray[i][2];
+    dropGear(rarchest);
+    dropGear(rarchest);
+    dropGear(rarchest);
+    dropPotion();
+  }
+});
 $('#sort').click(function(){//php sort and refresh grafico dell'inv
   invArray.sort(function(a,b){return b[2]-a[2];});
   invArray.sort(function(a,b){return b[1]-a[1];});
