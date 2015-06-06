@@ -239,8 +239,10 @@ function downloadInfo(){
     dataType: "JSON",
     success: function(json){
         for(var i=0;i<6;i++){
-            gearArray[i] = [json[i][0],json[i][1],json[i][2],json[i][3],json[i][4],json[i][5],json[i][6],json[i][7]];
-        }updateGearPanel();
+          gearArray[i] = [json[i][0],json[i][1],json[i][2],json[i][3],json[i][4],json[i][5],json[i][6],json[i][7]];
+          timerPozioni[i] = json[6][i];
+        }
+        updateGearPanel();
     }
   });
 }function downloadInventario(){
@@ -462,11 +464,26 @@ function getUserData() {
   //viene chiamata anche durante l'init!!!
   //get(userdata.php) //restituisce un json con i dati da mettere nelle var/array del js 
 }
+function invDoubleClick(i){
+  //send php?slot=i
+  //in base al return aggiorna solo una parte dell'interfaccia (oppure aggiorna tutto?):
+  // - cassa: tutto l'inv
+  // - pozione: slot + gearpanel
+  // - gear: slot + gearpanel
 
+  // - per il refine (altra funzione invRightClick(i); ): slot + mainpanel(i credits)
+}
 //DA PHPiZZARE
 $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica tutto l'inv ma solo uno slot)
+
   id=parseInt((this.id).substring(1));
   i=id+64*(invpage-1);
+
+  invDoubleClick(i);
+
+
+
+
   if(invArray[i][0]==-1){//empty
   }else if(invArray[i][0]==2){//oggetto
     tmp=0;

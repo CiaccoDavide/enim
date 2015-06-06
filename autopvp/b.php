@@ -36,17 +36,32 @@ echo $username.' vs '.$opponent.'<br>';
 	$multi_atk=$multi_def=1;
 	for($i=0;$i<6;$i++)
 		$user_atk+=($user_gear[i][1]+1)*$user_gear[i][3];
+	if($user_gear[6][0]>0)$multi_atk=2;
 	$user_atk*=$multi_atk;
 
 	$user_def=0;
 	$multi_def=1;
 	for($i=0;$i<6;$i++)
 		$user_def+=($user_gear[i][1]+1)*$user_gear[i][4];
+	if($user_gear[6][1]>0)$multi_def=2;
 	$user_atk*=$multi_def;
 
 
 
 
 	echo '<br>'.$user_atk;
+
+
+
+
+
+
+
+
+
+	/*alla fine della battaglia:
+		-sottrai 1 a tutti i potion timers a meno che non siano già a 0
+	*/
+
 
 ?>
