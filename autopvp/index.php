@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
+=======
+<!DOCTYPE html>
+>>>>>>> parent of ae97851... Merge remote-tracking branch 'origin/master'
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="./tooltipster.css" />
@@ -724,6 +728,7 @@ $(window).focus(function(){
 
 </body>
 </html>
+<<<<<<< HEAD
 =======
 <!DOCTYPE html>
 <html>
@@ -1451,3 +1456,5 @@ $(window).focus(function(){
 
 </body>
 </html>
+=======
+>>>>>>> parent of ae97851... Merge remote-tracking branch 'origin/master'
