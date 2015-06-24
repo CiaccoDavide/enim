@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,8 +67,8 @@ border-radius: 2px;
 #level{margin-top:-21px;margin-bottom: 20px;text-shadow:0 0 3px #000;}
 
 .minions{overflow-y:auto;}
-.minions::-webkit-scrollbar { 
-    display: none; 
+.minions::-webkit-scrollbar {
+    display: none;
 }
 
 #boots{opacity:0.3;background: url("./gear_Boots.png");}
@@ -130,16 +129,16 @@ border-radius: 2px;
   <div class="hr"></div>
     <div class="div"><h2>Inventory</h2><small>(double left-click to equip/use,right-click to sell/use)</small></div>
     <div class="slots">
-    	
+
     </div>
     <div class="div"><a href="#" id="invleft"><</a> <span id="invnav"></span> <a href="#" id="invright">></a><span id="sort">sort</span><br><br></div>
-    
+
   </div>
 
   <div class="minions">
     <div class="div"><h2>Title</h2><small>Sub-Title</small></div><br><br><br><br>
     <div class="list">
-	    
+
     </div>
   </div>
 
@@ -155,7 +154,7 @@ border-radius: 2px;
       theme: "minimal"
     });
   });
-  
+
   var username='xenoma';
   var wins=losses=0;
   var exp=100,level=credits=0,expmax=888;
@@ -176,7 +175,7 @@ border-radius: 2px;
   gearArray[3] = new Array(-1,0,0,0,0,0,0,0);
   gearArray[4] = new Array(-1,0,0,0,0,0,0,0);
   gearArray[5] = new Array(-1,0,0,0,0,0,0,0);
-   
+
   initInventario();//inizializza l'array dell'inventario
   updateInventario();//aggiorna il contenuto dell'inventario (grafico)
 
@@ -457,13 +456,13 @@ function scala(num){
 }
 //right click disabled
 $('html').bind('contextmenu', function(){
-      return false; 
+      return false;
 });
 
 
 function getUserData() {
   //viene chiamata anche durante l'init!!!
-  //get(userdata.php) //restituisce un json con i dati da mettere nelle var/array del js 
+  //get(userdata.php) //restituisce un json con i dati da mettere nelle var/array del js
 }
 function invDoubleClick(i){
   //send php?slot=i
@@ -795,8 +794,8 @@ border-radius: 2px;
 #level{margin-top:-21px;margin-bottom: 20px;text-shadow:0 0 3px #000;}
 
 .minions{overflow-y:auto;}
-.minions::-webkit-scrollbar { 
-    display: none; 
+.minions::-webkit-scrollbar {
+    display: none;
 }
 
 #boots{opacity:0.3;background: url("./gear_Boots.png");}
@@ -857,16 +856,16 @@ border-radius: 2px;
   <div class="hr"></div>
     <div class="div"><h2>Inventory</h2><small>(double left-click to equip/use,right-click to sell/use)</small></div>
     <div class="slots">
-    	
+
     </div>
     <div class="div"><a href="#" id="invleft"><</a> <span id="invnav"></span> <a href="#" id="invright">></a><span id="sort">sort</span><br><br></div>
-    
+
   </div>
 
   <div class="minions">
     <div class="div"><h2>Title</h2><small>Sub-Title</small></div><br><br><br><br>
     <div class="list">
-	    
+
     </div>
   </div>
 
@@ -882,7 +881,7 @@ border-radius: 2px;
       theme: "minimal"
     });
   });
-  
+
   var username='xenoma';
   var wins=losses=0;
   var exp=100,level=credits=0,expmax=888;
@@ -903,7 +902,7 @@ border-radius: 2px;
   gearArray[3] = new Array(-1,0,0,0,0,0,0,0);
   gearArray[4] = new Array(-1,0,0,0,0,0,0,0);
   gearArray[5] = new Array(-1,0,0,0,0,0,0,0);
-   
+
   initInventario();//inizializza l'array dell'inventario
   updateInventario();//aggiorna il contenuto dell'inventario (grafico)
 
@@ -1184,13 +1183,13 @@ function scala(num){
 }
 //right click disabled
 $('html').bind('contextmenu', function(){
-      return false; 
+      return false;
 });
 
 
 function getUserData() {
   //viene chiamata anche durante l'init!!!
-  //get(userdata.php) //restituisce un json con i dati da mettere nelle var/array del js 
+  //get(userdata.php) //restituisce un json con i dati da mettere nelle var/array del js
 }
 function invDoubleClick(i){
   //send php?slot=i
@@ -1452,4 +1451,3 @@ $(window).focus(function(){
 
 </body>
 </html>
->>>>>>> origin/master
