@@ -387,40 +387,40 @@ function updateGearPanel(){
   potpanel='';
   //potion timers
   if(timerPozioni[1]>0){
-    potpanel+='<span class="potGold">'+scala(gear_goldps)+'</span><span class="neutro"> ['+scala(timerPozioni[1])+']</span><br>';
-    multiGold=2;
+  multiGold=2;
+    potpanel+='<span class="potGold">'+scala(gear_goldps*2)+'</span><span class="neutro"> ['+scala(timerPozioni[1])+']</span><br>';
   }else if(timerPozioni[1]<0){
     timerPozioni[1]=0;
     potpanel+='<span>'+scala(gear_goldps)+'</span><br>';
   }else{potpanel+='<span>'+scala(gear_goldps)+'</span><br>';multiGold=1;}
 
   if(timerPozioni[4]>0){
-    potpanel+='<span class="potDiams">'+scala(gear_diamsps)+'</span><span class="neutro"> ['+scala(timerPozioni[4])+']</span><br>';
-    multiDiam=2;
+  multiDiam=2;
+    potpanel+='<span class="potDiams">'+scala(gear_diamsps*2)+'</span><span class="neutro"> ['+scala(timerPozioni[4])+']</span><br>';
   }else if(timerPozioni[4]<0){
     timerPozioni[4]=0;
     potpanel+='<span>'+scala(gear_diamsps)+'</span><br>';
   }else{potpanel+='<span>'+scala(gear_diamsps)+'</span><br>';multiDiam=1;}
 
   if(timerPozioni[3]>0){
-    potpanel+='<span class="potEff">'+scala(gear_clickeff)+'%</span><span class="neutro"> ['+scala(timerPozioni[3])+']</span><br>';
-    multiEff=2;
+  multiEff=2;
+    potpanel+='<span class="potEff">'+scala(gear_clickeff*2)+'%</span><span class="neutro"> ['+scala(timerPozioni[3])+']</span><br>';
   }else if(timerPozioni[3]<0){
     timerPozioni[3]=0;
     potpanel+='<span>'+scala(gear_clickeff)+'%</span><br>';
   }else{potpanel+='<span>'+scala(gear_clickeff)+'%</span><br>';multiEff=1;}
 
   if(timerPozioni[0]>0){
+      multiMf=2;
     potpanel+='<span class="potMf">'+scala(gear_mf)+'%</span><span class="neutro"> ['+scala(timerPozioni[0])+']</span><br>';
-    multiMf=2;
   }else if(timerPozioni[0]<0){
     timerPozioni[0]=0;
     potpanel+='<span>'+scala(gear_mf)+'%</span><br>';
   }else{potpanel+='<span>'+scala(gear_mf)+'%</span><br>';multiMf=1;}
 
   if(timerPozioni[2]>0){
-    potpanel+='<span class="potExp">'+scala(gear_expps)+'</span><span class="neutro"> ['+scala(timerPozioni[2])+']</span><br>';
-    multiExp=2;
+      multiExp=2;
+      potpanel+='<span class="potExp">'+scala(gear_expps*2)+'</span><span class="neutro"> ['+scala(timerPozioni[2])+']</span><br>';
   }else if(timerPozioni[2]<0){
     timerPozioni[2]=0;
     potpanel+='<span>'+scala(gear_expps)+'</span><br>';
