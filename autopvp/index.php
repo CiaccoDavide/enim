@@ -507,9 +507,6 @@ $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica
 
   invDoubleClick(i);
 
-
-
-
   if(invArray[i][0]==-1){//empty
   }else if(invArray[i][0]==2){//oggetto
     tmp=0;
@@ -564,6 +561,7 @@ $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica
     dropGear(rarchest);
     dropGear(rarchest);
     dropPotion();
+    updateInventario();
   }
 });
 $('#sort').click(function(){//php sort and refresh grafico dell'inv
