@@ -179,6 +179,8 @@ border-radius: 2px;
   initInventario();//inizializza l'array dell'inventario
   updateInventario();//aggiorna il contenuto dell'inventario (grafico)
 
+  initGears();
+
   downloadInfo();
   downloadGear();
   downloadInventario();
@@ -188,7 +190,14 @@ border-radius: 2px;
   updateMainPanel();
 
 
-
+  function initGears(){
+      $('#boots').tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
+      $('#armor').tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
+      $('#helm').tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
+      $('#gaunlet').tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
+      $('#ring').tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
+      $('#pickaxe').tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
+  }
 
 
 //DA TENERE (tutte le azioni grafiche)
@@ -352,13 +361,30 @@ $('#invright').click(function(){
 });
 
 function updateGearSlots(gear){
+    tipo='';rar='';
+    switch(gear){
+      case 0: tipo='Boots'; break;
+      case 1: tipo='Armor'; break;
+      case 2: tipo='Helm'; break;
+      case 3: tipo='Gaunlet'; break;
+      case 4: tipo='Ring'; break;
+      case 5: tipo='Pickaxe'; break;
+    }rar='';
+    switch(gearArray[gear][0]){
+      case 0: rar='Common'; break;
+      case 1: rar='Magic'; break;
+      case 2: rar='Rare'; break;
+      case 3: rar='Epic'; break;
+      case 4: rar='Legendary'; break;
+      case 5: rar='Unique'; break;
+    }
   switch(gear){
-    case 0: $('#boots').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[0][0]+1));$('#boots').css({opacity:1}); break;
-    case 1: $('#armor').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[1][0]+1));$('#armor').css({opacity:1}); break;
-    case 2: $('#helm').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[2][0]+1));$('#helm').css({opacity:1}); break;
-    case 3: $('#gaunlet').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[3][0]+1));$('#gaunlet').css({opacity:1}); break;
-    case 4: $('#ring').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[4][0]+1));$('#ring').css({opacity:1}); break;
-    case 5: $('#pickaxe').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[5][0]+1));$('#pickaxe').css({opacity:1}); break;
+    case 0: $('#boots').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[0][0]+1));$('#boots').css({opacity:1}).tooltipster('content','<b id="q'+gearArray[gear][0]+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+    case 1: $('#armor').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[1][0]+1));$('#armor').css({opacity:1}).tooltipster('content','<b id="q'+gearArray[gear][0]+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+    case 2: $('#helm').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[2][0]+1));$('#helm').css({opacity:1}).tooltipster('content','<b id="q'+gearArray[gear][0]+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+    case 3: $('#gaunlet').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[3][0]+1));$('#gaunlet').css({opacity:1}).tooltipster('content','<b id="q'+gearArray[gear][0]+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+    case 4: $('#ring').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[4][0]+1));$('#ring').css({opacity:1}).tooltipster('content','<b id="q'+gearArray[gear][0]+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+    case 5: $('#pickaxe').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[5][0]+1));$('#pickaxe').css({opacity:1}).tooltipster('content','<b id="q'+gearArray[gear][0]+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
   }
 }
 
