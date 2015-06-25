@@ -263,7 +263,7 @@ function downloadInfo(){
             invArray[i] = [json[i][0],json[i][1],json[i][2],json[i][3],json[i][4],json[i][5],json[i][6],json[i][7],json[i][8],json[i][9]];
         }updateInventario();
     }
-  });
+  });updateInventario();
 }
 
 
@@ -555,13 +555,20 @@ $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica
     updateSlotInv(i);
     updateGearPanel();
   }else if(invArray[i][0]==0){//cassa
-    invArray[i][0]=-1;
+      $.ajax({
+        url: "./dbl.php?u="+username+"&s="+i,
+        dataType: "JSON",
+        success: function(json){
+            downloadInventario();
+        }
+      });
+    /*invArray[i][0]=-1;
     rarchest=invArray[i][2];
     dropGear(rarchest);
     dropGear(rarchest);
     dropGear(rarchest);
     dropPotion();
-    updateInventario();
+    updateInventario();*/
   }
 });
 $('#sort').click(function(){//php sort and refresh grafico dell'inv
