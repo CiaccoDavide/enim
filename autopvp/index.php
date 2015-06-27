@@ -556,7 +556,7 @@ $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica
     updateGearPanel();
   }else if(invArray[i][0]==0){//cassa
       $.ajax({
-        url: "./dbl.php?u="+username+"&s="+i,
+        url: "./dbl.php?u="+username+"&s="+i+"&l="+level,
         success: function(){
             downloadInventario();
         }
