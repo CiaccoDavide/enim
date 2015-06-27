@@ -284,7 +284,7 @@ function setInvIcon(i,q,t){
       case 2: tipo='Helm'; break;
       case 3: tipo='Gaunlet'; break;
       case 4: tipo='Ring'; break;
-      case 5: tipo='Pickaxe'; break;
+      case 5: tipo='Sword'; break;
     }rar='';
     switch(q-1){
       case 0: rar='Common'; break;
@@ -368,7 +368,7 @@ function updateGearSlots(gear){
       case 2: tipo='Helm'; break;
       case 3: tipo='Gaunlet'; break;
       case 4: tipo='Ring'; break;
-      case 5: tipo='Pickaxe'; break;
+      case 5: tipo='Sword'; break;
     }rar='';
     switch(gearArray[gear][0]){
       case 0: rar='Common'; break;
