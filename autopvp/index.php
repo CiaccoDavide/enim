@@ -263,7 +263,7 @@ function downloadInfo(){
             invArray[i] = [json[i][0],json[i][1],json[i][2],json[i][3],json[i][4],json[i][5],json[i][6],json[i][7],json[i][8],json[i][9]];
         }updateInventario();
     }
-  });updateInventario();
+  });
 }
 
 
