@@ -557,8 +557,7 @@ $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica
   }else if(invArray[i][0]==0){//cassa
       $.ajax({
         url: "./dbl.php?u="+username+"&s="+i,
-        dataType: "JSON",
-        success: function(json){
+        success: function(){
             downloadInventario();
         }
       });
