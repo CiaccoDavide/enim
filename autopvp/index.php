@@ -76,7 +76,7 @@ border-radius: 2px;
 #helm{opacity:0.3;background: url("./gear_Helm.png");}
 #gaunlet{opacity:0.3;background: url("./gear_Gaunlet.png");}
 #ring{opacity:0.3;background: url("./gear_Ring.png");}
-#pickaxe{opacity:0.3;background: url("./gear_Pickaxe.png");}
+#sword{opacity:0.3;background: url("./gear_Sword.png");}
 
 .q0{border:solid 1px #333; !important}
 .q1{border:solid 1px #666; !important}
@@ -121,7 +121,7 @@ border-radius: 2px;
   </div>
   <div class="gear">
     <h2>Gear</h2><br>
-    <div class="invslot"><span id="boots" class="q0"></span><span id="armor" class="q0"></span><span id="helm" class="q0"></span><span id="gaunlet" class="q0"></span><span id="ring" class="q0"></span><span id="pickaxe" class="q0"></span></div>
+    <div class="invslot"><span id="boots" class="q0"></span><span id="armor" class="q0"></span><span id="helm" class="q0"></span><span id="gaunlet" class="q0"></span><span id="ring" class="q0"></span><span id="sword" class="q0"></span></div>
     <span id="gearPanel"></span>
 <!--  </div>
   <br>
@@ -196,7 +196,7 @@ border-radius: 2px;
       $('#helm').tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
       $('#gaunlet').tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
       $('#ring').tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
-      $('#pickaxe').tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
+      $('#sword').tooltipster({content: $('<i>Empty slot</i>'),contentAsHTML:true});
   }
 
 
@@ -384,7 +384,7 @@ function updateGearSlots(gear){
     case 2: $('#helm').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[2][0]+1));$('#helm').css({opacity:1}).tooltipster('content','<b id="q'+gearArray[gear][0]+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
     case 3: $('#gaunlet').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[3][0]+1));$('#gaunlet').css({opacity:1}).tooltipster('content','<b id="q'+gearArray[gear][0]+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
     case 4: $('#ring').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[4][0]+1));$('#ring').css({opacity:1}).tooltipster('content','<b id="q'+gearArray[gear][0]+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
-    case 5: $('#pickaxe').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[5][0]+1));$('#pickaxe').css({opacity:1}).tooltipster('content','<b id="q'+gearArray[gear][0]+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+    case 5: $('#sword').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[5][0]+1));$('#sword').css({opacity:1}).tooltipster('content','<b id="q'+gearArray[gear][0]+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
   }
 }
 
