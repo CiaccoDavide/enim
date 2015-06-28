@@ -56,7 +56,7 @@
 		//store back the $inv
 		$invjson=json_encode($inv);
 			$sql="UPDATE inventories SET inventory='$invjson' WHERE username='$username'";
-			$result=mysqli_query($db, $sql);
+			mysqli_query($db, $sql);
 		echo $invjson;
 	}else if($inv[$slot][0]==1){//pozione
 

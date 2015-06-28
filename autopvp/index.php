@@ -550,6 +550,13 @@ $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica
     updateGearPanel();
   }else if(invArray[i][0]==1){//pozione small fat awesome 10 20 30
     //gold, diams, eff, mf, exp
+    /*
+    $.ajax({
+      url: "./dbl.php?u="+username+"&s="+i,
+      success: function(){
+          downloadInventario();
+      }
+    });*/
     timerPozioni[invArray[i][1]]+=(invArray[i][2]+1);
     invArray[i][0]=-1;
     updateSlotInv(i);
@@ -571,10 +578,20 @@ $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica
   }
 });
 $('#sort').click(function(){//php sort and refresh grafico dell'inv
+    $.ajax({
+      url: "./sort.php?u="+username,
+      dataType: "JSON",
+      success: function(json){
+          for(var i=0;i<64*invmaxpages;i++){
+              invArray[i] = [json[i][0],json[i][1],json[i][2],json[i][3],json[i][4],json[i][5],json[i][6],json[i][7],json[i][8],json[i][9]];
+          }updateInventario();
+      }
+    });
+/*
   invArray.sort(function(a,b){return b[2]-a[2];});
   invArray.sort(function(a,b){return b[1]-a[1];});
   invArray.sort(function(a,b){return b[0]-a[0];});
-  updateInventario();
+  updateInventario();*/
 });
 
 
