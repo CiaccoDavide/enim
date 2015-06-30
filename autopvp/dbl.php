@@ -11,6 +11,7 @@
 
 	$inv=json_decode($row['inventory'], true);
 
+	$tipo=$inv[$slot][1];//usato da pozioni e gear
 	$rar=$inv[$slot][2];
 
 	if($inv[$slot][0]==0){//cassa
@@ -57,8 +58,26 @@
 		$invjson=json_encode($inv);
 			$sql="UPDATE inventories SET inventory='$invjson' WHERE username='$username'";
 			mysqli_query($db, $sql);
-		echo $invjson;
 	}else if($inv[$slot][0]==1){//pozione
+
+		$inv[$slot][0]=-1;//free used potion slot
+
+
+		$sql2="SELECT gear FROM gears WHERE username='$username'";
+		$result2=mysqli_query($db, $sql2);
+		$row2=mysqli_fetch_array($result2);
+		$gear=json_decode($row2['gear'], true);
+
+		$gear[6][$tipo]+=($rar+1);
+
+		$invjson=json_encode($inv);
+			$sql="UPDATE inventories SET inventory='$invjson' WHERE username='$username'";
+			mysqli_query($db, $sql);
+		$gearjson=json_encode($gear);
+			$sql="UPDATE gears SET gear='$gearjson' WHERE username='$username'";
+			mysqli_query($db, $sql);
+
+
 
 	}else if($inv[$slot][0]==2){//gear
 
