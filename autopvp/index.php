@@ -94,10 +94,22 @@ border-radius: 2px;
 #q5{color:#FF3C35;}
 #q6{color:#FFA347;}
 
+.m0{color:#bbb;}
+.m1{color:#04A3E4;}
+.m2{color:#cFcF14;}
+.m3{color:#D107FF;}
+.m4{color:#FF3C35;}
+.m5{color:#FFA347;}
+
 
 .hr{width:330px;height:1px;background:#333;position:absolute;top:250px;}
 #sort{text-decoration:none;position: absolute;bottom:8px;right:8px}
 #sort:hover{cursor:pointer;text-decoration:underline;}
+#actions{text-decoration:none;position: absolute;top:260px;left:8px}
+#actions:hover{cursor:pointer;text-decoration:underline;}
+.actions{text-decoration:none;}
+.actions:hover{cursor:pointer;text-decoration:underline;}
+#actionslist{text-align:left;margin-top:-100px;border: solid 1px #333;padding:8px;box-shadow:inset 0 0 3px 0 #000;background:#111;}
 
 .meglio{color:#3CeF65;}
 .neutro{color:#999;}
@@ -131,7 +143,8 @@ border-radius: 2px;
     <div class="slots">
 
     </div>
-    <div class="div"><a href="#" id="invleft"><</a> <span id="invnav"></span> <a href="#" id="invright">></a><span id="sort">sort</span><br><br></div>
+    <div class="div"><small id="actions">actions<span id="actionslist"><b><i>Actions:</i></b><br><small> - </small><small id="action0" class="actions">Drink all potions</small><br><small> - </small><small id="action1" class="actions">Open all chests</small><br><small> - </small><small id="action2" class="actions m0">Refine all Common Items</small><br><small> - </small><small id="action3" class="actions m1">Refine all Magic Items</small><br><small> - </small><small id="action4" class="actions m2">Refine all Rare Items</small><br><small> - </small><small id="action5" class="actions m3">Refine all Epic Items</small><br><small> - </small><small id="action6" class="actions m4">Refine all Legendary Items</small><br><small> - </small><small id="action7" class="actions m5">Refine all Unique Items</small></span></small>
+        <a href="#" id="invleft"><</a> <span id="invnav"></span> <a href="#" id="invright">></a><span id="sort">sort</span><br><br></div>
 
   </div>
 
@@ -154,6 +167,18 @@ border-radius: 2px;
       theme: "minimal"
     });
   });
+
+/*
+  $('#actions').tooltipster({
+  		animation: 'grow',
+  		content: 'North',
+  		position: 'top',
+      trigger: 'click',
+      content: $('<b><i>Actions:</i></b><br><small> - </small><small id="action0" class="actions">Drink all potions</small><br><small> - </small><small id="action1" class="actions">Open all chests</small><br><small> - </small><small id="action2" class="actions m0">Refine all Common Items</small><br><small> - </small><small id="action3" class="actions m1">Refine all Magic Items</small><br><small> - </small><small id="action4" class="actions m2">Refine all Rare Items</small><br><small> - </small><small id="action5" class="actions m3">Refine all Epic Items</small><br><small> - </small><small id="action6" class="actions m4">Refine all Legendary Items</small><br><small> - </small><small id="action7" class="actions m5">Refine all Unique Items</small>'),
+      contentAsHTML:true
+  });*/
+  $('#actionslist').hide();
+   $('#actions').click(function(){$('#actionslist').toggle("slow");});
 
   var username='xenoma';
   var wins=losses=0;
@@ -297,10 +322,13 @@ function setInvIcon(i,q,t){
     }
     $('#s'+i).css({'background':'url("./inv_'+tipo+'.png")'});
 
-    var diffe=pDD(invArray[i+64*(invpage-1)][5]-gearArray[t][3]);
+        stats='';
+    var diffe=pDD(invArray[i+64*(invpage-1)][4]-gearArray[t][2]);
     if(diffe>0)colores='meglio">(+'+scala(diffe)+')';else if(diffe<0)colores='peggio">('+scala(diffe)+')';else colores='neutro">';
+    stats+='<i>Level '+scala(invArray[i+64*(invpage-1)][4])+'</i> <small class="'+colores+'</small><br><small>';
 
-    stats='';
+    diffe=pDD(invArray[i+64*(invpage-1)][5]-gearArray[t][3]);
+    if(diffe>0)colores='meglio">(+'+scala(diffe)+')';else if(diffe<0)colores='peggio">('+scala(diffe)+')';else colores='neutro">';
     stats+='Atk: '+scala(invArray[i+64*(invpage-1)][5])+' <span class="'+colores+'</span><br>';
     diffe=invArray[i+64*(invpage-1)][6]-gearArray[t][4];
     if(diffe>0)colores='meglio">(+'+scala(diffe)+')';else if(diffe<0)colores='peggio">('+scala(diffe)+')';else colores='neutro">';
@@ -315,7 +343,7 @@ function setInvIcon(i,q,t){
     if(diffe>0)colores='meglio">(+'+scala(diffe)+')';else if(diffe<0)colores='peggio">('+scala(diffe)+')';else colores='neutro">';
     stats+='Exp: '+scala(invArray[i+64*(invpage-1)][9])+' <span class="'+colores+'</span><br>';
 
-    $('#s'+i).tooltipster('content','<b id="q'+q+'">'+rar+' '+tipo+' +'+invArray[i+64*(invpage-1)][3]+'</b><br><i>Level '+scala(invArray[i+64*(invpage-1)][4])+'</i><br><small>'+stats+'</small>');
+    $('#s'+i).tooltipster('content','<b id="q'+q+'">'+rar+' '+tipo+' +'+invArray[i+64*(invpage-1)][3]+'</b><br>'+stats+'</small>');
   }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
     qual='';q-=1;
     switch(q){
