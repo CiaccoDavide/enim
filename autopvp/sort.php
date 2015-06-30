@@ -11,10 +11,10 @@
 
         usort($inv, function($a, $b) {
             return $b[2] - $a[2];
-        });
+        });/*
         usort($inv, function($a, $b) {
             return $b[1] - $a[1];
-        });
+        });*/
         usort($inv, function($a, $b) {
             return $b[0] - $a[0];
         });
