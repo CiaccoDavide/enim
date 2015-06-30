@@ -248,8 +248,9 @@ function downloadInfo(){
     dataType: "JSON",
     success: function(json){
         for(var i=0;i<6;i++){
-          gearArray[i] = [json[i][0],json[i][1],json[i][2],json[i][3],json[i][4],json[i][5],json[i][6],json[i][7]];
+          gearArray[i] = new Array(json[i][0],json[i][1],json[i][2],json[i][3],json[i][4],json[i][5],json[i][6],json[i][7]);
           timerPozioni[i] = json[6][i];
+          updateGearSlots(i);
         }
         updateGearPanel();
     }
@@ -377,15 +378,27 @@ function updateGearSlots(gear){
       case 3: rar='Epic'; break;
       case 4: rar='Legendary'; break;
       case 5: rar='Unique'; break;
+      default: rar='Empty'; break;
     }
-  switch(gear){
-    case 0: $('#boots').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[0][0]+1));$('#boots').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
-    case 1: $('#armor').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[1][0]+1));$('#armor').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
-    case 2: $('#helm').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[2][0]+1));$('#helm').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
-    case 3: $('#gaunlet').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[3][0]+1));$('#gaunlet').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
-    case 4: $('#ring').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[4][0]+1));$('#ring').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
-    case 5: $('#sword').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[5][0]+1));$('#sword').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
-  }
+    if(gearArray[gear][0]==-1){
+        switch(gear){
+            case 0: $('#boots').removeClass("q0 q1 q2 q3 q4 q5 q6");$('#boots').css({opacity:0.3}).tooltipster('content','<i>Empty slot</i>'); break;
+            case 1: $('#armor').removeClass("q0 q1 q2 q3 q4 q5 q6");$('#armor').css({opacity:0.3}).tooltipster('content','<i>Empty slot</i>'); break;
+            case 2: $('#helm').removeClass("q0 q1 q2 q3 q4 q5 q6");$('#helm').css({opacity:0.3}).tooltipster('content','<i>Empty slot</i>'); break;
+            case 3: $('#gaunlet').removeClass("q0 q1 q2 q3 q4 q5 q6");$('#gaunlet').css({opacity:0.3}).tooltipster('content','<i>Empty slot</i>'); break;
+            case 4: $('#ring').removeClass("q0 q1 q2 q3 q4 q5 q6");$('#ring').css({opacity:0.3}).tooltipster('content','<i>Empty slot</i>'); break;
+            case 5: $('#sword').removeClass("q0 q1 q2 q3 q4 q5 q6");$('#sword').css({opacity:0.3}).tooltipster('content','<i>Empty slot</i>'); break;
+        }
+    }else{
+        switch(gear){
+            case 0: $('#boots').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[0][0]+1));$('#boots').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+            case 1: $('#armor').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[1][0]+1));$('#armor').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+            case 2: $('#helm').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[2][0]+1));$('#helm').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+            case 3: $('#gaunlet').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[3][0]+1));$('#gaunlet').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+            case 4: $('#ring').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[4][0]+1));$('#ring').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+            case 5: $('#sword').removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+(gearArray[5][0]+1));$('#sword').css({opacity:1}).tooltipster('content','<b id="q'+(gearArray[gear][0]+1)+'">'+rar+' '+tipo+' +'+gearArray[gear][1]+'</b><br><i>Level '+scala(gearArray[gear][2])+'</i><br><small>Atk: '+scala(gearArray[gear][3])+' <br>Def: '+scala(gearArray[gear][4])+' <br>Crit: '+scala(gearArray[gear][5])+'%<br>M.Find: '+scala(gearArray[gear][6])+'%<br>Exp: '+scala(gearArray[gear][7])+' <br></small>'); break;
+        }
+    }
 }
 
 function updateSlotInv(i){
@@ -509,45 +522,19 @@ $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica
 
   if(invArray[i][0]==-1){//empty
   }else if(invArray[i][0]==2){//oggetto
-    tmp=0;
-    tipo=invArray[i][1];
-    if(gearArray[tipo][0]==-1)invArray[i][0]=-1;
-    //if(gearArray[tipo][0]==-1)
-    tmp=gearArray[tipo][0];
-    gearArray[tipo][0]=invArray[i][2];
-    invArray[i][2]=tmp;
-    tmp=gearArray[tipo][1];
-    gearArray[tipo][1]=invArray[i][3];
-    invArray[i][3]=tmp;
-    tmp=gearArray[tipo][2];
-    gearArray[tipo][2]=invArray[i][4];
-    invArray[i][4]=tmp;
-    tmp=gearArray[tipo][3];
-    gearArray[tipo][3]=invArray[i][5];
-    invArray[i][5]=tmp;
-    tmp=gearArray[tipo][4];
-    gearArray[tipo][4]=invArray[i][6];
-    invArray[i][6]=tmp;
-    tmp=gearArray[tipo][5];
-    gearArray[tipo][5]=invArray[i][7];
-    invArray[i][7]=tmp;
-    tmp=gearArray[tipo][6];
-    gearArray[tipo][6]=invArray[i][8];
-    invArray[i][8]=tmp;
-    tmp=gearArray[tipo][7];
-    gearArray[tipo][7]=invArray[i][9];
-    invArray[i][9]=tmp;
+    $.ajax({
+      url: "./dbl.php?u="+username+"&s="+i,
+      success: function(){
+              gear_goldps=0;
+              gear_diamsps=0;
+              gear_clickeff=0;
+              gear_mf=0;
+              gear_expps=0;
+          downloadGear();
+          downloadInventario();
+      }
+    });
 
-    gear_goldps=0;
-    gear_diamsps=0;
-    gear_clickeff=0;
-    gear_mf=0;
-    gear_expps=0;
-
-    updateGearSlots(tipo);
-    updateInventario();
-    //updateSlotInv(i);
-    updateGearPanel();
   }else if(invArray[i][0]==1){//pozione small fat awesome 10 20 30
     //atk, def, eff, mf, exp
     $.ajax({

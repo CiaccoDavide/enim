@@ -62,7 +62,6 @@
 
 		$inv[$slot][0]=-1;//free used potion slot
 
-
 		$sql2="SELECT gear FROM gears WHERE username='$username'";
 		$result2=mysqli_query($db, $sql2);
 		$row2=mysqli_fetch_array($result2);
@@ -81,6 +80,45 @@
 
 	}else if($inv[$slot][0]==2){//gear
 
+		$sql2="SELECT gear FROM gears WHERE username='$username'";
+		$result2=mysqli_query($db, $sql2);
+		$row2=mysqli_fetch_array($result2);
+		$gear=json_decode($row2['gear'], true);
+
+		$tmp=0;
+	    if($gear[$tipo][0]==-1)$inv[$slot][0]=-1;
+	    $tmp=$gear[$tipo][0];
+	    $gear[$tipo][0]=$inv[$slot][2];
+	    $inv[$slot][2]=$tmp;
+	    $tmp=$gear[$tipo][1];
+	    $gear[$tipo][1]=$inv[$slot][3];
+	    $inv[$slot][3]=$tmp;
+	    $tmp=$gear[$tipo][2];
+	    $gear[$tipo][2]=$inv[$slot][4];
+	    $inv[$slot][4]=$tmp;
+	    $tmp=$gear[$tipo][3];
+	    $gear[$tipo][3]=$inv[$slot][5];
+	    $inv[$slot][5]=$tmp;
+	    $tmp=$gear[$tipo][4];
+	    $gear[$tipo][4]=$inv[$slot][6];
+	    $inv[$slot][6]=$tmp;
+	    $tmp=$gear[$tipo][5];
+	    $gear[$tipo][5]=$inv[$slot][7];
+	    $inv[$slot][7]=$tmp;
+	    $tmp=$gear[$tipo][6];
+	    $gear[$tipo][6]=$inv[$slot][8];
+	    $inv[$slot][8]=$tmp;
+	    $tmp=$gear[$tipo][7];
+	    $gear[$tipo][7]=$inv[$slot][9];
+	    $inv[$slot][9]=$tmp;
+
+
+		$invjson=json_encode($inv);
+			$sql="UPDATE inventories SET inventory='$invjson' WHERE username='$username'";
+			mysqli_query($db, $sql);
+		$gearjson=json_encode($gear);
+			$sql="UPDATE gears SET gear='$gearjson' WHERE username='$username'";
+			mysqli_query($db, $sql);
 	}
 
 
