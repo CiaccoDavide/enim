@@ -8,16 +8,9 @@
     $row=mysqli_fetch_array($result);
 
     $inv=json_decode($row['inventory'], true);
-
-        usort($inv, function($a, $b) {
-            return $b[2] - $a[2];
-        });/*
-        usort($inv, function($a, $b) {
-            return $b[1] - $a[1];
-        });*/
-        usort($inv, function($a, $b) {
-            return $b[0] - $a[0];
-        });
+    usort($inv, function($a, $b) {
+        return ($b[0]*100+$b[1]*10+$b[2]) - ($a[0]*100+$a[1]*10+$a[2]);
+    });
 
     $invjson=json_encode($inv);
     $sql="UPDATE inventories SET inventory='$invjson' WHERE username='$username'";
