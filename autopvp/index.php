@@ -476,20 +476,22 @@ function updateMainPanel(){
 
 
 function scala(num){
-  if(num < 1e3)         return pDD(num);
-  else if(num >= 1e39)  return pDD(num/1e39) + " Duodecillions";
-  else if(num >= 1e36)  return pDD(num/1e36) + " Undecillions";
-  else if(num >= 1e33)  return pDD(num/1e33) + " Decillions";
-  else if(num >= 1e30)  return pDD(num/1e30) + " Nonillions";
-  else if(num >= 1e27)  return pDD(num/1e27) + " Octillions";
-  else if(num >= 1e24)  return pDD(num/1e24) + " Septillions";
-  else if(num >= 1e21)  return pDD(num/1e21) + " Sextillions";
-  else if(num >= 1e18)  return pDD(num/1e18) + " Quintillions";
-  else if(num >= 1e15)  return pDD(num/1e15) + " Quadrillions";
-  else if(num >= 1e12)  return pDD(num/1e12) + " T";
-  else if(num >= 1e9)   return pDD(num/1e9) + " B";
-  else if(num >= 1e6)   return pDD(num/1e6) + " M";
-  else if(num >= 1e3)   return pDD(num/1e3) + " K";
+segno=1;
+if(num<0){num*=-1;segno=-1;}
+  if(num < 1e3)         return pDD(segno*num);
+  else if(num >= 1e39)  return pDD(segno*num/1e39) + " Duodecillions";
+  else if(num >= 1e36)  return pDD(segno*num/1e36) + " Undecillions";
+  else if(num >= 1e33)  return pDD(segno*num/1e33) + " Decillions";
+  else if(num >= 1e30)  return pDD(segno*num/1e30) + " Nonillions";
+  else if(num >= 1e27)  return pDD(segno*num/1e27) + " Octillions";
+  else if(num >= 1e24)  return pDD(segno*num/1e24) + " Septillions";
+  else if(num >= 1e21)  return pDD(segno*num/1e21) + " Sextillions";
+  else if(num >= 1e18)  return pDD(segno*num/1e18) + " Quintillions";
+  else if(num >= 1e15)  return pDD(segno*num/1e15) + " Quadrillions";
+  else if(num >= 1e12)  return pDD(segno*num/1e12) + " T";
+  else if(num >= 1e9)   return pDD(segno*num/1e9) + " B";
+  else if(num >= 1e6)   return pDD(segno*num/1e6) + " M";
+  else if(num >= 1e3)   return pDD(segno*num/1e3) + " K";
 }function pDD(num){//tieni solo 2 cifre decimali - parsaDueDecimali
   return Math.floor(100*num)/100;
 }
