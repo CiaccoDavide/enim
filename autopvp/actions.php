@@ -19,6 +19,7 @@
 			if($inv[$i][0]==1){
 				$inv[$i][0]=-1;
 				$tipo=$inv[$i][1];
+				$rar=$inv[$i][2];
 				$gear[6][$tipo]+=($rar+1);
 			}
 			$i++;
@@ -35,6 +36,7 @@
 		while($s<sizeof($inv)){
 			if($inv[$s][0]==0){
 				$inv[$s][0]=-1;
+				$rar=$inv[$s][2];
 				//drop 3 gears and potion
 				$i=0;
 				for($ng=0;$ng<3;$ng++){
