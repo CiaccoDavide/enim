@@ -533,22 +533,11 @@ function getUserData() {
   //viene chiamata anche durante l'init!!!
   //get(userdata.php) //restituisce un json con i dati da mettere nelle var/array del js
 }
-function invDoubleClick(i){
-  //send php?slot=i
-  //in base al return aggiorna solo una parte dell'interfaccia (oppure aggiorna tutto?):
-  // - cassa: tutto l'inv
-  // - pozione: slot + gearpanel
-  // - gear: slot + gearpanel
-
-  // - per il refine (altra funzione invRightClick(i); ): slot + mainpanel(i credits)
-}
 //DA PHPiZZARE
 $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica tutto l'inv ma solo uno slot)
 
   id=parseInt((this.id).substring(1));
   i=id+64*(invpage-1);
-
-  invDoubleClick(i);
 
   if(invArray[i][0]==-1){//empty
   }else if(invArray[i][0]==2){//oggetto
@@ -681,25 +670,36 @@ function levelUP(){//implementare anche la parte grafica con la barra che scorre
 
 $('.slot').bind('contextmenu', function(){//REFINE
       i=parseInt((this.id).substring(1));
-      if(invArray[i+64*(invpage-1)][0]==2){//gear
-        credits+=100*(invArray[i+64*(invpage-1)][2]*invArray[i+64*(invpage-1)][4]+1);
-        invArray[i+64*(invpage-1)][0]=-1;
-        updateSlotInv(i+64*(invpage-1));
-      updateMainPanel();
-      }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
-        //gold, diams, eff, mf, exp
-        timerPozioni[invArray[i][1]]+=(invArray[i][2]+1);
-        invArray[i+64*(invpage-1)][0]=-1;
-        updateSlotInv(i+64*(invpage-1));
-        updateGearPanel();
-      }else if(invArray[i+64*(invpage-1)][0]==0){//cassa
-        invArray[i+64*(invpage-1)][0]=-1;
-        rarchest=invArray[i+64*(invpage-1)][2];
-        dropGear(rarchest);
-        dropGear(rarchest);
-        dropGear(rarchest);
-        dropPotion();
-      }return false;
+      i+=64*(invpage-1);
+
+
+
+    if(invArray[i][0]==2){//oggetto
+    $.ajax({
+      url: "./rgt.php?u="+username+"&s="+i,
+      success: function(){
+          downloadInfo();
+          downloadInventario();
+      }
+    });
+
+    }else if(invArray[i][0]==1){//pozione small fat awesome 10 20 30
+    //atk, def, eff, mf, exp
+    $.ajax({
+        url: "./dbl.php?u="+username+"&s="+i,
+        success: function(){
+            downloadGear();
+            downloadInventario();
+        }
+    });
+    }else if(invArray[i][0]==0){//cassa
+      $.ajax({
+        url: "./dbl.php?u="+username+"&s="+i+"&l="+level,
+        success: function(){
+            downloadInventario();
+        }
+      });
+    }return false;
 });
 
 
