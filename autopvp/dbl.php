@@ -80,6 +80,8 @@
 
 	}else if($inv[$slot][0]==2){//gear
 
+		if($level<$inv[$slot][4])break;
+
 		$sql2="SELECT gear FROM gears WHERE username='$username'";
 		$result2=mysqli_query($db, $sql2);
 		$row2=mysqli_fetch_array($result2);

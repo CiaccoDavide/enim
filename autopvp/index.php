@@ -294,6 +294,7 @@ function setInvIcon(i,q,t){
     $('#s'+i).removeClass("q6 q1 q2 q3 q4 q5").addClass("q0");
     $('#s'+i).css({'background':'url("./inv_empty.png")'});
     $('#s'+i).tooltipster('content','<i>empty slot</i>');
+    $('#s'+i).css({'opacity':1});
   }else if(invArray[i+64*(invpage-1)][0]==2){//oggetto
     $('#s'+i).removeClass("q0 q1 q2 q3 q4 q5 q6").addClass("q"+q);
     tipo='';
@@ -316,6 +317,9 @@ function setInvIcon(i,q,t){
     $('#s'+i).css({'background':'url("./inv_'+tipo+'.png")'});
 
         stats='';
+
+            if(level<invArray[i+64*(invpage-1)][4])stats+='<small class="peggio">Your level is too low!</small><br><small>';
+
     var diffe=pDD(invArray[i+64*(invpage-1)][4]-gearArray[t][2]);
     if(diffe>0)colores='meglio">(+'+scala(diffe)+')';else if(diffe<0)colores='peggio">('+scala(diffe)+')';else colores='neutro">';
     stats+='<i>Level '+scala(invArray[i+64*(invpage-1)][4])+'</i> <small class="'+colores+'</small><br><small>';
@@ -337,7 +341,12 @@ function setInvIcon(i,q,t){
     stats+='Exp: '+scala(invArray[i+64*(invpage-1)][9])+' <span class="'+colores+'</span><br>';
 
     $('#s'+i).tooltipster('content','<b id="q'+q+'">'+rar+' '+tipo+' +'+invArray[i+64*(invpage-1)][3]+'</b><br>'+stats+'</small>');
+    if(level<invArray[i+64*(invpage-1)][4])
+        $('#s'+i).css({'opacity':0.3});
+    else
+        $('#s'+i).css({'opacity':1});
   }else if(invArray[i+64*(invpage-1)][0]==1){//pozione small fat awesome 10 20 30
+  $('#s'+i).css({'opacity':1});
     qual='';q-=1;
     switch(q){
       case 0: qual='Small'; break;
@@ -359,6 +368,7 @@ function setInvIcon(i,q,t){
     plurale='';if((1+(q))>1)plurale='es';
     $('#s'+i).tooltipster('content','<b>'+qual+' '+tipo+' Potion</b><br><i>Increases '+gain+' by 50% for '+((1+(q)))+' match'+plurale+'.</i>');
   }else if(invArray[i+64*(invpage-1)][0]==0){//cassa
+  $('#s'+i).css({'opacity':1});
     $('#s'+i).removeClass("q6 q1 q2 q3 q4 q5").addClass("q0");
     rar='';
     switch(q-1){
@@ -528,7 +538,7 @@ $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica
   if(invArray[i][0]==-1){//empty
   }else if(invArray[i][0]==2){//oggetto
     $.ajax({
-      url: "./dbl.php?u="+username+"&s="+i,
+      url: "./dbl.php?u="+username+"&s="+i+"&l="+level,
       success: function(){
               gear_goldps=0;
               gear_diamsps=0;
@@ -611,7 +621,7 @@ $('#action0').click(function(){$.ajax({
       }
 });});
 $('#action1').click(function(){$.ajax({
-      url: "./actions.php?a=1&l=100",
+      url: "./actions.php?a=1&l="+level,
       success: function(){
           downloadInventario();
       }
