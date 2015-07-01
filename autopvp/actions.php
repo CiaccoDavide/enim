@@ -3,7 +3,6 @@
 
 	$username='xenoma';
 	$action=$_GET['a'];
-
 	$sql="SELECT inventory FROM inventories WHERE username='$username'";
 	$result=mysqli_query($db, $sql);
 	$row=mysqli_fetch_array($result);
@@ -31,6 +30,7 @@
 			$sql="UPDATE gears SET gear='$gearjson' WHERE username='$username'";
 			mysqli_query($db, $sql);
 	}else if($action==1){//open all chests
+		$level=$_GET['l'];//user level
 		$s=0;
 		while($s<sizeof($inv)){
 			if($inv[$s][0]==0){
