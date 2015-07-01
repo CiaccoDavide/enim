@@ -57,7 +57,7 @@
 				$inv[$i][1]=floor((rand(0,5)));//tipo di gear
 				$inv[$i][2]=$rar;//rarità
 				$inv[$i][3]=0;//enanchement
-				$inv[$i][4]=floor((rand(1,$level)));//lvl
+				$inv[$i][4]=abs(floor((rand($level-5,$level))));//lvl
 
 				$inv[$i][5]=pDD(((((rand(0,15*$inv[$i][4]))+16+10*($inv[$i][4]-1))*pow(1.1,$inv[$i][4])/16)*(($rar+1)+$inv[$i][3])));//atk
 				$inv[$i][6]=pDD(((((rand(0,15*$inv[$i][4]))+16+10*($inv[$i][4]-1))*pow(1.1,$inv[$i][4])/16)*(($rar+1)+$inv[$i][3])));//def

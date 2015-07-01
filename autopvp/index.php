@@ -255,9 +255,6 @@ function updateInventario(){
   $('#invnav').html('<small>Page '+invpage+'/'+invmaxpages+' </small>');
 }
 
-
-
-
 function downloadInfo(){
   $.ajax({
     url: "./getUserInfo.php?username="+username,
@@ -291,10 +288,6 @@ function downloadInfo(){
     }
   });
 }
-
-
-
-
 
 function setInvIcon(i,q,t){
   if(invArray[i+64*(invpage-1)][0]==-1){//empty
@@ -500,9 +493,6 @@ function updateMainPanel(){
   $('#mainPanel').html(mainpanel+'<br></div>');
 }
 
-
-
-
 function scala(num){
 segno=1;
 if(num<0){num*=-1;segno=-1;}
@@ -528,14 +518,10 @@ $('html').bind('contextmenu', function(){
       return false;
 });
 
+//PHP REQUESTS
 
-function getUserData() {
-  //viene chiamata anche durante l'init!!!
-  //get(userdata.php) //restituisce un json con i dati da mettere nelle var/array del js
-}
 //DA PHPiZZARE
 $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica tutto l'inv ma solo uno slot)
-
   id=parseInt((this.id).substring(1));
   i=id+64*(invpage-1);
 
@@ -570,35 +556,8 @@ $('.slot').dblclick(function(){//funzione che opera su un solo slot (non scarica
             downloadInventario();
         }
       });
-    /*invArray[i][0]=-1;
-    rarchest=invArray[i][2];
-    dropGear(rarchest);
-    dropGear(rarchest);
-    dropGear(rarchest);
-    dropPotion();
-    updateInventario();*/
   }
 });
-
-
-$('#sort').click(function(){
-    $.ajax({
-      url: "./sort.php?u="+username,
-      dataType: "JSON",
-      success: function(json){
-          for(var i=0;i<64*invmaxpages;i++){
-              invArray[i] = [json[i][0],json[i][1],json[i][2],json[i][3],json[i][4],json[i][5],json[i][6],json[i][7],json[i][8],json[i][9]];
-          }updateInventario();
-      }
-    });
-});
-
-
-function levelUP(){//implementare anche la parte grafica con la barra che scorre!
-  exp=0;
-  expmax=parseInt(expmax*1.25);
-  level++;
-}
 
 $('.slot').bind('contextmenu', function(){//REFINE
       i=parseInt((this.id).substring(1));
@@ -629,6 +588,86 @@ $('.slot').bind('contextmenu', function(){//REFINE
       });
     }return false;
 });
+
+
+$('#sort').click(function(){
+    $.ajax({
+      url: "./sort.php?u="+username,
+      dataType: "JSON",
+      success: function(json){
+          for(var i=0;i<64*invmaxpages;i++){
+              invArray[i] = [json[i][0],json[i][1],json[i][2],json[i][3],json[i][4],json[i][5],json[i][6],json[i][7],json[i][8],json[i][9]];
+          }updateInventario();
+      }
+    });
+});
+
+//inv actions
+$('#action0').click(function(){$.ajax({
+      url: "./actions.php?a=0",
+      success: function(){
+          downloadGear();
+          downloadInventario();
+      }
+});});
+$('#action1').click(function(){$.ajax({
+      url: "./actions.php?a=1",
+      success: function(){
+          downloadInventario();
+      }
+});});
+$('#action2').click(function(){$.ajax({
+      url: "./actions.php?a=2",
+      success: function(){
+          downloadInfo();
+          downloadInventario();
+      }
+});});
+$('#action3').click(function(){$.ajax({
+      url: "./actions.php?a=3",
+      success: function(){
+          downloadInfo();
+          downloadInventario();
+      }
+});});
+$('#action4').click(function(){$.ajax({
+      url: "./actions.php?a=4",
+      success: function(){
+          downloadInfo();
+          downloadInventario();
+      }
+});});
+$('#action5').click(function(){$.ajax({
+      url: "./actions.php?a=5",
+      success: function(){
+          downloadInfo();
+          downloadInventario();
+      }
+});});
+$('#action6').click(function(){$.ajax({
+      url: "./actions.php?a=6",
+      success: function(){
+          downloadInfo();
+          downloadInventario();
+      }
+});});
+$('#action7').click(function(){$.ajax({
+      url: "./actions.php?a=7",
+      success: function(){
+          downloadInfo();
+          downloadInventario();
+      }
+});});
+
+
+//DA PHPiZZARE
+function levelUP(){//implementare anche la parte grafica con la barra che scorre!
+  exp=0;
+  expmax=parseInt(expmax*1.25);
+  level++;
+}
+
+
 
 
 //ancora da classificare

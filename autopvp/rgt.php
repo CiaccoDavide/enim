@@ -14,7 +14,6 @@
 	$rar=$inv[$slot][2];
 
 	if($inv[$slot][0]==2){//gear
-		echo "asd";
 		$inv[$slot][0]=-1;
 		$invjson=json_encode($inv);
 			$sql="UPDATE inventories SET inventory='$invjson' WHERE username='$username'";
