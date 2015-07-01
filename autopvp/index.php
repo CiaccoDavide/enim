@@ -594,6 +594,100 @@ $('#sort').click(function(){
 });
 
 
+function levelUP(){//implementare anche la parte grafica con la barra che scorre!
+  exp=0;
+  expmax=parseInt(expmax*1.25);
+  level++;
+}
+
+$('.slot').bind('contextmenu', function(){//REFINE
+      i=parseInt((this.id).substring(1));
+      i+=64*(invpage-1);
+    if(invArray[i][0]==2){//oggetto
+    $.ajax({
+      url: "./rgt.php?u="+username+"&s="+i,
+      success: function(){
+          downloadInfo();
+          downloadInventario();
+      }
+    });
+    }else if(invArray[i][0]==1){//pozione small fat awesome 10 20 30
+    //atk, def, eff, mf, exp
+    $.ajax({
+        url: "./dbl.php?u="+username+"&s="+i,
+        success: function(){
+            downloadGear();
+            downloadInventario();
+        }
+    });
+    }else if(invArray[i][0]==0){//cassa
+      $.ajax({
+        url: "./dbl.php?u="+username+"&s="+i+"&l="+level,
+        success: function(){
+            downloadInventario();
+        }
+      });
+    }return false;
+});
+
+
+//ancora da classificare
+
+//main timer loop
+var timer = $.timer(function() {
+  ciclo();
+}, 200, true);
+var timer = $.timer(function() {
+  cicloSecondo();
+}, 1000, true);
+function ciclo(){
+    updateMainPanel();updateGearPanel();
+    update();
+    updateUpIcons();
+
+    mf=calcMf();
+
+    if(exp>=expmax){levelUP();}
+//drop();
+    //document.title = scala(gold);
+}function cicloSecondo(){
+  if(Math.random()*100<mf) drop();
+}
+
+
+function profitExp(){
+  return (1+getGearStats(5))*multiExp;
+}
+function calcMf(){
+  return (0.5+getGearStats(4))*multiMf;
+}
+function calcEff(){
+  return (5+getGearStats(3))*multiEff;
+}
+
+/*
+//get real time when hidden
+$(window).blur(function(){
+  timer.pause();
+  before = new Date();
+});
+$(window).focus(function(){
+  timer.play();
+  now = new Date();
+  elapsedTime = (now.getTime() - before.getTime());
+  elapsedTime/=200;
+    $('.tempo').text(elapsedTime/5);
+  while(elapsedTime>0){
+    elapsedTime--;
+    ciclo();
+  }
+});
+*/
+
+//window.open("", "", "width=200, height=100");
+
+/* DONE SECTION */
+/*
 function drop(){
   tipo=rar=0;
   tipo=Math.floor((Math.random()*9));
@@ -662,121 +756,7 @@ function dropGear(rar){
       }i++;
   }updateSlotInv(i);
 }
-function levelUP(){//implementare anche la parte grafica con la barra che scorre!
-  exp=0;
-  expmax=parseInt(expmax*1.25);
-  level++;
-}
-
-$('.slot').bind('contextmenu', function(){//REFINE
-      i=parseInt((this.id).substring(1));
-      i+=64*(invpage-1);
-
-
-
-    if(invArray[i][0]==2){//oggetto
-    $.ajax({
-      url: "./rgt.php?u="+username+"&s="+i,
-      success: function(){
-          downloadInfo();
-          downloadInventario();
-      }
-    });
-
-    }else if(invArray[i][0]==1){//pozione small fat awesome 10 20 30
-    //atk, def, eff, mf, exp
-    $.ajax({
-        url: "./dbl.php?u="+username+"&s="+i,
-        success: function(){
-            downloadGear();
-            downloadInventario();
-        }
-    });
-    }else if(invArray[i][0]==0){//cassa
-      $.ajax({
-        url: "./dbl.php?u="+username+"&s="+i+"&l="+level,
-        success: function(){
-            downloadInventario();
-        }
-      });
-    }return false;
-});
-
-
-//ancora da classificare
-
-
-    //                      0       1       2       3     4         5   6     7
-//array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
-
-/*
-dropChest(0);
-dropChest(1);
-dropChest(2);
-dropChest(3);
-dropChest(4);
-dropChest(5);
 */
-
-    //                      0       1       2       3     4         5   6     7
-//array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
-
-
-//main timer loop
-var timer = $.timer(function() {
-  ciclo();
-}, 200, true);
-var timer = $.timer(function() {
-  cicloSecondo();
-}, 1000, true);
-function ciclo(){
-    updateMainPanel();updateGearPanel();
-    update();
-    updateUpIcons();
-
-    mf=calcMf();
-
-    if(exp>=expmax){levelUP();}
-//drop();
-    //document.title = scala(gold);
-}function cicloSecondo(){
-  if(Math.random()*100<mf) drop();
-}
-
-
-function profitExp(){
-  return (1+getGearStats(5))*multiExp;
-}
-function calcMf(){
-  return (0.5+getGearStats(4))*multiMf;
-}
-function calcEff(){
-  return (5+getGearStats(3))*multiEff;
-}
-
-/*
-//get real time when hidden
-$(window).blur(function(){
-  timer.pause();
-  before = new Date();
-});
-$(window).focus(function(){
-  timer.play();
-  now = new Date();
-  elapsedTime = (now.getTime() - before.getTime());
-  elapsedTime/=200;
-    $('.tempo').text(elapsedTime/5);
-  while(elapsedTime>0){
-    elapsedTime--;
-    ciclo();
-  }
-});
-*/
-
-//window.open("", "", "width=200, height=100");
-
-
-
   </script>
 
 </body>
