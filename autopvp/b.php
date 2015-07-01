@@ -28,6 +28,12 @@
 	echo '<br>';
 echo $username.' vs '.$opponent.'<br>';
 
+echo 'Atk: '.($user_gear[0][3]+$user_gear[1][3]+$user_gear[2][3]+$user_gear[3][3]+$user_gear[4][3]+$user_gear[5][3]).' vs '.($opponent_gear[0][3]+$opponent_gear[1][3]+$opponent_gear[2][3]+$opponent_gear[3][3]+$opponent_gear[4][3]+$opponent_gear[5][3]).'<br>';
+echo 'Atk: '.($user_gear[0][4]+$user_gear[1][4]+$user_gear[2][4]+$user_gear[3][4]+$user_gear[4][4]+$user_gear[5][4]).' vs '.($opponent_gear[0][4]+$opponent_gear[1][4]+$opponent_gear[2][4]+$opponent_gear[3][4]+$opponent_gear[4][4]+$opponent_gear[5][4]).'<br>';
+echo 'Atk: '.($user_gear[0][5]+$user_gear[1][5]+$user_gear[2][5]+$user_gear[3][5]+$user_gear[4][5]+$user_gear[5][5]).' vs '.($opponent_gear[0][5]+$opponent_gear[1][5]+$opponent_gear[2][5]+$opponent_gear[3][5]+$opponent_gear[4][5]+$opponent_gear[5][5]).'<br>';
+echo 'Atk: '.($user_gear[0][6]+$user_gear[1][6]+$user_gear[2][6]+$user_gear[3][6]+$user_gear[4][6]+$user_gear[5][6]).' vs '.($opponent_gear[0][6]+$opponent_gear[1][6]+$opponent_gear[2][6]+$opponent_gear[3][6]+$opponent_gear[4][6]+$opponent_gear[5][6]).'<br>';
+echo 'Atk: '.($user_gear[0][7]+$user_gear[1][7]+$user_gear[2][7]+$user_gear[3][7]+$user_gear[4][7]+$user_gear[5][7]).' vs '.($opponent_gear[0][7]+$opponent_gear[1][7]+$opponent_gear[2][7]+$opponent_gear[3][7]+$opponent_gear[4][7]+$opponent_gear[5][7]).'<br>';
+
 
     //                      0       1       2     3    4    5    6     7
 //array inv: [tipo][tipo][rar][enanchement][lvl][atk][def][crit][mf][expps]
@@ -49,7 +55,7 @@ echo $username.' vs '.$opponent.'<br>';
 
 
 
-	echo '<br>'.$user_atk;
+//	echo '<br>'.$user_atk;
 
 
 

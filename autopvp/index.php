@@ -180,7 +180,7 @@ border-radius: 2px;
   $('#actionslist').hide();
    $('#actions').click(function(){$('#actionslist').toggle("slow");});
 
-  var username='xenoma';
+  var username="<?php echo $_GET['user']; ?>";
   var wins=losses=0;
   var exp=100,level=credits=0,expmax=888;
   var expps=1,goldps=1,diamsps=0.1,mf=0.5,clickeff=5;
