@@ -27,37 +27,107 @@
 
 	echo '<br>';
 echo $username.' vs '.$opponent.'<br>';
-
-echo 'Atk: '.($user_gear[0][3]+$user_gear[1][3]+$user_gear[2][3]+$user_gear[3][3]+$user_gear[4][3]+$user_gear[5][3]).' vs '.($opponent_gear[0][3]+$opponent_gear[1][3]+$opponent_gear[2][3]+$opponent_gear[3][3]+$opponent_gear[4][3]+$opponent_gear[5][3]).'<br>';
-echo 'Atk: '.($user_gear[0][4]+$user_gear[1][4]+$user_gear[2][4]+$user_gear[3][4]+$user_gear[4][4]+$user_gear[5][4]).' vs '.($opponent_gear[0][4]+$opponent_gear[1][4]+$opponent_gear[2][4]+$opponent_gear[3][4]+$opponent_gear[4][4]+$opponent_gear[5][4]).'<br>';
-echo 'Atk: '.($user_gear[0][5]+$user_gear[1][5]+$user_gear[2][5]+$user_gear[3][5]+$user_gear[4][5]+$user_gear[5][5]).' vs '.($opponent_gear[0][5]+$opponent_gear[1][5]+$opponent_gear[2][5]+$opponent_gear[3][5]+$opponent_gear[4][5]+$opponent_gear[5][5]).'<br>';
-echo 'Atk: '.($user_gear[0][6]+$user_gear[1][6]+$user_gear[2][6]+$user_gear[3][6]+$user_gear[4][6]+$user_gear[5][6]).' vs '.($opponent_gear[0][6]+$opponent_gear[1][6]+$opponent_gear[2][6]+$opponent_gear[3][6]+$opponent_gear[4][6]+$opponent_gear[5][6]).'<br>';
-echo 'Atk: '.($user_gear[0][7]+$user_gear[1][7]+$user_gear[2][7]+$user_gear[3][7]+$user_gear[4][7]+$user_gear[5][7]).' vs '.($opponent_gear[0][7]+$opponent_gear[1][7]+$opponent_gear[2][7]+$opponent_gear[3][7]+$opponent_gear[4][7]+$opponent_gear[5][7]).'<br>';
-
-
     //                      0       1       2     3    4    5    6     7
 //array inv: [tipo][tipo][rar][enanchement][lvl][atk][def][crit][mf][expps]
-//AGGIUNGERE I MOLTIPLICATORI DELLE POZIONI!!!
+
+/* USER STATS */
 	$user_atk=0;
-	$multi_atk=$multi_def=1;
-	for($i=0;$i<6;$i++)
-		$user_atk+=($user_gear[i][1]+1)*$user_gear[i][3];
+	$multi_atk=1;
+	for($i=0;$i<6;$i++)$user_atk+=$user_gear[$i][3];
 	if($user_gear[6][0]>0)$multi_atk=2;
 	$user_atk*=$multi_atk;
 
 	$user_def=0;
 	$multi_def=1;
-	for($i=0;$i<6;$i++)
-		$user_def+=($user_gear[i][1]+1)*$user_gear[i][4];
+	for($i=0;$i<6;$i++)$user_def+=($user_gear[$i][1]+1)*$user_gear[$i][4];
 	if($user_gear[6][1]>0)$multi_def=2;
-	$user_atk*=$multi_def;
+	$user_def*=$multi_def;
+
+	$user_crit=0;
+	$multi_crit=1;
+	for($i=0;$i<6;$i++)$user_crit+=($user_gear[$i][1]+1)*$user_gear[$i][5];
+	if($user_gear[6][2]>0)$multi_crit=2;
+	$user_crit*=$multi_crit;
+
+	$user_mf=0;
+	$multi_mf=1;
+	for($i=0;$i<6;$i++)$user_mf+=($user_gear[$i][1]+1)*$user_gear[$i][6];
+	if($user_gear[6][3]>0)$multi_mf=2;
+	$user_mf*=$multi_mf;
+
+	$user_exp=0;
+	$multi_exp=1;
+	for($i=0;$i<6;$i++)$user_exp+=($user_gear[$i][1]+1)*$user_gear[$i][7];
+	if($user_gear[6][4]>0)$multi_exp=2;
+	$user_exp*=$multi_exp;
+
+/* OPPONENT STATS */
+	$user_atk=0;
+	$multi_atk=1;
+	for($i=0;$i<6;$i++)$user_atk+=($user_gear[$i][1]+1)*$user_gear[$i][3];
+	if($user_gear[6][0]>0)$multi_atk=2;
+	$user_atk*=$multi_atk;
+
+	$user_def=0;
+	$multi_def=1;
+	for($i=0;$i<6;$i++)$user_def+=($user_gear[$i][1]+1)*$user_gear[$i][4];
+	if($user_gear[6][1]>0)$multi_def=2;
+	$user_def*=$multi_def;
+
+	$user_crit=0;
+	$multi_crit=1;
+	for($i=0;$i<6;$i++)$user_crit+=($user_gear[$i][1]+1)*$user_gear[$i][5];
+	if($user_gear[6][2]>0)$multi_crit=2;
+	$user_crit*=$multi_crit;
+
+	$user_mf=0;
+	$multi_mf=1;
+	for($i=0;$i<6;$i++)$user_mf+=($user_gear[$i][1]+1)*$user_gear[$i][6];
+	if($user_gear[6][3]>0)$multi_mf=2;
+	$user_mf*=$multi_mf;
+
+	$user_exp=0;
+	$multi_exp=1;
+	for($i=0;$i<6;$i++)$user_exp+=($user_gear[$i][1]+1)*$user_gear[$i][7];
+	if($user_gear[6][4]>0)$multi_exp=2;
+	$user_exp*=$multi_exp;
 
 
+	$opponent_atk=0;
+	$multi_atk=1;
+	for($i=0;$i<6;$i++)$opponent_atk+=($opponent_gear[$i][1]+1)*$opponent_gear[$i][3];
+	if($opponent_gear[6][0]>0)$multi_atk=2;
+	$opponent_atk*=$multi_atk;
 
+	$opponent_def=0;
+	$multi_def=1;
+	for($i=0;$i<6;$i++)$opponent_def+=($opponent_gear[$i][1]+1)*$opponent_gear[$i][4];
+	if($opponent_gear[6][1]>0)$multi_def=2;
+	$opponent_def*=$multi_def;
 
-//	echo '<br>'.$user_atk;
+	$opponent_crit=0;
+	$multi_crit=1;
+	for($i=0;$i<6;$i++)$opponent_crit+=($opponent_gear[$i][1]+1)*$opponent_gear[$i][5];
+	if($opponent_gear[6][2]>0)$multi_crit=2;
+	$opponent_crit*=$multi_crit;
 
+	$opponent_mf=0;
+	$multi_mf=1;
+	for($i=0;$i<6;$i++)$opponent_mf+=($opponent_gear[$i][1]+1)*$opponent_gear[$i][6];
+	if($opponent_gear[6][3]>0)$multi_mf=2;
+	$opponent_mf*=$multi_mf;
 
+	$opponent_exp=0;
+	$multi_exp=1;
+	for($i=0;$i<6;$i++)$opponent_exp+=($opponent_gear[$i][1]+1)*$opponent_gear[$i][7];
+	if($opponent_gear[6][4]>0)$multi_exp=2;
+	$opponent_exp*=$multi_exp;
+
+echo 'Atk: '.($user_atk).' vs '.($opponent_atk).'<br>';
+echo 'Def: '.($user_def).' vs '.($opponent_def).'<br>';
+echo 'Crit: '.($user_crit).' vs '.($opponent_crit).'<br>';
+echo 'MF: '.($user_mf).' vs '.($opponent_mf).'<br>';
+echo 'Exp: '.($user_exp).' vs '.($opponent_exp).'<br>';
 
 
 
