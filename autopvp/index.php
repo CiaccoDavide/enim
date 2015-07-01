@@ -611,7 +611,7 @@ $('#action0').click(function(){$.ajax({
       }
 });});
 $('#action1').click(function(){$.ajax({
-      url: "./actions.php?a=1&l="+level,
+      url: "./actions.php?a=1&l=100",
       success: function(){
           downloadInventario();
       }

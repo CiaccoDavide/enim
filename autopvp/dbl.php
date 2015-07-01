@@ -46,7 +46,7 @@
 		while($i<sizeof($inv)){
 			if($inv[$i][0]==-1){
 				$inv[$i][0]=1;//potion_code
-				$inv[$i][1]=floor(rand(0,5));//tipo di pozione
+				$inv[$i][1]=floor(rand(0,4));//tipo di pozione
 				$rar=floor(rand(0,99));
 				if($rar<10)        $inv[$i][2]=2;
 				else if($rar<35)   $inv[$i][2]=1;
