@@ -101,6 +101,10 @@
 			}
 			$slot++;
 		}
+		//sort after refine!
+		usort($inv, function($a, $b) {
+	        return ($b[0]*100+$b[1]*10+$b[2]) - ($a[0]*100+$a[1]*10+$a[2]);
+	    });
 	}
 
 
