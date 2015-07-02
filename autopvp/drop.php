@@ -51,6 +51,8 @@
 		else if($rar<1500) $rar=1;
 		else              $rar=0;
 
+		//              0     1    2        3        4     5        6      7    8    9
+		//array inv: [tipo][tipo][rar][enanchement][lvl][goldps][diamsps][eff][mf][expps]
 		while($i<sizeof($inv)){
 			if($inv[$i][0]==-1){
 				$inv[$i][0]=2;//gear_code
@@ -62,11 +64,13 @@
 				$inv[$i][5]=pDD(((((rand(0,15*$inv[$i][4]))+16+10*($inv[$i][4]-1))*pow(1.1,$inv[$i][4])/16)*(($rar+1)+$inv[$i][3])));//atk
 				$inv[$i][6]=pDD(((((rand(0,15*$inv[$i][4]))+16+10*($inv[$i][4]-1))*pow(1.1,$inv[$i][4])/16)*(($rar+1)+$inv[$i][3])));//def
 
-				$inv[$i][7]=pDD((10/(11-$inv[$i][3]))/(7-$inv[$i][2]));//eff max_eff=60% (max 10% per gear)
-				if($inv[$i][7]>10)$inv[$i][7]=10;
-				$inv[$i][8]=pDD((10/(11-$inv[$i][3]))/(7-$inv[$i][2]));//mf max_mf=60% (max 10% per gear)
-				if($inv[$i][8]>10)$inv[$i][8]=10;
-				$inv[$i][9]=2;//expps
+//88/ (11-10)*(6-5)*(101-100)
+
+				$inv[$i][7]=pDD((2/6)+abs((88/6)*(1-((11-$inv[$i][3])*(6-$inv[$i][2])*(101-abs(((rand($level-3,$level))))))/6666)));//crit max_eff=90% (max 10% per gear)
+				if($inv[$i][7]>15) $inv[$i][7]=15;
+				$inv[$i][8]=pDD((5/6)+abs((55/6)*(1-((11-$inv[$i][3])*(6-$inv[$i][2])*(101-abs(((rand($level-3,$level))))))/6666)));//mf max_mf=60% (max 10% per gear)
+				if($inv[$i][8]>10) $inv[$i][8]=10;
+				$inv[$i][9]=pDD(abs(floor((rand(($level+1)*4,($level+1)*8))))/6);//expps
 
 				break;
 			}$i++;

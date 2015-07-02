@@ -123,21 +123,46 @@ echo $username.' vs '.$opponent.'<br>';
 	if($opponent_gear[6][4]>0)$multi_exp=2;
 	$opponent_exp*=$multi_exp;
 
+echo '<br>';
 echo 'Atk: '.($user_atk).' vs '.($opponent_atk).'<br>';
 echo 'Def: '.($user_def).' vs '.($opponent_def).'<br>';
 echo 'Crit: '.($user_crit).' vs '.($opponent_crit).'<br>';
 echo 'MF: '.($user_mf).' vs '.($opponent_mf).'<br>';
 echo 'Exp: '.($user_exp).' vs '.($opponent_exp).'<br>';
+echo '<br>';
 
 
+	$user_damage_dealt=0;
+	$opponent_damage_dealt=0;
+	for($i=0;$i<10;$i++){
+		/*turno user*/
+		$rand=rand(0,100);
+		if($rand<$user_crit) $user_damage_dealt_temp=$user_atk; //se crit un attacco passa senza difesa e ne passa un altro con la difesa
+		if($opponent_def>=$user_atk) $effetto=0.4; //40%
+		else $effetto=pDD(0.4+(((1-$opponent_def/$user_atk)/100)*60));
+		if($effetto>1)$effetto=1;
+		$user_damage_dealt_temp+=$user_atk*$effetto;
+		$user_damage_dealt+=$user_damage_dealt_temp;
 
+		/*turno opponent*/
+		$rand=rand(0,100);
+		if($rand<$opponent_crit) $opponent_damage_dealt_temp=$opponent_atk; //se crit un attacco passa senza difesa e ne passa un altro con la difesa
+		if($user_def>=$opponent_atk) $effetto=0.4; //40%
+		else $effetto=pDD(0.4+(((1-$user_def/$opponent_atk)/100)*60));
+		if($effetto>1)$effetto=1;
+		$opponent_damage_dealt_temp+=$opponent_atk*$effetto;
+		$opponent_damage_dealt+=$opponent_damage_dealt_temp;
 
-
+echo 'Round '.$i.': '.($user_damage_dealt_temp).' vs '.($opponent_damage_dealt_temp).'<br>';
+	}
+echo 'Result: '.($user_damage_dealt).' vs '.($opponent_damage_dealt).'<br>';
 
 
 	/*alla fine della battaglia:
 		-sottrai 1 a tutti i potion timers a meno che non siano già a 0
 	*/
-
+function pDD($num){//tieni solo 2 cifre decimali - parsaDueDecimali
+	return floor(100*$num)/100;
+}
 
 ?>
