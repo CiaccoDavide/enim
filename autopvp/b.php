@@ -137,7 +137,8 @@ echo '<br>';
 	for($i=0;$i<10;$i++){
 		/*turno user*/
 		$rand=rand(0,100);
-		if($rand<$user_crit) $user_damage_dealt_temp=$user_atk; //se crit un attacco passa senza difesa e ne passa un altro con la difesa
+		$user_damage_dealt_temp=0;
+		if($rand<$user_crit) $user_damage_dealt_temp=$user_atk/2; //se crit un attacco passa senza difesa e ne passa un altro con la difesa
 		if($opponent_def>=$user_atk) $effetto=0.4; //40%
 		else $effetto=pDD(0.4+(((1-$opponent_def/$user_atk)/100)*60));
 		if($effetto>1)$effetto=1;
@@ -146,16 +147,17 @@ echo '<br>';
 
 		/*turno opponent*/
 		$rand=rand(0,100);
-		if($rand<$opponent_crit) $opponent_damage_dealt_temp=$opponent_atk; //se crit un attacco passa senza difesa e ne passa un altro con la difesa
+		$opponent_damage_dealt_temp=0;
+		if($rand<$opponent_crit) $opponent_damage_dealt_temp=$opponent_atk/2; //se crit un attacco passa senza difesa e ne passa un altro con la difesa
 		if($user_def>=$opponent_atk) $effetto=0.4; //40%
 		else $effetto=pDD(0.4+(((1-$user_def/$opponent_atk)/100)*60));
 		if($effetto>1)$effetto=1;
 		$opponent_damage_dealt_temp+=$opponent_atk*$effetto;
 		$opponent_damage_dealt+=$opponent_damage_dealt_temp;
 
-echo 'Round '.$i.': '.($user_damage_dealt_temp).' vs '.($opponent_damage_dealt_temp).'<br>';
+echo 'Round '.$i.': '.pDD($user_damage_dealt_temp).' vs '.pDD($opponent_damage_dealt_temp).'<br>';
 	}
-echo 'Result: '.($user_damage_dealt).' vs '.($opponent_damage_dealt).'<br>';
+echo 'Result: '.pDD($user_damage_dealt).' vs '.pDD($opponent_damage_dealt).'<br>';
 
 
 	/*alla fine della battaglia:

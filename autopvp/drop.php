@@ -66,11 +66,11 @@
 
 //88/ (11-10)*(6-5)*(101-100)
 
-				$inv[$i][7]=pDD((2/6)+abs((88/6)*(1-((11-$inv[$i][3])*(6-$inv[$i][2])*(101-abs(((rand($level-3,$level))))))/6666)));//crit max_eff=90% (max 10% per gear)
-				if($inv[$i][7]>15) $inv[$i][7]=15;
-				$inv[$i][8]=pDD((5/6)+abs((55/6)*(1-((11-$inv[$i][3])*(6-$inv[$i][2])*(101-abs(((rand($level-3,$level))))))/6666)));//mf max_mf=60% (max 10% per gear)
-				if($inv[$i][8]>10) $inv[$i][8]=10;
-				$inv[$i][9]=pDD(abs(floor((rand(($level+1)*4,($level+1)*8))))/6);//expps
+				$inv[$i][7]=pDD(0.5*((2/6)+abs((88/6)*(1-((11-$inv[$i][3])*(6-$inv[$i][2])*(101-abs(((rand($level-3,$level))))))/6666))));//crit max_eff=90% (max 10% per gear)
+				if($inv[$i][7]>15/2) $inv[$i][7]=15/2;
+				$inv[$i][8]=pDD(0.5*((5/6)+abs((55/6)*(1-((11-$inv[$i][3])*(6-$inv[$i][2])*(101-abs(((rand($level-3,$level))))))/6666))));//mf max_mf=60% (max 10% per gear)
+				if($inv[$i][8]>10/2) $inv[$i][8]=10/2;
+				$inv[$i][9]=pDD(0.5*(abs(floor((rand(($level+1)*4,($level+1)*8))))/6));//expps
 
 				break;
 			}$i++;
